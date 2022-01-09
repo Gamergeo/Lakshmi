@@ -1,0 +1,225 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.project</groupId>
+	<artifactId>lakshmi</artifactId>
+	<version>${revision}</version>
+	<packaging>pom</packaging>
+  
+	<modules>
+		<module>lakshmi-business</module>
+		<module>lakshmi-persistance</module>
+		<module>lakshmi-model</module>
+		<module>lakshmi-webapp</module>
+		<module>lakshmi-technical</module>
+	</modules>
+	
+	<properties>
+		<revision>0.2.2</revision>
+		<java.version>8</java.version>
+		<log4j.version>2.11.1</log4j.version>
+		<servlet.version>4.0.1</servlet.version>
+		<jsp-api.version>2.0</jsp-api.version>
+    	<commons.version>3.6</commons.version>
+		<spring.version>5.0.8.RELEASE</spring.version>
+		<mysql-connector.version>8.0.12</mysql-connector.version>
+		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+		<dbcp.version>2.5.0</dbcp.version>
+		<hibernate.version>5.5.7.Final</hibernate.version>
+		<jaxb.version>2.3.0</jaxb.version>
+		<jstl.version>1.2</jstl.version>
+		<jquery.version>3.4.1</jquery.version>    
+		<jquery-ui.version>1.12.1</jquery-ui.version>
+		<jquery.form.version>4.2.2</jquery.form.version>
+		<junit.version>4.13</junit.version>
+		<jackson-databind.version>2.12.4</jackson-databind.version>
+	    <httpcomponents.version>4.5.13</httpcomponents.version>
+	    <aspectj.version>1.9.1</aspectj.version>
+	</properties>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				
+				<!-- java compiler -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+					<configuration>
+						<release>${java.version}</release>
+						<showDeprecation>true</showDeprecation>
+						<showWarnings>true</showWarnings>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<!-- Dependencies Management (No import their, check module instead) -->
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Project dependency -->
+			<dependency>
+				<groupId>com.project</groupId>
+				<artifactId>lakshmi-persistance</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.project</groupId>
+				<artifactId>lakshmi-model</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.project</groupId>
+				<artifactId>lakshmi-business</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.project</groupId>
+				<artifactId>lakshmi-technical</artifactId>
+				<version>${revision}</version>
+			</dependency>
+
+			<!-- java servlet -->
+			<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			    <!-- Servlet -->
+			<dependency>
+			    <groupId>javax.servlet</groupId>
+			    <artifactId>jsp-api</artifactId>
+		    	<version>${jsp-api.version}</version>
+			    <scope>provided</scope>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+	    		<artifactId>commons-lang3</artifactId>
+			    <version>${commons.version}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+
+			<!-- Spring BOM -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>${spring.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+			<!-- Pool de connection -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-dbcp2</artifactId>
+				<version>${dbcp.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.hibernate</groupId>
+			    <artifactId>hibernate-jpamodelgen</artifactId>
+			    <version>${hibernate.version}</version>
+			</dependency>
+
+			<!-- Utile pour hibernate -->
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/jstl/jstl -->
+			<!--  Tag du type ${ } -->
+			<dependency>
+			    <groupId>javax.servlet</groupId>
+			    <artifactId>jstl</artifactId>
+			    <version>${jstl.version}</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+			<!-- Webjar https://www.webjars.org/documentation#springmvc -->
+			<dependency>
+			    <groupId>org.webjars</groupId>
+			    <artifactId>jquery</artifactId>
+			    <version>${jquery.version}</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/org.webjars/jquery-ui -->
+			<dependency>
+			    <groupId>org.webjars</groupId>
+			    <artifactId>jquery-ui</artifactId>
+			    <version>${jquery-ui.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>junit</groupId>
+			    <artifactId>junit</artifactId>
+			    <version>${junit.version}</version>
+			    <scope>test</scope>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+			<dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-databind</artifactId>
+			    <version>${jackson-databind.version}</version>
+			</dependency>
+			
+			<!--  Aspect J -->
+            <dependency>
+			    <groupId>org.aspectj</groupId>
+			    <artifactId>aspectjrt</artifactId>
+			    <version>${aspectj.version}</version>
+			</dependency>
+            <dependency>
+			    <groupId>org.aspectj</groupId>
+			    <artifactId>aspectjweaver</artifactId>
+			    <version>${aspectj.version}</version>
+			    <scope>runtime</scope>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+			<dependency>
+			    <groupId>org.apache.httpcomponents</groupId>
+			    <artifactId>httpclient</artifactId>
+			    <version>${httpcomponents.version}</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+</project>

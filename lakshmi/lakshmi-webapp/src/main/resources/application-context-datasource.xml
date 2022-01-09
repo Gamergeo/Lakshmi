@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
+            
+	<!-- Utilisation de properties : attention à ne pas faire ca IRL car password public -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/database.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
+    </bean>
+    
+<!-- 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+<!--         <property name="locations"> -->
+<!--             <list> -->
+<!--                 <value>classpath:/database-PROD.properties</value> -->
+<!--             </list> -->
+<!--         </property> -->
+<!--         <property name="ignoreUnresolvablePlaceholders" value="false"/> -->
+<!--     </bean> -->
+    
+    <!-- Datasource : definition du pool de connection -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+    	<property name="driverClassName" value="${database.game.driverClassName}"/>
+        <property name="url" value="${database.game.url}"/>
+        <property name="username" value="${database.game.username}"/>
+        <property name="password" value="${database.game.password}"/>
+    </bean>
+    
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.project.mscomptes.model"/>
+        <property name="hibernateProperties">
+            <props>
+            	<prop key="hibernate.hbm2ddl.auto">
+            		update
+            	</prop>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQL8Dialect
+                </prop>
+            </props>
+        </property>
+    </bean>
+</beans>

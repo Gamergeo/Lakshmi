@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+	<Appenders>
+	     <RollingFile name="logFile" fileName="E:/log/mscomptes.log"
+                     filePattern="logs/logs-%d{yyyy-MM-dd}-%i.txt">
+            <PatternLayout>
+		        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+		     </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+		    <DefaultRolloverStrategy max="5" />
+        </RollingFile>
+		<Console name="Console" target="SYSTEM_OUT">
+		        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+		</Console>
+	</Appenders>
+	
+	<Loggers>
+	
+		<Logger name="com.project.mscomptes" level="debug" additivity="false">
+            <AppenderRef ref="logFile"/>
+			<AppenderRef ref="console"/>
+        </Logger>
+        
+		<Root level="info">
+			<AppenderRef ref="logFile"/>
+			<AppenderRef ref="console"/>
+		</Root>
+
+	</Loggers>
+</Configuration>

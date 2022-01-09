@@ -1,0 +1,12 @@
+Version 0.1 : Mscomptes -> Lakshmi
+	- Reprise de mscomptes
+	- Changement de nom
+	
+------------------------------------------------------------------------------------------------------------
+
+Version 0.2 : Main et page subalterne
+	- Mise en place de la navigation initiale
+	- Pas de vocation à faire quelque chose de joli, juste utilisable
+	
+Version 0.3 : Mise à jour Import prix
+	- Reprise / amélioration du code

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Transaction Manager for Spring -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Annotation Transactionnal -->
+	<!-- <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager"/> -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- Mise en place des règles transactionnelles par défaut -->
+	<tx:advice id="transactionAdvice"
+		transaction-manager="transactionManager">
+		<tx:attributes>
+		
+			<tx:method name="*" />
+<!-- 			<tx:method name="*" -->
+<!-- 				rollback-for="com.tutorial.game.exception.GameException" /> -->
+<!-- 			<tx:method name="get*" read-only="true" -->
+<!-- 				rollback-for="com.tutorial.game.exception.GameException" /> -->
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- AspectJ : On rajoute par défaut le comportement transactionnel à l'éxécution 
+		sur toutes les méthodes des classes services -->
+
+	<!-- * com.tutorial.game.service.impl..*Service.*(..)) -->
+
+	<!-- * = N'importe quel type de retour -->
+	<!-- package -->
+	<!-- .. = tous les subpackage -->
+	<!-- *Service = toutes les classes suffixées par service -->
+	<!-- (..) = n'importe quel type de paramètre -->
+
+	<!-- <aop:config> -->
+	<!-- <aop:pointcut id="serviceMethods" -->
+	<!-- expression="execution(* com.tutorial.game.service.impl..*Service.*(..))" 
+		/> -->
+	<!-- <aop:advisor advice-ref="transactionAdvice" pointcut-ref="serviceMethods" 
+		/> -->
+	<!-- </aop:config> -->
+</beans>
