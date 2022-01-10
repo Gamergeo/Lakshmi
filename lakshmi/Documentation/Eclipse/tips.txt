@@ -1,0 +1,23 @@
+--------------------------------------------------------------------------------------------------------
+
+Pour ne plus avoir les target en crtl shift r il faut faire ca : 
+https://newbedev.com/exclude-target-folder-from-search-results-in-eclipse
+
+Go to Add Resource Filter preferences dialog:
+Go to Project / Properties / Resource / Resource Filters
+
+Click Add Filter...
+
+Then fill the options:
+Filter type:
+(•)Exclude all
+
+Applies to:
+(•)Folders
+
+[X] All children (recursive)
+
+Filter and Folder Attributes:
+Name - Matches - [target]
+
+--------------------------------------------------------------------------------------------------------

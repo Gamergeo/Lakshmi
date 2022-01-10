@@ -1,0 +1,49 @@
+/* input[type=text], select { */
+/* 	box-sizing:border-box; */
+/* 	font-family: var(--main-font); */
+/* 	height: 22px; */
+/* 	max-width: 80%; */
+/* } */
+
+select {
+	font-family: var(--main-font);
+}
+
+form {
+	height: inherit;
+}
+
+a {
+	cursor: pointer;
+}
+
+/* a:hover { */
+/* 	font-weight: bold; */
+/* /* 	background-color: var(--color-hover-dark); */ */
+/* } */
+
+.invisible {
+	display: none;
+}
+
+::placeholder {
+	font-family: var(--main-font);
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.centered {
+	margin:auto;
+}
+
+.hcentered {
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.vcentered {
+	margin-top:auto;
+	margin-bottom:auto;
+}

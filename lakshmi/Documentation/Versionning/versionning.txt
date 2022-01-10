@@ -14,6 +14,9 @@ Version 0.2.2 : Amelioration interface
 	- Reprise d'une bonne architecture
 	- Modèle inspière de freyr, header, menu, content
 	
+	
+Version 0.2.2.1 : Amelioration interface
+	
 ---------------------------------------------------------------------------------
 	
 Version 0.2.3 : Reprise de refresh content

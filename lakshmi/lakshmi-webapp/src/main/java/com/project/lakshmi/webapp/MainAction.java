@@ -22,4 +22,9 @@ public class MainAction extends AbstractAction {
 	public ModelAndView main() {
 		return new ModelAndView("main/main");
 	}
+
+	@GetMapping("startContent")
+	public ModelAndView content() {
+		return new ModelAndView("start/startView");
+	}
 }

@@ -1,0 +1,22 @@
+#mainContent {
+	display:grid;
+/* 	grid-template-columns: minmax(70%, auto) minmax(50px, 5%); */
+	grid-template-rows: minmax(min-content, 30px) min-content auto
+}
+
+/* #mainError { */
+/* 	display:none; */
+/* } */
+
+#mainContentTitle {
+	grid-row : 1;
+}
+
+#mainErrorMessage {
+	grid-row : 2;
+	height: fit-content; 
+}
+
+#mainContentBody {
+	grid-row : 3;
+}

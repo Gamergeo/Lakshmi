@@ -27,7 +27,7 @@ public class ButtonTag extends Tag  {
 		request.setAttribute("size", getSize());
 		request.setAttribute("onclick", getOnclick());
 		
-		includePage("buttonTag.jsp");
+		includePage("general/buttonTag.jsp");
 	}
 	
 	@Override

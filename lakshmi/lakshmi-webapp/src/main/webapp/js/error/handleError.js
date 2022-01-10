@@ -1,22 +1,18 @@
-/**
- * Classic error handling, must be overriden
- */
+$.handleError = function(errorMessage) {
+	return $('#mainErrorMessage').handleError(errorMessage);
+}
 
 $.fn.handleError = function(errorMessage) {
 	
 	return $(this).each(function() {
-		let errorContainer = $(this).closest('#contentContainer');
+		let errorContainer = $(this).closest('.contentBody').siblings('.errorMessage');
 		
+		if (!errorContainer.length) {
+			errorContainer = $('#mainErrorMessage');
+		}
+		
+		errorContainer.show();
 		errorContainer.text(errorMessage.responseText);
 	})
 	
-}
-
-/**
- * Classic error handling, must be overriden
- */
-
-$.handleError = function(errorMessage) {
-
-	return $('#contentContainer').handleError(errorMessage);
 }

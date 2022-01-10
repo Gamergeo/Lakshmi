@@ -34,5 +34,16 @@
    			<rtexprvalue>true</rtexprvalue>
         </attribute>
 	</tag>
+	
+	<tag>
+        <name>pageInfos</name> 
+        <tag-class>com.project.lakshmi.webapp.taglib.general.PageInfosTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>title</name>
+            <required>true</required>
+   			<rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
 
 </taglib>

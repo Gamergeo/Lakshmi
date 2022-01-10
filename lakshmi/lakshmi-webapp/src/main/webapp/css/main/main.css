@@ -2,52 +2,78 @@
 @import "../application/reset.css";
 
 /* Definition */
-/* @import "../application/font.css"; */
-/* @import "../application/constant.css"; */
+@import "../application/font.css";
+@import "../application/constant.css";
 /* @import "../application/image.css"; */
-/* @import "../application/freyr.css"; */
-
+@import "../application/lakshmi.css";
 @import "../application/button.css";
 
+/* @import "../table/datatable.css"; */
+/* @import "../popup/popup.css"; */
+@import "../content/content.css";
+/* @import "../infos/infos.css"; */
+/* @import "../form/form.css"; */
+/* @import "../filterList/filterList.css"; */
+/* @import "../collapsable/collapsable.css"; */
+
 #main {
-	
 	/* Disposition du header/menu/content dans une grille */
 	display: grid;
 	grid-template-columns: minmax(200px, 20%) minmax(400px, 80%);
-	grid-template-rows: minmax(50px, 5%) 95%;
+	grid-template-rows: minmax(80px, 10%) 90%;
+	
+	/* Font par défaut */
+	font-family: var(--main-font);
+	
+	/** Taille de l'ecran, ce qui depasse est delete (à gerer dans les composants) */
+	height: 100vh;
+	overflow: hidden;
+	
 }
-
 
 #mainHeader {
-	/* Ligne 1, 2 colonnes */  
+	/* Ligne 1, 2 colonnes   */
 	grid-row : 1;
 	grid-column:1 / span 2;
+	
+	background-color: var(--color-bg);
 }
 
-#titleContainer {
-	width : 80%;
-	min-height: 100px; 
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	
-	cursor: pointer;
-	
-	background-image: url("../images/lakshmi.jpg");
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
+#mainMenu {
+	background-color: var(--color-bg);
+	padding-top:10px;
 }
 
-#contentContainer {
-	width : 80%;
-    align-self: stretch;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	margin-left: auto;
-	margin-right: auto;
-	align-items: center
+#mainContent{
+	overflow: auto;
+	padding-left:10px;
+	padding-top:10px;
 }
+
+/* #titleContainer { */
+/* 	width : 80%; */
+/* 	min-height: 100px;  */
+/* 	text-align: center; */
+/* 	margin-left: auto; */
+/* 	margin-right: auto; */
+/* 	margin-top: 20px; */
+/* 	margin-bottom: 20px; */
+	
+/* 	cursor: pointer; */
+	
+/* 	background-image: url("../images/lakshmi.jpg"); */
+/* 	background-size: contain; */
+/* 	background-repeat: no-repeat; */
+/* 	background-position: center; */
+/* } */
+
+/* #contentContainer { */
+/* 	width : 80%; */
+/*     align-self: stretch; */
+/* 	text-align: center; */
+/* 	display: flex; */
+/* 	flex-direction: column; */
+/* 	margin-left: auto; */
+/* 	margin-right: auto; */
+/* 	align-items: center */
+/* } */

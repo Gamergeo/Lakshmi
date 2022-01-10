@@ -1,0 +1,23 @@
+.contentTitle {
+	font-size: x-large;
+	margin-left: auto;
+	margin-right: auto;
+/* 	width: fit-content; */
+}
+
+/* .contentBody:before { */
+/* 	 border-top : var(--small-separator); */
+/* 	 content: ''; */
+/* 	 display: block; */
+/* 	 width: 50%; */
+/* 	 margin-left:auto; */
+/* 	 margin-right:auto; */
+/* 	 margin-bottom: 15px; */
+/* } */
+
+.errorMessage {
+	color: red;
+	font-size: x-large;
+	cursor: pointer;
+	margin: auto;
+}
