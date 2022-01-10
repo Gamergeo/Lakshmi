@@ -14,7 +14,7 @@
 	<mvc:annotation-driven />
 
 	<context:component-scan
-		base-package="com.project.mscomptes.webapp" />
+		base-package="com.project.lakshmi.webapp" />
 		
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

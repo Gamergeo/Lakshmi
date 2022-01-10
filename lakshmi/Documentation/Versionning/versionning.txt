@@ -2,11 +2,16 @@ Version 0.1 : Mscomptes -> Lakshmi
 	- Reprise de mscomptes
 	- Changement de nom
 	
-------------------------------------------------------------------------------------------------------------
-
 Version 0.2 : Main et page subalterne
 	- Mise en place de la navigation initiale
 	- Pas de vocation à faire quelque chose de joli, juste utilisable
+	- Bouton vers les pages de l'appli
+	- Bouton retour à l'accueil
+	- Integration de certains plugins jquery (ajax / util)
+	
+---------------------------------------------------------------------------------
+	
+Version 0.3 : Generate Csv from binance
 	
 Version 0.3 : Mise à jour Import prix
 	- Reprise / amélioration du code

@@ -2,5 +2,5 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-	<jsp:forward page="/main/view.do" />
+	<jsp:forward page="/main/main.do" />
 </html>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="DEBUG">
 	<Appenders>
-	     <RollingFile name="logFile" fileName="E:/log/mscomptes.log"
+	     <RollingFile name="logFile" fileName="E:/log/lakshmi.log"
                      filePattern="logs/logs-%d{yyyy-MM-dd}-%i.txt">
             <PatternLayout>
 		        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
@@ -19,7 +19,7 @@
 	
 	<Loggers>
 	
-		<Logger name="com.project.mscomptes" level="debug" additivity="false">
+		<Logger name="com.project.lakshmi" level="debug" additivity="false">
             <AppenderRef ref="logFile"/>
 			<AppenderRef ref="console"/>
         </Logger>

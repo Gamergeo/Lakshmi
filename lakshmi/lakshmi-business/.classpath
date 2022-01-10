@@ -32,8 +32,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="/mscomptes-model"/>
-	<classpathentry kind="src" path="/mscomptes-technical"/>
+	<classpathentry kind="src" path="/lakshmi-model"/>
+	<classpathentry kind="src" path="/lakshmi-technical"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/5.0.8.RELEASE/spring-context-5.0.8.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-context/5.0.8.RELEASE/spring-context-5.0.8.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-aop/5.0.8.RELEASE/spring-aop-5.0.8.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-aop/5.0.8.RELEASE/spring-aop-5.0.8.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/5.0.8.RELEASE/spring-beans-5.0.8.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-beans/5.0.8.RELEASE/spring-beans-5.0.8.RELEASE-sources.jar"/>
@@ -57,7 +57,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/jvnet/staxex/stax-ex/1.8/stax-ex-1.8.jar" sourcepath="M2_REPO/org/jvnet/staxex/stax-ex/1.8/stax-ex-1.8-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sun/xml/fastinfoset/FastInfoset/1.2.15/FastInfoset-1.2.15.jar" sourcepath="M2_REPO/com/sun/xml/fastinfoset/FastInfoset/1.2.15/FastInfoset-1.2.15-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-jpamodelgen/5.5.7.Final/hibernate-jpamodelgen-5.5.7.Final.jar" sourcepath="M2_REPO/org/hibernate/hibernate-jpamodelgen/5.5.7.Final/hibernate-jpamodelgen-5.5.7.Final-sources.jar"/>
-	<classpathentry kind="src" path="/mscomptes-persistance"/>
+	<classpathentry kind="src" path="/lakshmi-persistance"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/5.0.8.RELEASE/spring-orm-5.0.8.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-orm/5.0.8.RELEASE/spring-orm-5.0.8.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/5.0.8.RELEASE/spring-jdbc-5.0.8.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-jdbc/5.0.8.RELEASE/spring-jdbc-5.0.8.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/5.0.8.RELEASE/spring-tx-5.0.8.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-tx/5.0.8.RELEASE/spring-tx-5.0.8.RELEASE-sources.jar"/>

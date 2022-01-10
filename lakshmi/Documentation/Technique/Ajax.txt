@@ -1,0 +1,32 @@
+	@PostMapping("postJSON)
+	public @ResponseBody JsonStringResponse save(@RequestBody NavigationPage navigationPage) {
+		return  new JsonStringResponse(navigationPage.getNamespace());
+	}	
+	
+	@GetMapping("getJSON")
+	public @ResponseBody JsonStringResponse getJSON(NavigationPage navigationPage) {
+		return  new JsonStringResponse(navigationPage.getNamespace());
+	}
+	
+	
+	static nav(namespace, method, id) {
+		
+		let ajaxData = new AjaxData();
+		ajaxData.method = Method.SAVE;
+		ajaxData.namespace = Namespace.NAVIGATION;
+		
+		ajaxData.data.namespace = Namespace.MAIN;
+
+		ajaxData.onSuccess = (response) => {
+			alert(response.message);
+		}
+		
+		Ajax.postJSON(ajaxData);
+		
+		ajaxData.method = 'getJSON';
+		ajaxData.data.id= 3;
+		ajaxData.data.namespace = "get";
+		
+		Ajax.getJSON(ajaxData);
+		
+	}

@@ -123,5 +123,15 @@
 		    <groupId>org.aspectj</groupId>
 		    <artifactId>aspectjweaver</artifactId>
 		</dependency>
+		
+		<!--  Personnal js plugin -->
+		<dependency>	
+			<groupId>com.plugin</groupId>
+ 			<artifactId>util</artifactId>
+		</dependency>
+		<dependency>	
+			<groupId>com.plugin</groupId>
+ 			<artifactId>ajax</artifactId>
+		</dependency>
 	</dependencies>
 </project>
