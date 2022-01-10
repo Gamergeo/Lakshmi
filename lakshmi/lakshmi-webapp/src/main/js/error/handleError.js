@@ -1,5 +1,5 @@
-/**
- * Classic error handling, must be overriden
+/*
+	TODO : Handler Errot for Lakshmi
  */
 
 $.fn.handleError = function(errorMessage) {
@@ -11,10 +11,6 @@ $.fn.handleError = function(errorMessage) {
 	})
 	
 }
-
-/**
- * Classic error handling, must be overriden
- */
 
 $.handleError = function(errorMessage) {
 

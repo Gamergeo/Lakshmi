@@ -1,0 +1,14 @@
+#menu {
+	display: flex;
+	flex-direction: column;
+}
+
+#menu > .menuItem {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Sauf le premier item, on met un margin top */
+#menu > .menuItem:nth-child(n+2) {
+	margin-top: 20px;
+}

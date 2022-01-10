@@ -1,0 +1,38 @@
+<taglib version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+
+        <tlib-version>1.0</tlib-version>
+
+<!-- <taglib xmlns="http://java.sun.com/xml/ns/j2ee" -->
+<!-- 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" -->
+<!-- 	version="2.0"> -->
+
+<!-- 	<tlib-version>2.0</tlib-version> -->
+	<short-name>LakshmiTags</short-name>
+	<uri>LakshmiTags</uri>
+	
+	<tag>
+        <name>button</name> 
+        <tag-class>com.project.lakshmi.webapp.taglib.general.ButtonTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>label</name>
+            <required>true</required>
+   			<rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>size</name>
+            <required>false</required>
+   			<rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onclick</name>
+            <required>false</required>
+   			<rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+
+</taglib>

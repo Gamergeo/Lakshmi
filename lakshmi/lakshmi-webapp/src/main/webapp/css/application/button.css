@@ -1,0 +1,28 @@
+:root {
+	--button-mini-width: 12.5px;
+	--button-small-width: 20px;
+	--button-normal-width: 50px;
+	--button-height: 40px;
+}
+
+.button {
+	border: 1px;
+	border-radius: 7px;
+	cursor: pointer;
+	min-height: var(--button-height);
+	min-width: 200px;
+	background-color: green;
+	color:white;
+	display:flex;
+}
+
+.button > span {
+	margin:auto;
+}
+
+.button:hover {
+	background-color: lime;
+	color: grey;
+}
+
+

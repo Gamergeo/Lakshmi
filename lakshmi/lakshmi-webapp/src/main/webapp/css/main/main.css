@@ -1,0 +1,53 @@
+/* Reset */
+@import "../application/reset.css";
+
+/* Definition */
+/* @import "../application/font.css"; */
+/* @import "../application/constant.css"; */
+/* @import "../application/image.css"; */
+/* @import "../application/freyr.css"; */
+
+@import "../application/button.css";
+
+#main {
+	
+	/* Disposition du header/menu/content dans une grille */
+	display: grid;
+	grid-template-columns: minmax(200px, 20%) minmax(400px, 80%);
+	grid-template-rows: minmax(50px, 5%) 95%;
+}
+
+
+#mainHeader {
+	/* Ligne 1, 2 colonnes */  
+	grid-row : 1;
+	grid-column:1 / span 2;
+}
+
+#titleContainer {
+	width : 80%;
+	min-height: 100px; 
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	
+	cursor: pointer;
+	
+	background-image: url("../images/lakshmi.jpg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#contentContainer {
+	width : 80%;
+    align-self: stretch;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+	align-items: center
+}

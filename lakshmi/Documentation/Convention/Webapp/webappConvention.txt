@@ -1,0 +1,4 @@
+...Label = Label
+...Value = Valeur
+...Link = Lien
+...Button = Bouton

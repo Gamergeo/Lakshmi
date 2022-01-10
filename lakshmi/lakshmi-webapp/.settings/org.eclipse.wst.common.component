@@ -31,8 +31,6 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
         <dependent-module archiveName="lakshmi-business-0.2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lakshmi-business/lakshmi-business">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -43,6 +41,12 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="lakshmi-technical-0.2.2.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lakshmi-technical/lakshmi-technical">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="util-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/util/util">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ajax-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ajax/ajax">
             <dependency-type>uses</dependency-type>
         </dependent-module>
                                                         
