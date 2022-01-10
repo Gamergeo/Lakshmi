@@ -60,18 +60,6 @@
             <dependency-type>uses</dependency-type>
                     
         </dependent-module>
-                
-        <dependent-module archiveName="util-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/util/util">
-                        
-            <dependency-type>uses</dependency-type>
-                    
-        </dependent-module>
-                
-        <dependent-module archiveName="ajax-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ajax/ajax">
-                        
-            <dependency-type>uses</dependency-type>
-                    
-        </dependent-module>
                                                                 
         
         

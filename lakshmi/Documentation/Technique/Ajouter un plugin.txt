@@ -2,4 +2,5 @@ Pour ajouter un plugin
 
 1) Pom parent et pom webnapp
 2) eclipse:eclipse clean:install et update
-3) dans webapp / properties / deployement assembly, supprimer les ref existantes et ajouter les jar du repo m2
+3) dans webapp / properties / deployement assembly, 
+		supprimer les ref existantes et ajouter les jar du repo m2 (java build path entry)

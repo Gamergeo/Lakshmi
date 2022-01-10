@@ -17,6 +17,10 @@ Version 0.2.2 : Amelioration interface
 	
 Version 0.2.2.1 : Amelioration interface
 	
+Version 0.2.3 : Reprise de refresh content
+	- Reprise de refresh content et refresh main content
+	- Start page
+	
 ---------------------------------------------------------------------------------
 	
 Version 0.2.3 : Reprise de refresh content

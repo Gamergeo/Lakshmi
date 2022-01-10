@@ -3,6 +3,7 @@ package com.project.lakshmi.webapp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,7 +24,7 @@ public class MainAction extends AbstractAction {
 		return new ModelAndView("main/main");
 	}
 
-	@GetMapping("startContent")
+	@PostMapping("startContent")
 	public ModelAndView content() {
 		return new ModelAndView("start/startView");
 	}

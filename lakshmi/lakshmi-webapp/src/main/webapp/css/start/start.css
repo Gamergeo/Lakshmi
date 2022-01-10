@@ -1,0 +1,8 @@
+#startImage {
+	height: 70vh;
+	
+	background-image: url("../../images/lakshmi.jpg");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}

@@ -8,22 +8,10 @@
 		<link href="<c:url value='/css/main/main.css' />" rel="stylesheet" media="all" type="text/css">
 
 		<script type="text/javascript">
-		
-			function backToMain() {
-				
-				$("#mainContainer").getHtml({
-					url: '/lakshmi/main/main.do',
-				})
-			}
-		
-			function selectButton() {
-				
-				$("#contentContainer").getHtml({
-					url: '/lakshmi/generateCsv/view.do',
-				})
-			}
-			
-		
+	    
+	    	$(document).ready(function() {
+	    		$.applicationStart();
+	    	});
 		</script>
 	</head>
 	
@@ -39,7 +27,7 @@
 				<jsp:include page="mainMenu.jsp" />
 			</div>
 			
-			<div id="mainContent">
+			<div id="mainContent" class="content">
 				<jsp:include page="mainContent.jsp" />
 			</div>
 		</div>
