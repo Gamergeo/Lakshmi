@@ -1,4 +1,4 @@
-package com.project.lakshmi.webapp;
+package com.project.lakshmi.webapp.priceTracker;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -6,16 +6,15 @@ import java.net.URISyntaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.lakshmi.model.AssetType;
 import com.project.lakshmi.business.asset.AssetService;
+import com.project.lakshmi.model.AssetType;
+import com.project.lakshmi.webapp.AbstractAction;
 
-/**
- * General action (header, menu,...)
- */
 @RequestMapping("priceTracker")
 @Controller
 public class PriceTrackerAction extends AbstractAction {
@@ -23,7 +22,7 @@ public class PriceTrackerAction extends AbstractAction {
 	@Autowired
 	AssetService assetService;
 
-	@GetMapping("view")
+	@PostMapping("view")
 	public ModelAndView view() {
 		ModelAndView model = new ModelAndView("priceTracker/priceTracker");
 		

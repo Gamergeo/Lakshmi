@@ -13,4 +13,6 @@ public interface DatabaseService<T> {
     public List<T> findAll();
 	
     public void delete(Integer id);
+
+	public List<T> findAllOrderBy(String attributeName);
 }

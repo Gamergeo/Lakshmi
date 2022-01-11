@@ -21,10 +21,13 @@ Version 0.2.3 : Reprise de refresh content
 	- Reprise de refresh content et refresh main content
 	- Start page
 	
+Version 0.3.1 : Checklist
+	- Mise en place de checklist
+	- Création de la checklist initale
+	- Liens du menu ok
+	
 ---------------------------------------------------------------------------------
-	
-Version 0.2.3 : Reprise de refresh content
-	
+
 Version 0.3 : Generate Csv from binance
 	
 Version 0.3 : Mise à jour Import prix

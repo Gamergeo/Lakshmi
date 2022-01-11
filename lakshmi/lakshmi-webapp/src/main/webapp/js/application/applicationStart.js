@@ -2,7 +2,7 @@ $.applicationStart = function() {
 	
 //	Freyr_application.startNavigation();
 //	$("#mainMenu").accordeonMenu();
-	$('#mainContent').refreshContent({'url' : "main/startContent.do"});
+	$.refreshMainContent({'url' : "main/startContent.do"});
 	
 	return $;
 }

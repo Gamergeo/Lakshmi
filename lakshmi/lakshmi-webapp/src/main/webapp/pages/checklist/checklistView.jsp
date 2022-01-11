@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <%@include file="/pages/head/headOnlyMetadata.jsp" %>
 
+<l:pageInfos title="Checklist"/>
+
 <div id="checklistDate">
 
 	<div id="lastDate">
@@ -12,4 +14,17 @@
 	<div id="otherDates">
 		<span id="otherDatesLink">Autres dates</span>
 	</div>
+</div>
+
+<div id="checklist">
+	
+
+<%-- 	<form:form method="post" action="save" modelAttribute="account" data-namespace="account" autocomplete="off"> --%>
+	
+<%-- 	</form:form> --%>
+<!-- 	<div> -->
+	
+<!-- 	</div> -->
+
+
 </div>

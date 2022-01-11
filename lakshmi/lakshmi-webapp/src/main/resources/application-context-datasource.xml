@@ -40,9 +40,9 @@
         <property name="packagesToScan" value="com.project.lakshmi.model"/>
         <property name="hibernateProperties">
             <props>
-            	<prop key="hibernate.hbm2ddl.auto">
-            		update
-            	</prop>
+<!--             	<prop key="hibernate.hbm2ddl.auto"> -->
+<!--             		update -->
+<!--             	</prop> -->
                 <prop key="hibernate.dialect">
                     org.hibernate.dialect.MySQL8Dialect
                 </prop>

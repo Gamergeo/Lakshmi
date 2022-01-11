@@ -24,7 +24,7 @@ import com.project.lakshmi.technical.FileUtils;
 @Service("assetService")
 public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements AssetService {
 	
-	@Autowired
+//	@Autowired
 	AssetDao assetDao;
 	
 	@Autowired

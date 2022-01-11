@@ -36,6 +36,12 @@ public abstract class AbstractDatabaseService<T> implements DatabaseService<T> {
 
 	@Override
 	@Transactional
+	public List<T> findAllOrderBy(String attributeName) {
+		return getDao().findAllOrderedBy(attributeName);
+	}
+
+	@Override
+	@Transactional
 	public void delete(Integer id) {
 		getDao().delete(id);
 	}

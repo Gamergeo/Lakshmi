@@ -20,10 +20,7 @@ public class ButtonTag extends Tag  {
 	public void doFinally() {
 		HttpServletRequest request = getRequest();
 
-		System.out.println(getLabel());
 		request.setAttribute("label", getLabel());
-
-		System.out.println(getRequest().getAttribute("label"));
 		request.setAttribute("size", getSize());
 		request.setAttribute("onclick", getOnclick());
 		
