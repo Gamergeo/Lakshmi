@@ -14,6 +14,7 @@
 	<!-- Plugins -->
 		<script type="text/javascript" src="<c:url value='/webjars/plugin/util/plugin.js' />"></script>
 		<script type="text/javascript" src="<c:url value='/webjars/plugin/ajax/plugin.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/webjars/plugin/form/plugin.js' />"></script>
 		
 	<!-- Content -->
 		<script type="text/javascript" src="<c:url value='/js/content/refreshContent.js' />"></script>

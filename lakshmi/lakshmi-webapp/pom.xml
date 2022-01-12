@@ -133,5 +133,9 @@
 			<groupId>com.plugin</groupId>
  			<artifactId>ajax</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.plugin</groupId>
+ 			<artifactId>form</artifactId>
+		</dependency>
 	</dependencies>
 </project>

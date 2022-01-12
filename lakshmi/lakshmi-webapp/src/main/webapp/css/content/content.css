@@ -6,6 +6,10 @@
 /* 	width: fit-content; */
 }
 
+.contentBody {
+	width: 100%;
+}
+
 /* .contentBody:before { */
 /* 	 border-top : var(--small-separator); */
 /* 	 content: ''; */

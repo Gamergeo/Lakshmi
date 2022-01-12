@@ -8,10 +8,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,16 +29,12 @@ public class Checklist implements Serializable {
 	protected Integer id;
 
 	@Column(name=DatabaseName.CHECKLIST.CREATION_DATE)
-//	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime creationDate;
 
 	@Column(name=DatabaseName.CHECKLIST.END_DATE)
-//	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime endDate;
 	
-//	@OneToMany(cascade = { CascadeType.ALL})
-//	@JoinColumn(name=DatabaseName.CHECKLIST_STEP.CHECKLIST_STEP_INFOS_ID, referencedColumnName = DatabaseName.ID)
-	@OneToMany(mappedBy="checklist", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="checklist", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<ChecklistStep> checklistSteps = new ArrayList<>();
 
 	public Integer getId() {

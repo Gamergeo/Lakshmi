@@ -9,7 +9,7 @@ import com.project.lakshmi.model.checklist.Checklist;
 public interface ChecklistService extends DatabaseService<Checklist>  {
 
 	/**
-	 * @return the last checklist. If last
+	 * @return the last checklist. If last doesnt exist, we create
 	 */
 	Checklist getLastChecklist();
 

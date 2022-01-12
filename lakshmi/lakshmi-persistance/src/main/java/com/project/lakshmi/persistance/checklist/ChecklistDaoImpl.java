@@ -12,4 +12,5 @@ public class ChecklistDaoImpl extends AbstractDAO<Checklist> implements Checklis
 	protected void setTypeParameterClass() {
 		typeParameterClass = Checklist.class;
 	}
+	
 }

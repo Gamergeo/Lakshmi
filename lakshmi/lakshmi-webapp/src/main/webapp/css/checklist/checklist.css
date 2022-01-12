@@ -1,0 +1,28 @@
+.contentBody {
+	display: flex;
+	flex-direction: column;
+}
+
+#checklistDate {
+	display: flex;
+}
+
+#lastDate {
+	margin-left: auto;
+	padding-right: 10px;
+}
+
+#otherDates {
+	margin-right: auto;
+	padding-left: 10px;
+}
+
+#checklist {
+	margin-top:10px;
+}
+
+.checklistStepLine {
+	display: grid;
+	grid-template-columns: 10% 10% 80%;
+	height: 20px;
+}

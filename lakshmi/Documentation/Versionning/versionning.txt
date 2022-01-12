@@ -26,6 +26,10 @@ Version 0.3.1 : Checklist
 	- Création de la checklist initale
 	- Liens du menu ok
 	
+Version 0.3.2 : Mécanisme Checklist
+	- Save individuel ok
+	- Pas encore dem ecanisme pour changer de checklist
+	
 ---------------------------------------------------------------------------------
 
 Version 0.3 : Generate Csv from binance

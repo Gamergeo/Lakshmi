@@ -39,6 +39,7 @@
 	    
 		<plugin.ajax.version>1.0</plugin.ajax.version>
 		<plugin.util.version>1.0</plugin.util.version>
+		<plugin.form.version>1.0</plugin.form.version>
 	</properties>
 	
 	<build>
@@ -233,6 +234,11 @@
 				<groupId>com.plugin</groupId>
   				<artifactId>ajax</artifactId>
 			    <version>${plugin.ajax.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.plugin</groupId>
+  				<artifactId>form</artifactId>
+			    <version>${plugin.form.version}</version>
 			</dependency>
 			
 		</dependencies>
