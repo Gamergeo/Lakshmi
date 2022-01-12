@@ -30,9 +30,17 @@ Version 0.3.2 : Mécanisme Checklist
 	- Save individuel ok
 	- Pas encore dem ecanisme pour changer de checklist
 	
+Version 0.4.1 : Import order
+	- Upload de fichier
+	- On peut lire un fichier uploadé !
+	
 ---------------------------------------------------------------------------------
 
-Version 0.3 : Generate Csv from binance
+Version 0.4.2 :  Mise en place du mecanisme Binance / Kucoin...
+
+Verification des fichiers
+
+
 	
 Version 0.3 : Mise à jour Import prix
 	- Reprise / amélioration du code

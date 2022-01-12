@@ -37,6 +37,8 @@
 	    <httpcomponents.version>4.5.13</httpcomponents.version>
 	    <aspectj.version>1.9.1</aspectj.version>
 	    
+	    <commons-fileupload.version>1.4</commons-fileupload.version>
+	    
 		<plugin.ajax.version>1.0</plugin.ajax.version>
 		<plugin.util.version>1.0</plugin.util.version>
 		<plugin.form.version>1.0</plugin.form.version>
@@ -223,6 +225,12 @@
 			    <artifactId>httpclient</artifactId>
 			    <version>${httpcomponents.version}</version>
 			</dependency>
+			
+		    <dependency>
+		        <groupId>commons-fileupload</groupId>
+		        <artifactId>commons-fileupload</artifactId>
+		        <version>${commons-fileupload.version}</version> <!-- makesure you put a correct version here -->
+		    </dependency>
 			
 			<!--  Personnal js plugin -->
 			<dependency>	
