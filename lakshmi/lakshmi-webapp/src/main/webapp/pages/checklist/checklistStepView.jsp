@@ -16,7 +16,7 @@
 		</div>
 		<div>
 			<div>${checklistStep.checklistStepInfos.label}</div>
-		</div>	
+		</div>
 	</div>
 </form:form>
 

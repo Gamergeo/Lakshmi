@@ -15,7 +15,7 @@
 	</span>
 
 	<span class="menuItem">
-		<l:button label="Import CSV" onclick="$.refreshMainContent({'url' : 'orderImport/view.do'});"/>
+		<l:button label="Import CSV" onclick="$.refreshMainContent({'url' : 'operationImporter/view.do'});"/>
 	</span>
 
 	<span class="menuItem">

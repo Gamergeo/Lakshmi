@@ -34,6 +34,9 @@ Version 0.4.1 : Import order
 	- Upload de fichier
 	- On peut lire un fichier uploadé !
 	
+Version 0.4.2 : Creéation architecture de base
+	- Création d'une opération avec un attribut depuis un fichier Binance
+	
 ---------------------------------------------------------------------------------
 
 Version 0.4.2 :  Mise en place du mecanisme Binance / Kucoin...
