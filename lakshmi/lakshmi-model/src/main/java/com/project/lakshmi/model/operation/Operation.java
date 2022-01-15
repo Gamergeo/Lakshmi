@@ -12,6 +12,8 @@ public abstract class Operation implements Serializable {
 	
 	private Date date;
 	
+	private String comment;
+	
 	public Date getDate() {
 		return date;
 	}
@@ -24,5 +26,13 @@ public abstract class Operation implements Serializable {
 	
 	public OperationInvestment asOperationInvestment() {
 		throw new ApplicationException("Impossible to transform " + getOperationType() + " as investment");
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

@@ -43,11 +43,15 @@ Version 0.4.3 : Architecture import operation (basique)
 Version 0.4.3.2 : Amelioration architecture import operation
 
 Version 0.4.4 : Import des multi-trade Binance (small exhchange bnb)
+
+Version 0.4.5 : Import du stacking / withdraw / deposit et ligne ignorés
+	- La partie extraction de l'import binance est complète
 	
 ---------------------------------------------------------------------------------
 
-Version 0.4.4 : Architecture import operation
-	- Mécanisme des séparations par fichier
+TODO : Amelioration des assets
+
+Version 5.0 : Reprise du code des assets etc...
 	
 
 Reconnaissance automatique du fichier ?

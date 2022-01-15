@@ -26,5 +26,18 @@ public class OperationImporterBinanceConstants {
 	public final static List<String> INVESTMENT_TYPE_TRADE = Arrays.asList(new String[]{
 			INVESTMENT_TYPE_BUY, INVESTMENT_TYPE_SELL, INVESTMENT_TYPE_FEE});
 	
+	public final static List<String> INVESTMENT_TYPE_STACKING = Arrays.asList(new String[]{
+			"Pool Distribution", "Savings Interest", "ETH 2.0 Staking Rewards", 
+			"POS savings interest", "Super BNB Mining", "Launchpool Interest",
+			"Commission Rebate"});
+	
+	public final static String INVESTMENT_TYPE_WITHDRAW = "Withdraw";
+	
+	public final static String INVESTMENT_TYPE_DEPOSIT = "Deposit";
+	
+	public final static List<String> INVESTMENT_TYPE_IGNORED = Arrays.asList(new String[]{
+			"Dual savings settlement", "Dual savings purchase", "Savings purchase", 
+			"Savings Principal redemption", "POS savings purchase", "POS savings redemption"});
+	
 	public final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 }

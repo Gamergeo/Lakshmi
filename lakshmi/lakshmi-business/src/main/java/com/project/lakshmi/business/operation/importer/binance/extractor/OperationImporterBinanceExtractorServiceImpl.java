@@ -26,6 +26,16 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		return values.get(OperationImporterBinanceConstants.INVESTMENT_TYPE_INDEX);
 	}
 	
+	@Override 
+	public boolean isIgnored(String line) {
+		String rawInvestmentType = getRawInvestmentType(line);
+		if (OperationImporterBinanceConstants.INVESTMENT_TYPE_IGNORED.contains(rawInvestmentType)) {
+			return true;
+		} 
+		
+		return false;
+	}
+	
 	@Override
 	public InvestmentType getInvestmentType(String line) {
 		String rawInvestmentType = getRawInvestmentType(line);
@@ -34,9 +44,15 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 			return InvestmentType.TRADE;
 		} else if (OperationImporterBinanceConstants.INVESTMENT_TYPE_MULTI_TRADE.equals(rawInvestmentType)) {
 			return InvestmentType.MULTI_TRADE;
+		} else if (OperationImporterBinanceConstants.INVESTMENT_TYPE_STACKING.contains(rawInvestmentType)) {
+			return InvestmentType.STACKING;
+		} else if (OperationImporterBinanceConstants.INVESTMENT_TYPE_WITHDRAW.equals(rawInvestmentType)) {
+			return InvestmentType.WITHDRAW;
+		} else if (OperationImporterBinanceConstants.INVESTMENT_TYPE_DEPOSIT.equals(rawInvestmentType)) {
+			return InvestmentType.DEPOSIT;
 		}
 		
-		throw new NotYetImplementedException("Pas encore implementé");
+		throw new NotYetImplementedException("Pas encore implementé" + line);
 	}
 	
 	@Override

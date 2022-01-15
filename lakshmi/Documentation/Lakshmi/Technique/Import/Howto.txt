@@ -1,0 +1,3 @@
+Import Binance
+
+- Pour ajouter un mot clé de stacking ou ignoré, voir OperationImporterBinanceConstants.INVESTMENT_TYPE_IGNORED 

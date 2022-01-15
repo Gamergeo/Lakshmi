@@ -39,7 +39,8 @@ public interface OperationImporterBinanceExtractorService {
 	
 	/**
 	 * @param line
-	 * @return true s'il s'agit du fee part d'un trade
+	 * @return true s'il s'ag@Override
+	it du fee part d'un trade
 	 */
 	boolean isTradeFee(String line);
 
@@ -54,4 +55,10 @@ public interface OperationImporterBinanceExtractorService {
 	Investment getInvestment(String line);
 
 	Date getDate(String line);
+
+	/**
+	 * @param line
+	 * @return true si la ligne est ignorée
+	 */
+	boolean isIgnored(String line);
 }

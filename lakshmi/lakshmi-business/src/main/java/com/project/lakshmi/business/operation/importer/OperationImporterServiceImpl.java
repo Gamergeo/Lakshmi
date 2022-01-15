@@ -13,9 +13,6 @@ import com.project.lakshmi.model.operation.Operation;
 import com.project.lakshmi.model.operation.importer.OperationImporterOrigin;
 
 @Service("operationImporterService")
-/**
- * cf Documentation/Lakshmi/Technique/Import/import.txt
- */
 public class OperationImporterServiceImpl implements OperationImporterService {
 	
 	@Autowired

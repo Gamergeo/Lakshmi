@@ -1,9 +1,9 @@
 package com.project.lakshmi.business.operation.importer.binance;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.lakshmi.business.operation.importer.binance.creator.OperationImporterBinanceDefaultService;
 import com.project.lakshmi.business.operation.importer.binance.creator.OperationImporterBinanceMultiTradeService;
 import com.project.lakshmi.business.operation.importer.binance.creator.OperationImporterBinanceTradeService;
 import com.project.lakshmi.business.operation.importer.binance.extractor.OperationImporterBinanceExtractorService;
@@ -17,6 +17,9 @@ public class OperationImporterBinanceServiceImpl implements OperationImporterBin
 	
 	@Autowired
 	private OperationImporterBinanceExtractorService operationImporterBinanceExtractorService;
+
+	@Autowired
+	private OperationImporterBinanceDefaultService operationImporterBinanceDefaultService;
 	
 	@Autowired
 	private OperationImporterBinanceTradeService operationImporterBinanceTradeService;
@@ -54,6 +57,17 @@ public class OperationImporterBinanceServiceImpl implements OperationImporterBin
 			return null;
 		}
 		
+		// Si la ligne est ignorée, on passe à la suivante
+		while (operationImporterBinanceExtractorService.isIgnored(firstLine)) {
+			rawFile.removeNext();
+			firstLine = rawFile.getNext();
+			
+			// Le fichier est terminé
+			if (firstLine == null) {
+				return null;
+			}
+		}
+		
 		Operation operation = null;
 		
 		InvestmentType investmentType = operationImporterBinanceExtractorService.getInvestmentType(firstLine);
@@ -62,8 +76,12 @@ public class OperationImporterBinanceServiceImpl implements OperationImporterBin
 			operation = operationImporterBinanceTradeService.importNextOperation(rawFile);
 		} else if (InvestmentType.MULTI_TRADE.equals(investmentType)) {  
 			operation = operationImporterBinanceMultiTradeService.importNextOperation(rawFile);
+		} else if (InvestmentType.WITHDRAW.equals(investmentType) ||
+				InvestmentType.DEPOSIT.equals(investmentType) ||
+				InvestmentType.STACKING.equals(investmentType)) {
+			operation = operationImporterBinanceDefaultService.importNextOperation(rawFile);
 		} else {
-			throw new NotYetImplementedException();
+			throw new ApplicationException("Error, line operation non implémenté " + firstLine);
 		}
 		
 		return operation;

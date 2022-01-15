@@ -1,0 +1,24 @@
+Fonctionnement général :
+
+	- Operationimporter determine le type de fichier
+	- Le header est validé si besoin
+	- Ensuite on passe aux importers spécifique pour créer les opérations
+	
+	- Binance :
+		Les lignes sont traités differement si c'est un trade ou multitrade
+		Certaines lignes sont ignorées
+
+Specificité de Binance :
+
+	Les trades font x. La date est determinante, toute les trade d'une meme date sont un seul trad
+	Ils sont composés d'une LEFT part / RIGHT part et eventuellement de fee
+	On ajoute les investissements de la left / right pour avoir un seul trade
+	
+	Les multi trade sont sur x lignes (correspondent au small exchange bnb)
+	Ils sont composés d'un main (BNB) et de un ou plusieurs RIGHT part
+	Le main est l'ajout de toutes les lignes BNB
+	
+	
+
+
+	
