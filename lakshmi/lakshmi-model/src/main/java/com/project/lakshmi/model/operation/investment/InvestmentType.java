@@ -2,5 +2,8 @@ package com.project.lakshmi.model.operation.investment;
 
 public enum InvestmentType {
 	
-	TRADE, DIVIDEND;
+	TRADE,
+	DIVIDEND,
+	MULTI_TRADE // Use for Binance small bnb conversion
+	;
 }

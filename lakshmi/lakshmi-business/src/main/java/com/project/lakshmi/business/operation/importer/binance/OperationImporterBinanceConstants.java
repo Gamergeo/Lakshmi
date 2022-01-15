@@ -13,11 +13,15 @@ public class OperationImporterBinanceConstants {
 	public final static int ASSET_INDEX = 4;
 	public final static int QUANTITY_INDEX = 5;
 	
+	public final static String ASSET_BNB = "BNB";
+	
 	public final static String INVESTMENT_TYPE_BUY = "Buy";
 	
 	public final static String INVESTMENT_TYPE_SELL = "Sell";
 	
 	public final static String INVESTMENT_TYPE_FEE = "Fee";
+	
+	public final static String INVESTMENT_TYPE_MULTI_TRADE = "Small assets exchange BNB";
 	
 	public final static List<String> INVESTMENT_TYPE_TRADE = Arrays.asList(new String[]{
 			INVESTMENT_TYPE_BUY, INVESTMENT_TYPE_SELL, INVESTMENT_TYPE_FEE});

@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.operation.importer.binance.OperationImporterBinanceConstants;
 import com.project.lakshmi.model.Asset;
 import com.project.lakshmi.model.operation.investment.Investment;
+import com.project.lakshmi.model.operation.investment.InvestmentType;
 import com.project.lakshmi.technical.DateUtils;
 
 @Service("operationImporterBinanceExtractorService")
@@ -18,12 +20,24 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		return Arrays.asList(line.split(OperationImporterBinanceConstants.SEPARATOR));
 	}
 	
-	@Override
-	public String getInvestmentType(String line) {
+	private String getRawInvestmentType(String line) {
 		List<String> values = getValues(line);
 		
 		return values.get(OperationImporterBinanceConstants.INVESTMENT_TYPE_INDEX);
-	}	
+	}
+	
+	@Override
+	public InvestmentType getInvestmentType(String line) {
+		String rawInvestmentType = getRawInvestmentType(line);
+		
+		if (OperationImporterBinanceConstants.INVESTMENT_TYPE_TRADE.contains(rawInvestmentType)) {
+			return InvestmentType.TRADE;
+		} else if (OperationImporterBinanceConstants.INVESTMENT_TYPE_MULTI_TRADE.equals(rawInvestmentType)) {
+			return InvestmentType.MULTI_TRADE;
+		}
+		
+		throw new NotYetImplementedException("Pas encore implementé");
+	}
 	
 	@Override
 	public Asset getAsset(String line) {
@@ -63,25 +77,20 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		return DateUtils.formatDate(rawDate, OperationImporterBinanceConstants.DATE_FORMAT);
 	}
 
-	@Override
-	public boolean isTrade(String line) {
-		String investmentType = getInvestmentType(line);
-		
-		if (OperationImporterBinanceConstants.INVESTMENT_TYPE_TRADE.contains(investmentType)) {
-			return true;
-		}
-		
-		return false;
-	}
-	
+	/**
+	 * Dans le cas d'un trade, deux cas : 
+	 * Soit c'est un buy et la quantité est positive
+	 * Soit c'est un sell et la quantité est négative
+	 */
 	@Override
 	public boolean isTradeMain(String line) {
 		
-		String investmentType = getInvestmentType(line);
-		Double quantity = getQuantity(line);
+		if (!InvestmentType.TRADE.equals(getInvestmentType(line))) {
+			return false;
+		}
 		
-		// Deux cas : soit c'est un buy et la quantité est positive
-		// Soit c'est un sell et la quantité est négative
+		String investmentType = getRawInvestmentType(line);
+		Double quantity = getQuantity(line);
 		
 		if (OperationImporterBinanceConstants.INVESTMENT_TYPE_BUY.equals(investmentType) &&
 				quantity >= 0) {
@@ -94,20 +103,65 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		return false;
 	}
 	
+	/**
+	 * Dans le cas d'un multitrade, le BNB est toujours la left part
+	 */
+	@Override
+	public boolean isMultiTradeMain(String line) {
+		
+		if (!InvestmentType.MULTI_TRADE.equals(getInvestmentType(line))) {
+			return false;
+		}
+		
+		// TODO : avoir un asset propre
+		Asset asset = new Asset();
+		asset.setName(OperationImporterBinanceConstants.ASSET_BNB);
+		
+		return asset.equals(getAsset(line));
+	}	
+	
+	/**
+	 *  Si c'est un trade, mais pas un main ou un fee, c'est un balancing
+	 */
 	@Override
 	public boolean isTradeBalancing(String line) {
 		
-		// Si c'est un trade, mais pas un main ou un fee, c'est un balancing
-		if (isTrade(line) && !isTradeMain(line) && !isTradeFee(line)) {
+		if (!InvestmentType.TRADE.equals(getInvestmentType(line))) {
+			return false;
+		}
+		
+		if (!isTradeMain(line) && !isTradeFee(line)) {
 			return true;
 		}
 		
 		return false;
 	}
 	
+	/**
+	 *  Si c'est un trade, mais pas un main c'est un balancing
+	 */
+	@Override
+	public boolean isMultiTradeBalancing(String line) {
+		
+		if (!InvestmentType.MULTI_TRADE.equals(getInvestmentType(line))) {
+			return false;
+		}
+		
+		// Si c'est un trade, mais pas un main ou un fee, c'est un balancing
+		if (!isMultiTradeMain(line)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * @param line
+	 * @return true s'il s'agit du fee part d'un trade
+	 */
 	@Override
 	public boolean isTradeFee(String line) {
-		String investmentType = getInvestmentType(line);
+		String investmentType = getRawInvestmentType(line);
 		
 		if (OperationImporterBinanceConstants.INVESTMENT_TYPE_FEE.equals(investmentType)) {
 			return true;
@@ -115,5 +169,4 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		
 		return false;
 	}
-	
 }
