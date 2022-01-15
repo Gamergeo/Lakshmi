@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <%@include file="/pages/head/headOnlyMetadata.jsp" %>
 
-<%@ page import="com.project.lakshmi.model.operation.Importer.OperationImporterOrigin" %>
+<%@ page import="com.project.lakshmi.model.operation.importer.OperationImporterOrigin" %>
 
 <l:pageInfos title="Import Order"/>
 

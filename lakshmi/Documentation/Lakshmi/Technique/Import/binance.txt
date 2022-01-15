@@ -1,0 +1,20 @@
+Specificité de Binance :
+
+	Les trades font 2 OU 3 lignes
+	Ils sont composés d'une LEFT part / RIGHT part et eventuellement de fee
+	Les lignes peuvent dans n'importe quel ordre et mélangé avec d'autres trade de la même date
+	
+Du coup pour créer une unit Binance :
+
+	On crée une unit avec la première ligne
+	Il faut lire la première LIGNE et voir si c'est un TRADE
+	Si c'est un trade, si c'est un fee (examiner ligne pas value)
+		/!\ Ce n'est pas la value de l'unit
+	On chercher alors le right et le fee
+		Le right est le prochain trade non fee à la meme date (obligatoire)
+		Le fee est le prochain fee à la même date (non obligatoire)
+		
+	On crée une unit avec ces lignes et on les delete du fichier
+	
+
+	

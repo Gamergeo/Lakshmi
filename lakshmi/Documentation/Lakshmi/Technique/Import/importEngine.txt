@@ -1,0 +1,7 @@
+L'import engine est constitué de :
+
+	- Creator : chargé de creer correctement le fichier et les units
+	- Extractor : Chargé de recuperer les propriétés du fichier, composé de :
+		- Indexer : retrouve les indexes correspondant
+		- Transformer : Transforme la donnée brute en donnée exploitable
+		

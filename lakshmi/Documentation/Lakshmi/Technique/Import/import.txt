@@ -1,0 +1,33 @@
+Etapes mises en place pour l'import :
+
+------- Etape 1 : Création d'un TextFile -------
+
+	Création d'un object représentant le fichier et toutes ses lignes
+	Aucune transformation a ce stade, cet objet est juste une list<String> des lignes
+	
+------- Etape 2 : Création d'un OperationImporterFile -------
+
+	Création d'une représentation "intelligente" du fichier
+	Découpe le fichier en Unit, chacune de ses unit représentant une unité d'opération
+	Chaque unit est découpé en un certain nombre de ligne, dépendant de l'opération
+	A chaque fois qu'une unit est crée, les lignes dans le rawfile sont supprimés
+	
+	La création d'unit dépends de l'origin mais aussi du contenu de la ligne
+		
+		129992006,2021-10-20 22:18:16,Spot,Sell,BETH,-0.02560000,""
+		129992006,2021-10-20 22:18:16,Spot,Fee,BNB,-0.00000344,""
+		129992006,2021-10-20 22:18:16,Spot,Fee,BNB,-0.00014747,""
+		129992006,2021-10-20 22:18:16,Spot,Sell,ETH,0.00056136,""
+		129992006,2021-10-20 22:18:16,Spot,Sell,BETH,-0.00060000,""
+		129992006,2021-10-20 22:18:16,Spot,Sell,ETH,0.02395392,""
+
+	Ici, il faut créer deux unit ainsi :
+	
+		129992006,2021-10-20 22:18:16,Spot,Sell,BETH,-0.02560000,""
+		129992006,2021-10-20 22:18:16,Spot,Fee,BNB,-0.00000344,""
+		129992006,2021-10-20 22:18:16,Spot,Sell,ETH,0.00056136,""
+		
+		129992006,2021-10-20 22:18:16,Spot,Fee,BNB,-0.00014747,""
+		129992006,2021-10-20 22:18:16,Spot,Sell,BETH,-0.00060000,""
+		129992006,2021-10-20 22:18:16,Spot,Sell,ETH,0.02395392,""
+	

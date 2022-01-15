@@ -11,18 +11,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.lakshmi.business.file.FileService;
 import com.project.lakshmi.business.operation.importer.OperationImporterService;
-import com.project.lakshmi.business.operation.importer.origin.OperationImporterOriginService;
-import com.project.lakshmi.model.operation.Importer.OperationImporterOrigin;
+import com.project.lakshmi.model.file.RawTextFile;
+import com.project.lakshmi.model.operation.importer.OperationImporterOrigin;
 import com.project.lakshmi.webapp.AbstractAction;
 import com.project.lakshmi.webapp.response.json.EmptyResponse;
 import com.project.lakshmi.webapp.response.json.JsonResponse;
 
-import javassist.NotFoundException;
-
 @RequestMapping("operationImporter")
 @Controller
 public class OperationImporterAction extends AbstractAction {
+	
+	@Autowired
+	FileService fileService;
 	
 	@Autowired
 	OperationImporterService operationImporterService;
@@ -38,7 +40,10 @@ public class OperationImporterAction extends AbstractAction {
 			@RequestParam("origin") OperationImporterOrigin origin, 
 			@RequestParam("file") MultipartFile file) throws IOException {
 		
-		operationImporterService.importOperations(origin, file.getInputStream());
+		// Etape 1 : Création d'un TextFile
+		RawTextFile textFile = fileService.readTextFile(file.getInputStream());
+		
+		operationImporterService.importFile(origin, textFile);
 		
 		return new EmptyResponse();  
 	}

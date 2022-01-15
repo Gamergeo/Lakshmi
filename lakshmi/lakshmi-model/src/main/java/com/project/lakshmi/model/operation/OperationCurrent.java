@@ -2,7 +2,7 @@ package com.project.lakshmi.model.operation;
 
 import java.util.Date;
 
-public class OperationCurrent implements Operation {
+public class OperationCurrent extends Operation {
 	
 	private static final long serialVersionUID = 1695502602883468400L;
 
