@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.project.lakshmi.business.operation.importer.binance.OperationImporterBinanceConstants;
 import com.project.lakshmi.model.Asset;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.technical.DateUtils;
@@ -39,9 +40,10 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 	
 	@Override
 	public Investment getInvestment(String line) {
-		Investment investment = new Investment();
-		investment.setAsset(getAsset(line));
-		investment.setQuantity(getQuantity(line));
+		Asset asset = getAsset(line);
+		Double quantity = getQuantity(line);
+		
+		Investment investment = new Investment(asset, quantity);
 		
 		return investment;
 	}

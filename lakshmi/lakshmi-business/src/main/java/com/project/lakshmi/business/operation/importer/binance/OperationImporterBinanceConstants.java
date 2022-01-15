@@ -1,4 +1,4 @@
-package com.project.lakshmi.business.operation.importer.binance.extractor;
+package com.project.lakshmi.business.operation.importer.binance;
 
 import java.util.Arrays;
 import java.util.List;

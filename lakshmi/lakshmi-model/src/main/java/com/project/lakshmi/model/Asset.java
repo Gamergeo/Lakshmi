@@ -120,6 +120,25 @@ public class Asset implements Serializable {
 	public void setManaged(boolean managed) {
 		this.managed = managed;
 	}
-
 	
+	/**
+	 * TODO : pour l'instant, deux assets sont egales si elles ont le même nom
+	 */
+	@Override
+	public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+
+        if (object.getClass() != this.getClass()) {
+            return false;
+        }
+
+        final Asset asset = (Asset) object;
+        if ((this.getName() == null) ? (asset.getName() != null) : !this.getName().equals(asset.getName())) {
+            return false;
+        }
+
+        return true;
+	}
 }

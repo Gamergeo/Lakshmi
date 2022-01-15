@@ -70,4 +70,8 @@ public class RawTextFile {
 	public String getAndRemoveNext() {
 		return getAndRemoveLine(1);
 	}
+	
+	public void removeNext() {
+		removeLine(1);
+	}
 }

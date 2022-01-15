@@ -40,6 +40,8 @@ Version 0.4.2 : Creéation architecture de base
 Version 0.4.3 : Architecture import operation (basique)
 	- Permet l'import de trade Binance
 	
+Version 0.4.3.2 : Amelioration architecture import operation
+	
 ---------------------------------------------------------------------------------
 
 Version 0.4.4 : Architecture import operation

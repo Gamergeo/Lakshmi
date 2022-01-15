@@ -6,7 +6,6 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.lakshmi.business.operation.importer.binance.extractor.OperationImporterBinanceConstants;
 import com.project.lakshmi.business.operation.importer.binance.extractor.OperationImporterBinanceExtractorService;
 import com.project.lakshmi.model.file.RawTextFile;
 import com.project.lakshmi.model.operation.Operation;
@@ -65,116 +64,70 @@ public class OperationImporterBinanceServiceImpl implements OperationImporterBin
 		throw new NotYetImplementedException();
 	}
 	
-	/*
-	 *  Cas particulier du trade Binance :
-	 *  Il est sur plusieurs lignes (2 ou 3)
-	 * 	Ces lignes sont dans un ordre aléatoire 
-	 */
 	private Operation importNextTradeOperation(RawTextFile rawFile) {
 		OperationInvestmentTrade operation = new OperationInvestmentTrade();
 		
 		String firstLine = rawFile.getAndRemoveNext();
 		Date operationDate = operationImporterBinanceExtractorService.getDate(firstLine);
 		operation.setDate(operationDate);
-		boolean mainFound = false;
-		boolean balancingFound = false;
-		boolean feeFound = false;
 		
 		// On met en place les infos correspondantes à la ligne trouvée
-		if (operationImporterBinanceExtractorService.isTradeMain(firstLine)) {
-			mainFound = true;
-			fillTradeMainInfos(operation, firstLine);
-		} else if (operationImporterBinanceExtractorService.isTradeBalancing(firstLine)) {
-			balancingFound = true;
-			fillTradeBalancingInfos(operation, firstLine);
-		} else if (operationImporterBinanceExtractorService.isTradeFee(firstLine)) {
-			feeFound = true;
-			fillTradeFeeInfos(operation, firstLine);
-		} else { // Ne devrait pas arriver
-			throw new ApplicationException("importNextTradeOperation error");
-		}
+		fillTradeInfos(operation, firstLine);
 		
-		// On cherche la prochaine ligne qui concerne ce trade
+		// On cherche si la prochaine ligne concerne ce trade
 		String line = rawFile.getNext();
-		int lineNumber = 1;
-		boolean continueSearch = true;
+		Date lineDate = operationImporterBinanceExtractorService.getDate(line);
 		
-		while (continueSearch) {
-
-			Date lineDate = operationImporterBinanceExtractorService.getDate(line);
-			boolean removeLine = false;
+		while (operationDate.equals(lineDate)) {
 			
-			// Si les dates ne correspondent pas, la recherche est arrété, dans tous les cas
-			if (!operationDate.equals(lineDate)) {
-				continueSearch = false;
+			//La ligne est prise en compte : on la supprime du fichier
+			rawFile.removeNext();
+			fillTradeInfos(operation, line);
+			line = rawFile.getNext(); // On prends la prochaine ligne sans la supprimer
+			
+			if (line != null) {
+				lineDate = operationImporterBinanceExtractorService.getDate(line);
 			} else {
-				
-				// Si on trouve une partie et que celle ci n'a pas déja été définie,
-				// on le fait et on remove la ligne correspondante
-				if (!mainFound && operationImporterBinanceExtractorService.isTradeMain(line)) {
-					mainFound = true;
-					removeLine = true;
-					fillTradeMainInfos(operation, line);
-				} else if (!balancingFound && operationImporterBinanceExtractorService.isTradeBalancing(line)) {
-					balancingFound = true;
-					removeLine = true;
-					fillTradeBalancingInfos(operation, line);
-				} else if (!feeFound && operationImporterBinanceExtractorService.isTradeFee(line)) {
-					feeFound = true;
-					removeLine = true;
-					fillTradeFeeInfos(operation, line);
-				}
-
-				// Si la ligne est a supprimé, on l'a delete
-				if (removeLine) {
-					rawFile.removeLine(lineNumber);
-				}
-				
-				// Si tout a été trouvé, on arrete la recherche
-				if (mainFound && balancingFound && feeFound) {
-					continueSearch = false;
-				}
-			}
-			
-			// Si on continue la recherche, on prépare la prochaine ligne
-			if (continueSearch) {
-				
-				// Si la ligne n'a pas été supprimé, on augmente le ligne number
-				if (!removeLine) {
-					lineNumber ++;
-				}
-				
-				line = rawFile.getLine(lineNumber);
-				
-				// Si la ligne est nulle, on a fini le fichier, la recherche s'arrete
-				if (line == null) {
-					continueSearch = false;
-				}
+				lineDate = null;
 			}
 		}
 		
-		// Si au moins le main et le balancing ne sont pas definis, c'est une erreur
-		// Le fee peut être nul
-		if (!mainFound || !balancingFound) {
-			throw new ApplicationException("Error : L'opération n'a pas pu etre importé, infos manquante : " + firstLine);
+		// Il manque une partie au trade, exception
+		if (operation.getInvestment() == null || operation.getBalancingInvestment() == null) {
+			throw new ApplicationException("Trade incorrect : " + firstLine);
 		}
 		
 		return operation;
 	}
 	
-	private void fillTradeMainInfos(OperationInvestmentTrade operation, String line) {
-		Investment investment =  operationImporterBinanceExtractorService.getInvestment(line);
-		operation.setInvestment(investment);
+	private void fillTradeInfos(OperationInvestmentTrade operation, String line) {
+		
+		Investment lineInvestment = operationImporterBinanceExtractorService.getInvestment(line);
+		
+		// On met en place les infos correspondantes à la ligne trouvée
+		// Comme elles peuvent déja exister, on prends soin de merge si c'est le cas
+		if (operationImporterBinanceExtractorService.isTradeMain(line)) {
+			
+			if (operation.getInvestment() == null) {
+				operation.setInvestment(lineInvestment);
+			} else {
+				operation.getInvestment().addInvestment(lineInvestment);
+			}
+		} else if (operationImporterBinanceExtractorService.isTradeBalancing(line)) {
+			if (operation.getBalancingInvestment() == null) {
+				operation.setBalancingInvestment(lineInvestment);
+			} else {
+				operation.getBalancingInvestment().addInvestment(lineInvestment);
+			}
+		} else if (operationImporterBinanceExtractorService.isTradeFee(line)) {
+			
+			if (operation.getFeeInvestment() == null) {
+				operation.setFeeInvestment(lineInvestment);
+			} else {
+				operation.getFeeInvestment().addInvestment(lineInvestment);
+			}
+		} else { // Ne devrait pas arriver
+			throw new ApplicationException("importNextTradeOperation error");
+		}
 	}
-	
-	private void fillTradeBalancingInfos(OperationInvestmentTrade operation, String line) {
-		Investment investment =  operationImporterBinanceExtractorService.getInvestment(line);
-		operation.setBalancingInvestment(investment);
-	}
-	
-	private void fillTradeFeeInfos(OperationInvestmentTrade operation, String line) {
-		Investment investment =  operationImporterBinanceExtractorService.getInvestment(line);
-		operation.setFeeInvestment(investment);
-	}
-	
 }
