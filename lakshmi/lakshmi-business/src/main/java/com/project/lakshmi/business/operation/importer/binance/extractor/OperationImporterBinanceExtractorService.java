@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-import com.project.lakshmi.model.Asset;
+import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.model.operation.investment.InvestmentType;
 

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.lakshmi.business.asset.AssetService;
-import com.project.lakshmi.model.AssetType;
 import com.project.lakshmi.webapp.AbstractAction;
 
 @RequestMapping("priceTracker")
@@ -26,16 +25,16 @@ public class PriceTrackerAction extends AbstractAction {
 	public ModelAndView view() {
 		ModelAndView model = new ModelAndView("priceTracker/priceTracker");
 		
-		model.addObject("cryptoList", assetService.findAll(AssetType.CRYPTO));
-		model.addObject("stockList", assetService.findAll(AssetType.STOCK));
-		model.addObject("notManagedList", assetService.findAllNotManaged());
+//		model.addObject("cryptoList", assetService.findAll(AssetType.CRYPTO));
+//		model.addObject("stockList", assetService.findAll(AssetType.STOCK));
+//		model.addObject("notManagedList", assetService.findAllNotManaged());
 		
 		return model;
 	}
 	
 	@GetMapping("generate")
 	public @ResponseBody String generate() throws URISyntaxException, IOException {
-		assetService.generateCsv();
+//		assetService.generateCsv();
 		return "ok";
 	}	
 	

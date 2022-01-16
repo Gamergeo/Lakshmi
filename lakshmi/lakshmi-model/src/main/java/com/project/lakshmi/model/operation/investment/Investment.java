@@ -1,6 +1,6 @@
 package com.project.lakshmi.model.operation.investment;
 
-import com.project.lakshmi.model.Asset;
+import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.technical.ApplicationException;
 
 public class Investment {
@@ -43,7 +43,7 @@ public class Investment {
 			// Ce n'est pas les même asset : erreur
 			if (!asset.equals(addedAsset)) {
 				throw new ApplicationException("Impossible d'ajouter des investissements sur "
-						+ "deux asset différents : " + asset.getName() + " / " + addedAsset.getName());
+						+ "deux asset différents : " + asset.getIsin() + " / " + addedAsset.getIsin());
 			} else { // On ajoute les quantités
 				setQuantity(getQuantity() + addedInvestment.getQuantity()); 
 			}

@@ -1,52 +1,42 @@
-package com.project.lakshmi.model;
+package com.project.lakshmi.model.asset;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Entity(name = "asset")
-@Table(name = "asset")
-public class Asset implements Serializable {
+//@Entity(name = "asset")
+//@Table(name = "asset")
+public class OldAsset implements Serializable {
 
 	private static final long serialVersionUID = -1864542003746307771L;
 
-	@Id
-	@Column
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@Id
+//	@Column
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected Integer id;
 	
-	@Column
+//	@Column
 	private String name;
 	
-	@Column
+//	@Column
 	private String isin;
 
-	@Column
-	@Enumerated(EnumType.STRING)
+//	@Column
+//	@Enumerated(EnumType.STRING)
 	private AssetType type;
 	
-	@ManyToOne
-	private Asset dependence;
+//	@ManyToOne
+	private OldAsset dependence;
 	
 	// Yahoo finance
-	@Column
+//	@Column
 	private String symbol;
 	
-	@Column
+//	@Column
 	private String market;
 	
-	@Column
+//	@Column
 	private String link;
 	
-	@Column
+//	@Column
 	private boolean managed;
 	
 	public Integer getId() {
@@ -73,11 +63,11 @@ public class Asset implements Serializable {
 		this.isin = isin;
 	}
 
-	public Asset getDependence() {
+	public OldAsset getDependence() {
 		return dependence;
 	}
 
-	public void setDependence(Asset dependence) {
+	public void setDependence(OldAsset dependence) {
 		this.dependence = dependence;
 	}
 
@@ -134,7 +124,7 @@ public class Asset implements Serializable {
             return false;
         }
 
-        final Asset asset = (Asset) object;
+        final OldAsset asset = (OldAsset) object;
         if ((this.getName() == null) ? (asset.getName() != null) : !this.getName().equals(asset.getName())) {
             return false;
         }

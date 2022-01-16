@@ -1,14 +1,11 @@
 package com.project.lakshmi.persistance;
 
-import java.util.List;
-
-import com.project.lakshmi.model.Asset;
-import com.project.lakshmi.model.AssetType;
+import com.project.lakshmi.model.asset.Asset;
 
 public interface AssetDao extends IDao<Asset> {
 
-	List<Asset> findAll(AssetType type, List<Integer> dependencies);
-
-	List<Asset> findAll(AssetType type, boolean managed);
+//	List<OldAsset> findAll(AssetType type, List<Integer> dependencies);
+//
+//	List<OldAsset> findAll(AssetType type, boolean managed);
 
 }

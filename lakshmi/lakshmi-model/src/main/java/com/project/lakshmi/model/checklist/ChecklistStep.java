@@ -25,11 +25,11 @@ public class ChecklistStep implements Serializable {
 	protected Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name=DatabaseName.CHECKLIST_STEP.CHECKLIST_ID, referencedColumnName = DatabaseName.ID)
+	@JoinColumn(name=DatabaseName.CHECKLIST_STEP.ID_CHECKLIST, referencedColumnName = DatabaseName.ID)
 	private Checklist checklist;
 	
 	@ManyToOne
-	@JoinColumn(name=DatabaseName.CHECKLIST_STEP.CHECKLIST_STEP_INFOS_ID, referencedColumnName = DatabaseName.ID)
+	@JoinColumn(name=DatabaseName.CHECKLIST_STEP.ID_CHECKLIST_STEP_INFOS, referencedColumnName = DatabaseName.ID)
 	private ChecklistStepInfos checklistStepInfos;
 
 	@Column(name=DatabaseName.CHECKLIST_STEP.STARTED)

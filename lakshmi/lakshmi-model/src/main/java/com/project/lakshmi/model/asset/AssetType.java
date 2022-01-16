@@ -1,4 +1,4 @@
-package com.project.lakshmi.model;
+package com.project.lakshmi.model.asset;
 
 public enum AssetType {
 

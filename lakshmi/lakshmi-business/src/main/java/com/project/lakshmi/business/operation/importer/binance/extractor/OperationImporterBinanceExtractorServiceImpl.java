@@ -8,7 +8,8 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.operation.importer.binance.OperationImporterBinanceConstants;
-import com.project.lakshmi.model.Asset;
+import com.project.lakshmi.model.asset.Asset;
+import com.project.lakshmi.model.asset.OldAsset;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.model.operation.investment.InvestmentType;
 import com.project.lakshmi.technical.DateUtils;
@@ -63,7 +64,7 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		
 		// TODO : properly create asset
 		Asset asset = new Asset();
-		asset.setName(assetName);
+		asset.setIsin(assetName);
 		
 		return asset;
 	}
@@ -130,7 +131,7 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		}
 		
 		// TODO : avoir un asset propre
-		Asset asset = new Asset();
+		OldAsset asset = new OldAsset();
 		asset.setName(OperationImporterBinanceConstants.ASSET_BNB);
 		
 		return asset.equals(getAsset(line));
