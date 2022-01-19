@@ -12,7 +12,7 @@ import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.OldAsset;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.model.operation.investment.InvestmentType;
-import com.project.lakshmi.technical.DateUtils;
+import com.project.lakshmi.technical.DateUtil;
 
 @Service("operationImporterBinanceExtractorService")
 public class OperationImporterBinanceExtractorServiceImpl implements OperationImporterBinanceExtractorService {
@@ -91,7 +91,7 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		List<String> values = getValues(line);
 		String rawDate = values.get(OperationImporterBinanceConstants.DATE_INDEX);
 		
-		return DateUtils.formatDate(rawDate, OperationImporterBinanceConstants.DATE_FORMAT);
+		return DateUtil.formatDate(rawDate, OperationImporterBinanceConstants.DATE_FORMAT);
 	}
 
 	/**

@@ -27,12 +27,19 @@ public class ApiIdentifier {
 	@JoinColumn(name = DatabaseName.ID)   //same name as id @Column
 	private Asset asset;
 	
+	@OneToOne
+	@JoinColumn(name = DatabaseName.API_IDENTIFIER.ID_ASSET_CURRENCY, referencedColumnName = DatabaseName.ID)
+	private Asset currency;
+	
 	@Column(name=DatabaseName.API_IDENTIFIER.API)
 	@Enumerated(EnumType.STRING)
 	private Api api;
 	
 	@Column(name=DatabaseName.API_IDENTIFIER.MARKET)
 	private String market;
+	
+//	@Column(name=DatabaseName.API_IDENTIFIER.PAIR)
+//	private String pair;
 
 	public Integer getId() {
 		return id;
@@ -64,6 +71,18 @@ public class ApiIdentifier {
 
 	public void setMarket(String market) {
 		this.market = market;
+	}
+
+	public Asset getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Asset currency) {
+		this.currency = currency;
+	}
+	
+	public String getPair() {
+		return (asset.getIsin() + currency.getIsin()).toLowerCase();
 	}
 	
 }

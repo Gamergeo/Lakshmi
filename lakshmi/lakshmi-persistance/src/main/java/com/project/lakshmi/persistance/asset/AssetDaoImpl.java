@@ -1,8 +1,18 @@
-package com.project.lakshmi.persistance;
+package com.project.lakshmi.persistance.asset;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
 import com.project.lakshmi.model.asset.Asset;
+import com.project.lakshmi.model.asset.Asset_;
+import com.project.lakshmi.persistance.AbstractDAO;
 
 @Repository("assetDao")
 public class AssetDaoImpl extends AbstractDAO<Asset> implements AssetDao {
@@ -10,6 +20,22 @@ public class AssetDaoImpl extends AbstractDAO<Asset> implements AssetDao {
 	@Override
 	protected void setTypeParameterClass() {
 		typeParameterClass = Asset.class;
+	}
+	
+	@Override
+	public Asset findByIsin(String isin) {
+		String upperIsin = isin.toUpperCase();
+		
+		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
+		CriteriaQuery<Asset> query = builder.createQuery(Asset.class);
+		Root<Asset> root = query.from(Asset.class);
+		query.select(root);
+		
+		Set<Predicate> restrictions = new HashSet<Predicate>();
+
+		restrictions.add(builder.equal(root.get(Asset_.isin), upperIsin));
+		
+		return getCurrentSession().createQuery(query).getSingleResult();
 	}
 	
 //	@Override

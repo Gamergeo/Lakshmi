@@ -47,11 +47,20 @@ Version 0.4.4 : Import des multi-trade Binance (small exhchange bnb)
 Version 0.4.5 : Import du stacking / withdraw / deposit et ligne ignorés
 	- La partie extraction de l'import binance est complète
 	
-Version 5.1 : Suppression ancien code api /asset
+Version 0.5.1 : Suppression ancien code api /asset
 	- Suppression de toutes traces inutiles de mscomptes
 	- Création des class Asset / price / api / ohlc...
 	
+Version 0.5.2 : Import des OHLC en base
+	- Méthode d'import des ohlc à partir de l'api en base
+	- Ajout de divers fonction utilitaires (get day ohlc, get price...)
+	
+	
 ---------------------------------------------------------------------------------
+
+Version 0.5.3 : Amélioration import OHLC
+	- Ajout d'un mecanisme de level ? on import ceux qui dependent de l'euro, ainsi de suite
+	
 
 TODO : Amelioration des assets
 
@@ -61,6 +70,8 @@ IMPORTANT : Gestion des dates UTC
 	Pour l'instant les dates sont importés sans transformation
 	
 Checkbox pour exclure les operations antérieur à la dernière checklist terminée
+
+Prix a 5/10 m in près ?
 
 Reconnaissance automatique du fichier ?
 

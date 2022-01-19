@@ -45,9 +45,12 @@ public class DatabaseName {
 		public static final String API = "api";
 		
 		public static final String MARKET = "market";
+		
+		public static final String ID_ASSET_CURRENCY = "id_asset_currency";
 	}
 	
 	public class PRICE {
+	
 		public static final String TABLE = "price";
 		
 		public static final String ID_ASSET = "id_asset";

@@ -117,4 +117,5 @@ public abstract class AbstractDAO<T> implements IDao<T>{
 	public Predicate[] getPredicateArray(Collection<Predicate> predicates) {
 		return (Predicate[]) predicates.toArray(new Predicate[predicates.size()]);
 	}
+	
 }

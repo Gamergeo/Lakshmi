@@ -16,8 +16,8 @@ import javax.persistence.TemporalType;
 import com.project.lakshmi.model.DatabaseName;
 import com.project.lakshmi.model.asset.Asset;
 
-@Entity(name = DatabaseName.PRICE.TABLE)
-@Table(name = DatabaseName.PRICE.TABLE)
+@Entity(name = DatabaseName.OHLC.TABLE)
+@Table(name = DatabaseName.OHLC.TABLE)
 public class Ohlc {
 	
 	@Id
@@ -26,23 +26,23 @@ public class Ohlc {
 	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name=DatabaseName.PRICE.ID_ASSET, referencedColumnName = DatabaseName.ID)
+	@JoinColumn(name=DatabaseName.OHLC.ID_ASSET, referencedColumnName = DatabaseName.ID)
 	private Asset asset;
 	
 	@Column(name=DatabaseName.PRICE.DATE)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;	
 	
-	@Column(name=DatabaseName.PRICE.PRICE)
+	@Column(name=DatabaseName.OHLC.OPEN)
 	private Double open;
 	
-	@Column(name=DatabaseName.PRICE.PRICE)
+	@Column(name=DatabaseName.OHLC.HIGH)
 	private Double high;
 	
-	@Column(name=DatabaseName.PRICE.PRICE)
+	@Column(name=DatabaseName.OHLC.LOW)
 	private Double low;
 	
-	@Column(name=DatabaseName.PRICE.PRICE)
+	@Column(name=DatabaseName.OHLC.CLOSE)
 	private Double close;
 
 	public Integer getId() {
@@ -67,6 +67,10 @@ public class Ohlc {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public void setDate(long timestamp) {
+		this.date = new Date(timestamp*1000);
 	}
 
 	public Double getOpen() {

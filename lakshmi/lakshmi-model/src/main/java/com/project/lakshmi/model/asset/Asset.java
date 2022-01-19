@@ -15,6 +15,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.project.lakshmi.model.DatabaseName;
+import com.project.lakshmi.model.LakshmiConstants;
 import com.project.lakshmi.model.api.ApiIdentifier;
 
 @Entity(name = DatabaseName.ASSET.TABLE)
@@ -52,12 +53,36 @@ public class Asset implements Serializable {
 		this.label = label;
 	}
 
-public String getIsin() {
+	public String getIsin() {
 		return isin;
 	}
 
 	public void setIsin(String isin) {
 		this.isin = isin;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public AssetType getType() {
+		return type;
+	}
+
+	public void setType(AssetType type) {
+		this.type = type;
+	}
+
+	public ApiIdentifier getApiIdentifier() {
+		return apiIdentifier;
+	}
+
+	public void setApiIdentifier(ApiIdentifier apiIdentifier) {
+		this.apiIdentifier = apiIdentifier;
 	}
 
 		/**
@@ -79,5 +104,9 @@ public String getIsin() {
         }
 
         return true;
+	}
+	
+	public boolean isEuro() {
+		return LakshmiConstants.ASSET_EURO_ISIN.equals(getIsin());
 	}
 }
