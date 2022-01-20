@@ -2,6 +2,7 @@ package com.project.lakshmi.business.api;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -22,6 +23,7 @@ import com.project.lakshmi.business.api.cryptowatch.CryptoWatchApiService;
 import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
+import com.project.lakshmi.technical.ApplicationException;
 
 /**
  * Generic call to api
@@ -32,18 +34,26 @@ public abstract class ApiServiceImpl implements ApiService {
 	@Autowired
 	CryptoWatchApiService cryptoWatchApiService;
 	
-	protected String call(String uri, List<NameValuePair> parameters) throws URISyntaxException, IOException {
+	protected String call(String uri, List<NameValuePair> parameters) {
 		return call(uri, parameters, null, null);
 	}
 	
-	protected String call(String uri, List<NameValuePair> parameters, String apiKeyHeaderName, String apiKey) throws URISyntaxException, IOException {
-		 String response_content = "";
-	
-	    URIBuilder query = new URIBuilder(uri);
-	    query.addParameters(parameters);
+	protected String call(String uri, List<NameValuePair> parameters, String apiKeyHeaderName, String apiKey) {
+		String response_content = "";
+		URIBuilder query;
+		CloseableHttpClient client;
+		HttpGet request;
+		
+		try {
+			query = new URIBuilder(uri);
 
-	    CloseableHttpClient client = HttpClients.createDefault();
-	    HttpGet request = new HttpGet(query.build());
+			query.addParameters(parameters);
+
+	    	client = HttpClients.createDefault();
+	    	request = new HttpGet(query.build());
+		} catch (URISyntaxException exception) {
+			throw new ApplicationException(exception.getMessage());
+		}
 
 	    request.setHeader(HttpHeaders.ACCEPT, "application/json");
 	    
@@ -51,25 +61,39 @@ public abstract class ApiServiceImpl implements ApiService {
 	    	request.addHeader(apiKeyHeaderName, apiKey);
 	    }
 
-	    CloseableHttpResponse response = client.execute(request);
-
-	    try {
-	    	System.out.println(response.getStatusLine() + uri + parameters.toString());
-	    	HttpEntity entity = response.getEntity();
-	    	response_content = EntityUtils.toString(entity);
-	    	EntityUtils.consume(entity);
-	    } finally {
-	    	response.close();
-	    }
+	    CloseableHttpResponse response;
+		try {
+			response = client.execute(request);
+		    try {
+		    	System.out.println(response.getStatusLine() + uri + parameters.toString());
+		    	HttpEntity entity = response.getEntity();
+		    	response_content = EntityUtils.toString(entity);
+		    	EntityUtils.consume(entity);
+		    } finally {
+		    	response.close();
+		    }
+		} catch (IOException exception) {
+			throw new ApplicationException(exception.getMessage());
+		}
 
 	    return response_content;
 	}
 	
 	@Override
-	public List<Ohlc> getOhlc(Asset asset) throws URISyntaxException, IOException {
+	public Ohlc getPriceOhlc(Asset asset, Instant instant) {
 		
 		if (Api.CRYPTOWATCH.equals(asset.getApiIdentifier().getApi())) {
-			return cryptoWatchApiService.getOhlc(asset);
+			return cryptoWatchApiService.getPriceOhlc(asset, instant);
+		}
+		
+		throw new NotYetImplementedException("import api non implémenté");
+	}
+	
+	@Override
+	public List<Ohlc> getHistoricalOhlc(Asset asset) {
+		
+		if (Api.CRYPTOWATCH.equals(asset.getApiIdentifier().getApi())) {
+			return cryptoWatchApiService.getHistoricalOhlc(asset);
 		}
 		
 		throw new NotYetImplementedException("import api non implémenté");

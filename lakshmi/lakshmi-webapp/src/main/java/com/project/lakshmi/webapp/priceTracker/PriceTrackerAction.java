@@ -2,7 +2,6 @@ package com.project.lakshmi.webapp.priceTracker;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.lakshmi.business.api.ApiService;
 import com.project.lakshmi.business.asset.AssetService;
-import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.webapp.AbstractAction;
 
 @RequestMapping("priceTracker")
@@ -30,9 +28,6 @@ public class PriceTrackerAction extends AbstractAction {
 	@PostMapping("view")
 	public ModelAndView view() throws URISyntaxException, IOException {
 		ModelAndView model = new ModelAndView("priceTracker/priceTracker");
-		
-		Asset asset = assetService.findById(2);
-		apiService.getOhlc(asset);
 		
 //		model.addObject("cryptoList", assetService.findAll(AssetType.CRYPTO));
 //		model.addObject("stockList", assetService.findAll(AssetType.STOCK));

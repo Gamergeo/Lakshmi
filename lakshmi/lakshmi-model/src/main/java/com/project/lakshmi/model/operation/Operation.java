@@ -1,7 +1,7 @@
 package com.project.lakshmi.model.operation;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 
 import com.project.lakshmi.model.operation.investment.OperationInvestment;
 import com.project.lakshmi.technical.ApplicationException;
@@ -10,15 +10,15 @@ public abstract class Operation implements Serializable {
 
 	private static final long serialVersionUID = 8617172259352125727L;
 	
-	private Date date;
+	private Instant date;
 	
 	private String comment;
 	
-	public Date getDate() {
+	public Instant getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Instant date) {
 		this.date = date;
 	}
 	

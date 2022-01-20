@@ -1,5 +1,7 @@
 package com.project.lakshmi.business.operation.importer.binance;
 
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,5 +41,6 @@ public class OperationImporterBinanceConstants {
 			"Dual savings settlement", "Dual savings purchase", "Savings purchase", 
 			"Savings Principal redemption", "POS savings purchase", "POS savings redemption"});
 	
-	public final static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	public final static DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	public final static ZoneId DATE_ZONE = ZoneId.of("UTC");
 }

@@ -1,7 +1,6 @@
 package com.project.lakshmi.business.api;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +17,10 @@ public interface ApiService {
 	/**
 	 * @return la liste des ohlc pour un asset
 	 */
-	List<Ohlc> getOhlc(Asset asset) throws URISyntaxException, IOException;
+	List<Ohlc> getHistoricalOhlc(Asset asset);
 
+	/**
+	 * @return l'unique ohlc correspondant au prix
+	 */
+	Ohlc getPriceOhlc(Asset asset, Instant instant);
 }

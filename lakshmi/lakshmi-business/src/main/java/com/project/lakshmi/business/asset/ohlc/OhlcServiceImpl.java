@@ -1,11 +1,9 @@
 package com.project.lakshmi.business.asset.ohlc;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Instant;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,6 @@ import com.project.lakshmi.business.AbstractDatabaseService;
 import com.project.lakshmi.business.asset.AssetService;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
-import com.project.lakshmi.model.asset.price.Price;
 import com.project.lakshmi.persistance.asset.ohlc.OhlcDao;
 import com.project.lakshmi.technical.DateUtil;
 
@@ -36,46 +33,13 @@ public class OhlcServiceImpl extends AbstractDatabaseService<Ohlc> implements Oh
 	 */
 	@Override
 	@Transactional
-	public Ohlc find(Asset asset, Date date) {
+	public Ohlc find(Asset asset, Instant date) {
 		
-		// Les ohlc sont stockés par minute
-		Date floorDate = DateUtil.truncateDay(date);
+		// Les ohlc sont stockés par jour
+		Instant floorDate = DateUtil.truncateDay(date);
 		
 		return getDao().findOhlc(asset.getId(), floorDate);
 	}
-	
-	/**
-	 * @return the ohlc corresponding to date and asset
-	 * Get the day ohlc
-	 */
-	@Override
-	@Transactional
-	public Ohlc findDayOhlc(Asset asset, Date date) {
-		
-		// Les ohlc sont stockés par minute
-		Date floorDate = DateUtil.truncateDay(date);
-		Date ceilDate  = DateUtil.ceilingDay(date);
-		
-		Ohlc floorOhlc = find(asset, floorDate);
-		Ohlc ceilOhlc = find(asset, ceilDate);
-		Ohlc minOhlc = getDao().findMin(asset.getId(), floorDate, ceilDate);
-		Ohlc maxOhlc = getDao().findMax(asset.getId(), floorDate, ceilDate);
-		
-		Ohlc ohlc = new Ohlc();
-		ohlc.setAsset(asset);
-		
-		// L'open corresponds à l'open du début de journée
-		ohlc.setOpen(floorOhlc.getOpen());
-		// Le close corresponds au close de fin de journée
-		ohlc.setClose(ceilOhlc.getClose());
-		// Le high corresponds au max des high sur la journée
-		ohlc.setHigh(maxOhlc.getHigh());
-		// Le low corresponds au min des lowsur la journée
-		ohlc.setLow(minOhlc.getLow());
-		
-		return ohlc;
-	}
-	
 	
 	/**
 	 * save an update a OHLC set asset currency
@@ -87,7 +51,6 @@ public class OhlcServiceImpl extends AbstractDatabaseService<Ohlc> implements Oh
 		
 		saveOrUpdate(ohlc);
 	}
-	
 	
 	/**
 	 * modify the ohlc to convert to euroµ

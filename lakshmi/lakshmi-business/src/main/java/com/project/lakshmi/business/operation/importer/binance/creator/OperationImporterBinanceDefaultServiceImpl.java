@@ -1,6 +1,6 @@
 package com.project.lakshmi.business.operation.importer.binance.creator;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class OperationImporterBinanceDefaultServiceImpl implements OperationImpo
 		OperationInvestment operation = new OperationInvestment();
 		
 		String line = rawFile.getAndRemoveNext();
-		Date operationDate = operationImporterBinanceExtractorService.getDate(line);
+		Instant operationDate = operationImporterBinanceExtractorService.getDate(line);
 		operation.setDate(operationDate);
 		
 		// On met en place les infos correspondantes à la ligne trouvée

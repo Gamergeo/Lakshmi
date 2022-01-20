@@ -1,12 +1,12 @@
 package com.project.lakshmi.model.operation;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class OperationCurrent extends Operation {
 	
 	private static final long serialVersionUID = 1695502602883468400L;
 
-	private Date date;
+	private Instant date;
 	
 	private Double amount;
 	
@@ -24,11 +24,11 @@ public class OperationCurrent extends Operation {
 		return OperationType.CURRENT;
 	}
 
-	public Date getDate() {
+	public Instant getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Instant date) {
 		this.date = date;
 	}
 

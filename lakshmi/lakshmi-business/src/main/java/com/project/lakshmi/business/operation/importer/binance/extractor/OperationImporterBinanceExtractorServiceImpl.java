@@ -1,7 +1,7 @@
 package com.project.lakshmi.business.operation.importer.binance.extractor;
 
+import java.time.Instant;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.cfg.NotYetImplementedException;
@@ -87,11 +87,11 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 	}
 	
 	@Override
-	public Date getDate(String line) {
+	public Instant getDate(String line) {
 		List<String> values = getValues(line);
 		String rawDate = values.get(OperationImporterBinanceConstants.DATE_INDEX);
 		
-		return DateUtil.formatDate(rawDate, OperationImporterBinanceConstants.DATE_FORMAT);
+		return DateUtil.formatDate(rawDate, OperationImporterBinanceConstants.DATE_FORMAT, OperationImporterBinanceConstants.DATE_ZONE);
 	}
 
 	/**

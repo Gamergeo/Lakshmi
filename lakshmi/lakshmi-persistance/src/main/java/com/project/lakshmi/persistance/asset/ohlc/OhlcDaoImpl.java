@@ -1,6 +1,6 @@
 package com.project.lakshmi.persistance.asset.ohlc;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +24,7 @@ public class OhlcDaoImpl extends AbstractDAO<Ohlc> implements OhlcDao {
 	}
 	
 	@Override
-	public Ohlc findOhlc(Integer assetId, Date date) {
+	public Ohlc findOhlc(Integer assetId, Instant date) {
 		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
 		CriteriaQuery<Ohlc> query = builder.createQuery(Ohlc.class);
 		Root<Ohlc> root = query.from(Ohlc.class);
@@ -42,47 +42,47 @@ public class OhlcDaoImpl extends AbstractDAO<Ohlc> implements OhlcDao {
 //			return null;
 //		}
 	}
-	
-	/**
-	 * @return the maximum of high price between two date
-	 */
-	@Override
-	public Ohlc findMax(Integer assetId, Date beginDate, Date endDate) {
-		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
-		CriteriaQuery<Ohlc> query = builder.createQuery(Ohlc.class);
-		Root<Ohlc> root = query.from(Ohlc.class);
-		query.select(root);
-		
-		Set<Predicate> restrictions = new HashSet<Predicate>();
-
-		restrictions.add(builder.equal(root.get(Ohlc_.asset), assetId));
-		restrictions.add(builder.between(root.get(Ohlc_.date), beginDate, endDate));
-		
-		// On trie par high price desc
-		query.orderBy(builder.desc(root.get(Ohlc_.high)));
-		
-		return getCurrentSession().createQuery(query).getSingleResult();
-	}
-	
-	/**
-	 * @return the minimum of low price between two date
-	 */
-	@Override
-	public Ohlc findMin(Integer assetId, Date beginDate, Date endDate) {
-		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
-		CriteriaQuery<Ohlc> query = builder.createQuery(Ohlc.class);
-		Root<Ohlc> root = query.from(Ohlc.class);
-		query.select(root);
-		
-		Set<Predicate> restrictions = new HashSet<Predicate>();
-
-		restrictions.add(builder.equal(root.get(Ohlc_.asset), assetId));
-		restrictions.add(builder.between(root.get(Ohlc_.date), beginDate, endDate));
-		
-		// On trie par high price desc
-		query.orderBy(builder.asc(root.get(Ohlc_.low)));
-		
-		return getCurrentSession().createQuery(query).getSingleResult();
-	}
+//	
+//	/**
+//	 * @return the maximum of high price between two date
+//	 */
+//	@Override
+//	public Ohlc findMax(Integer assetId, Instant beginDate, Instant endDate) {
+//		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
+//		CriteriaQuery<Ohlc> query = builder.createQuery(Ohlc.class);
+//		Root<Ohlc> root = query.from(Ohlc.class);
+//		query.select(root);
+//		
+//		Set<Predicate> restrictions = new HashSet<Predicate>();
+//
+//		restrictions.add(builder.equal(root.get(Ohlc_.asset), assetId));
+//		restrictions.add(builder.between(root.get(Ohlc_.date), beginDate, endDate));
+//		
+//		// On trie par high price desc
+//		query.orderBy(builder.desc(root.get(Ohlc_.high)));
+//		
+//		return getCurrentSession().createQuery(query).getSingleResult();
+//	}
+//	
+//	/**
+//	 * @return the minimum of low price between two date
+//	 */
+//	@Override
+//	public Ohlc findMin(Integer assetId, Instant beginDate, Instant endDate) {
+//		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
+//		CriteriaQuery<Ohlc> query = builder.createQuery(Ohlc.class);
+//		Root<Ohlc> root = query.from(Ohlc.class);
+//		query.select(root);
+//		
+//		Set<Predicate> restrictions = new HashSet<Predicate>();
+//
+//		restrictions.add(builder.equal(root.get(Ohlc_.asset), assetId));
+//		restrictions.add(builder.between(root.get(Ohlc_.date), beginDate, endDate));
+//		
+//		// On trie par high price desc
+//		query.orderBy(builder.asc(root.get(Ohlc_.low)));
+//		
+//		return getCurrentSession().createQuery(query).getSingleResult();
+//	}
 	
 }

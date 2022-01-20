@@ -55,11 +55,24 @@ Version 0.5.2 : Import des OHLC en base
 	- Méthode d'import des ohlc à partir de l'api en base
 	- Ajout de divers fonction utilitaires (get day ohlc, get price...)
 	
+Version 0.5.3 : API Cryptowatch amélioré
+	- Le getPrice d'une Asset est fonctionnel
+	- Etant donné le fonctionnement de cryptowatch (limité à 6000 ohlc), on determine une période 
+		en fonction de la date, plus elle est eloigné plus la période est grande
+	
 	
 ---------------------------------------------------------------------------------
 
-Version 0.5.3 : Amélioration import OHLC
+Version 0.5.4 : Amélioration import OHLC
+
+	- Ajout d'un mecanisme pour convertir en euro "à la volée" à partir d'une list asset
+	- Supprimer l'ohlc de la base ?
+
+
+
 	- Ajout d'un mecanisme de level ? on import ceux qui dependent de l'euro, ainsi de suite
+	- Mieux controller ce qu'on importe (date du dernier import)
+	- L'import des OHLC est limité a 6000 candle à priori : du coup on va appeler l'api uniquement quand on veut un prix spécifique.
 	
 
 TODO : Amelioration des assets

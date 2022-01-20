@@ -1,6 +1,6 @@
 package com.project.lakshmi.business.asset.ohlc;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.springframework.stereotype.Service;
 
@@ -12,17 +12,6 @@ import com.project.lakshmi.model.asset.price.Ohlc;
 public interface OhlcService extends DatabaseService<Ohlc> {
 
 	/**
-	 * @return the price in database if exists
-	 */
-	Ohlc find(Asset asset, Date date);
-
-	/**
-	 * @return the ohlc corresponding to date and asset
-	 * Get the day ohlc
-	 */
-	Ohlc findDayOhlc(Asset asset, Date date);
-
-	/**
 	 * modify the ohlc to convert to euroµ
 	 * Ohlc is in currency asset
 	 */
@@ -32,6 +21,11 @@ public interface OhlcService extends DatabaseService<Ohlc> {
 	 * save an update a OHLC set asset currency
 	 */
 	void saveOrUpdate(Ohlc ohlc, Asset currency);
+
+	/**
+	 * @return the ohlc corresponding to date and asset
+	 */
+	Ohlc find(Asset asset, Instant date);
 
 }
 

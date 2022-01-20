@@ -1,6 +1,6 @@
 package com.project.lakshmi.business.operation.importer.binance.creator;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class OperationImporterBinanceTradeServiceImpl implements OperationImport
 		OperationInvestmentTrade operation = new OperationInvestmentTrade();
 		
 		String firstLine = rawFile.getAndRemoveNext();
-		Date operationDate = operationImporterBinanceExtractorService.getDate(firstLine);
+		Instant operationDate = operationImporterBinanceExtractorService.getDate(firstLine);
 		operation.setDate(operationDate);
 		
 		// On met en place les infos correspondantes à la ligne trouvée
@@ -31,7 +31,7 @@ public class OperationImporterBinanceTradeServiceImpl implements OperationImport
 		
 		// On cherche si la prochaine ligne concerne ce trade
 		String line = rawFile.getNext();
-		Date lineDate = operationImporterBinanceExtractorService.getDate(line);
+		Instant lineDate = operationImporterBinanceExtractorService.getDate(line);
 		
 		while (operationDate.equals(lineDate)) {
 			

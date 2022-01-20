@@ -1,6 +1,6 @@
 package com.project.lakshmi.model.asset.price;
 
-import java.util.Date;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.project.lakshmi.model.DatabaseName;
 import com.project.lakshmi.model.asset.Asset;
@@ -30,8 +28,8 @@ public class Ohlc {
 	private Asset asset;
 	
 	@Column(name=DatabaseName.PRICE.DATE)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;	
+//	@Temporal(TemporalType.TIMESTAMP)
+	private Instant date;	
 	
 	@Column(name=DatabaseName.OHLC.OPEN)
 	private Double open;
@@ -61,16 +59,16 @@ public class Ohlc {
 		this.asset = asset;
 	}
 
-	public Date getDate() {
+	public Instant getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Instant date) {
 		this.date = date;
 	}
 	
 	public void setDate(long timestamp) {
-		this.date = new Date(timestamp*1000);
+		this.date = Instant.ofEpochMilli(timestamp);
 	}
 
 	public Double getOpen() {

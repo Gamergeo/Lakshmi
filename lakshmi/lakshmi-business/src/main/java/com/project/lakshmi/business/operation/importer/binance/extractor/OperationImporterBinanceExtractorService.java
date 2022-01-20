@@ -1,6 +1,6 @@
 package com.project.lakshmi.business.operation.importer.binance.extractor;
 
-import java.util.Date;
+import java.time.Instant;
 
 import org.springframework.stereotype.Service;
 
@@ -54,7 +54,7 @@ public interface OperationImporterBinanceExtractorService {
 
 	Investment getInvestment(String line);
 
-	Date getDate(String line);
+	Instant getDate(String line);
 
 	/**
 	 * @param line
