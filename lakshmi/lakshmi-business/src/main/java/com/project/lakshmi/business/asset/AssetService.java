@@ -1,11 +1,13 @@
 package com.project.lakshmi.business.asset;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.DatabaseService;
 import com.project.lakshmi.model.asset.Asset;
+import com.project.lakshmi.model.asset.price.Ohlc;
 
 @Service
 public interface AssetService extends DatabaseService<Asset> {
@@ -16,6 +18,8 @@ public interface AssetService extends DatabaseService<Asset> {
 	 * Il faut neanmoins convertir en euro
 	 */
 	Double getPrice(Asset asset, Instant instant);
+
+	List<Ohlc> getAllHistoricalData();
 	
 //	void generateCsv() throws URISyntaxException, IOException;
 //

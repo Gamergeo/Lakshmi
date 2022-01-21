@@ -29,8 +29,15 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 	 * @return all the day ohlc for asset
 	 */
 	@Override
-	public List<Ohlc> getHistoricalOhlc(Asset asset) {
-		return getOhlc(asset, CryptoWatchApiConstants.PARAMETER_PERIOD_DAY, null, null);
+	public List<Ohlc> getHistoricalOhlc(List<Asset> assets) {
+		List<Ohlc> ohlc = new ArrayList<Ohlc>();
+		
+		// Pour cryptowatch, on fait les appels un par un
+		for (Asset asset : assets) {
+			ohlc.addAll(getOhlc(asset, CryptoWatchApiConstants.PARAMETER_PERIOD_DAY, null, null));
+		}
+		
+		return ohlc;
 	}
 	
 	private String getBestPeriod(Instant instant) {
@@ -127,15 +134,12 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 		while(iterator.hasNext()) {
 			JsonNode line = iterator.next();
 
-			Ohlc ohlc = new Ohlc();
-			ohlc.setAsset(asset);
+			Ohlc ohlc = new Ohlc(asset);
 			ohlc.setDate(line.get(0).asLong());
 			ohlc.setOpen(line.get(1).asDouble());
 			ohlc.setHigh(line.get(2).asDouble());
 			ohlc.setLow(line.get(3).asDouble());
 			ohlc.setClose(line.get(4).asDouble());
-			
-//			ohlcService.saveOrUpdate(ohlc, asset.getApiIdentifier().getCurrency());
 			
 			ohlcList.add(ohlc);
 		}

@@ -38,8 +38,8 @@ public class ApiIdentifier {
 	@Column(name=DatabaseName.API_IDENTIFIER.MARKET)
 	private String market;
 	
-//	@Column(name=DatabaseName.API_IDENTIFIER.PAIR)
-//	private String pair;
+	@Column(name=DatabaseName.API_IDENTIFIER.SYMBOL)
+	private String symbol;
 
 	public Integer getId() {
 		return id;
@@ -83,6 +83,14 @@ public class ApiIdentifier {
 	
 	public String getPair() {
 		return (asset.getIsin() + currency.getIsin()).toLowerCase();
+	}
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 	
 }

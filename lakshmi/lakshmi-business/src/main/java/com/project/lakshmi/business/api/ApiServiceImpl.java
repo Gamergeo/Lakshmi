@@ -3,6 +3,7 @@ package com.project.lakshmi.business.api;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.project.lakshmi.business.api.cryptowatch.CryptoWatchApiService;
+import com.project.lakshmi.business.api.yahoo.YahooApiService;
 import com.project.lakshmi.model.api.Api;
+import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
 import com.project.lakshmi.technical.ApplicationException;
@@ -33,6 +36,9 @@ public abstract class ApiServiceImpl implements ApiService {
 	
 	@Autowired
 	CryptoWatchApiService cryptoWatchApiService;
+
+	@Autowired
+	YahooApiService yahooApiService;
 	
 	protected String call(String uri, List<NameValuePair> parameters) {
 		return call(uri, parameters, null, null);
@@ -82,7 +88,11 @@ public abstract class ApiServiceImpl implements ApiService {
 	@Override
 	public Ohlc getPriceOhlc(Asset asset, Instant instant) {
 		
-		if (Api.CRYPTOWATCH.equals(asset.getApiIdentifier().getApi())) {
+		
+		if (asset.isEuro()) { // ne devrait pas arriver
+			throw new ApplicationException("On ne doit pas chercher le prix d'un euro");
+			
+		} else if (Api.CRYPTOWATCH.equals(asset.getApiIdentifier().getApi())) {
 			return cryptoWatchApiService.getPriceOhlc(asset, instant);
 		}
 		
@@ -90,15 +100,34 @@ public abstract class ApiServiceImpl implements ApiService {
 	}
 	
 	@Override
-	public List<Ohlc> getHistoricalOhlc(Asset asset) {
+	public List<Ohlc> getHistoricalOhlc(List<Asset> assets) {
 		
-		if (Api.CRYPTOWATCH.equals(asset.getApiIdentifier().getApi())) {
-			return cryptoWatchApiService.getHistoricalOhlc(asset);
+		// On va trier les assets en plusieurs listes, suivant l'api concerné
+		List<Asset> cryptoWatchAsset = new ArrayList<Asset>();
+		List<Asset> yahooAsset = new ArrayList<Asset>();
+		
+		for (Asset asset : assets) {
+			
+			ApiIdentifier apiIdentifier = asset.getApiIdentifier();
+			
+			// L'euro n'a pas d'identifier
+			if (apiIdentifier != null) {
+				if (Api.CRYPTOWATCH.equals(apiIdentifier.getApi())) {
+					cryptoWatchAsset.add(asset);
+				} else if (Api.YAHOO.equals(apiIdentifier.getApi())) {
+					yahooAsset.add(asset);
+				} else {
+					throw new NotYetImplementedException("Api non definie");
+				}
+			}
 		}
 		
-		throw new NotYetImplementedException("import api non implémenté");
+		List<Ohlc> ohlc = new ArrayList<Ohlc>();
+		
+		ohlc.addAll(cryptoWatchApiService.getHistoricalOhlc(cryptoWatchAsset));
+		ohlc.addAll(yahooApiService.getHistoricalOhlc(yahooAsset));
+		
+		return ohlc;
 	}
-//
-//	public abstract List<Ohlc> getPrice(Asset asset, Date date);
 
 }

@@ -1,6 +1,7 @@
 package com.project.lakshmi.business.asset;
 
 import java.time.Instant;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.AbstractDatabaseService;
-import com.project.lakshmi.business.api.ApiService;
 import com.project.lakshmi.business.asset.ohlc.OhlcService;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
@@ -23,9 +23,6 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 	@Autowired
 	OhlcService ohlcService;
 	
-	@Autowired
-	ApiService apiService;
-	
 	@Override
 	public AssetDao getDao() {
 		return assetDao;
@@ -37,12 +34,18 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 	 * Il faut neanmoins convertir en euro
 	 */
 	@Override
-	@Transactional
 	public Double getPrice(Asset asset, Instant instant) {
-		Ohlc ohlc = apiService.getPriceOhlc(asset, instant);
-		ohlcService.convertToEuro(ohlc, asset.getApiIdentifier().getCurrency());
+		Ohlc ohlc = ohlcService.getOhlc(asset, instant);
+		ohlcService.convertToEuro(ohlc);
 		
 		return (ohlc.getHigh() + ohlc.getLow())/2d;
 	}
 	
+	@Override
+	@Transactional
+	public List<Ohlc> getAllHistoricalData() {
+		List<Asset> assets = findAll();
+		
+		return ohlcService.getHistoricalOhlc(assets);
+	}
 }

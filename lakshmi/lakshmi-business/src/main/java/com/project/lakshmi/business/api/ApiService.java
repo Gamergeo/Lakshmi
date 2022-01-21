@@ -15,9 +15,9 @@ import com.project.lakshmi.model.asset.price.Ohlc;
 public interface ApiService {
 
 	/**
-	 * @return la liste des ohlc pour un asset
+	 * @return la liste des ohlc pour une liste d'asset
 	 */
-	List<Ohlc> getHistoricalOhlc(Asset asset);
+	List<Ohlc> getHistoricalOhlc(List<Asset> asset);
 
 	/**
 	 * @return l'unique ohlc correspondant au prix

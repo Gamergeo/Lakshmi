@@ -60,6 +60,11 @@ Version 0.5.3 : API Cryptowatch amélioré
 	- Etant donné le fonctionnement de cryptowatch (limité à 6000 ohlc), on determine une période 
 		en fonction de la date, plus elle est eloigné plus la période est grande
 	
+Version 0.5.4 : Amélioration import OHLC
+
+	- Ajout d'un mecanisme pour convertir en euro "à la volée" à partir d'une list asset
+	- Supprimer l'ohlc de la base
+	- Ajout de l'api yahoo finance
 	
 ---------------------------------------------------------------------------------
 

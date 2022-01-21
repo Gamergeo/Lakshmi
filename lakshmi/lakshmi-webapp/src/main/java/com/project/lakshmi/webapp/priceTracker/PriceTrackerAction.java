@@ -29,6 +29,8 @@ public class PriceTrackerAction extends AbstractAction {
 	public ModelAndView view() throws URISyntaxException, IOException {
 		ModelAndView model = new ModelAndView("priceTracker/priceTracker");
 		
+//		List<Ohlc> ohlc = assetService.getAllHistoricalData();
+		
 //		model.addObject("cryptoList", assetService.findAll(AssetType.CRYPTO));
 //		model.addObject("stockList", assetService.findAll(AssetType.STOCK));
 //		model.addObject("notManagedList", assetService.findAllNotManaged());

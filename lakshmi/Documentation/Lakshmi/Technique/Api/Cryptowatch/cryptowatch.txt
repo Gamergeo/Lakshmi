@@ -1,0 +1,19 @@
+Pour faire appel à l'api cryptowatch on utilise :
+	- L'ip
+	- Un nombre de crédit, diminué à chaque appel
+	- Les appels se font par asset
+	
+Paramètres :
+	- Period : Exprimé en s, correspond à la période des ohlc
+	- After : Représente la date à partir de laquelle on récupère les ohlc
+	- Before : Représente la date max on récupère les ohlc
+	
+Résultat : 
+	Les résultats sont triés par période
+		Puis par date, on y trouve directement les ohlc
+
+Particularité :
+	- Le nombre d'Ohlc disponible est limité à 6000 pour chaque période
+		Pour les données historique, on récupère environ 1000j, ce qui est suffisant
+		Pour le prix, on est obligé de s'arranger avec la période 
+			Plus la date est lointaine, plus la période de l'ohlc correspondate sera grande

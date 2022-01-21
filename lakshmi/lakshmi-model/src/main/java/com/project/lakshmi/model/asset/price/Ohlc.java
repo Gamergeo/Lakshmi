@@ -2,46 +2,30 @@ package com.project.lakshmi.model.asset.price;
 
 import java.time.Instant;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.project.lakshmi.model.DatabaseName;
 import com.project.lakshmi.model.asset.Asset;
 
-@Entity(name = DatabaseName.OHLC.TABLE)
-@Table(name = DatabaseName.OHLC.TABLE)
 public class Ohlc {
 	
-	@Id
-	@Column
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne
-	@JoinColumn(name=DatabaseName.OHLC.ID_ASSET, referencedColumnName = DatabaseName.ID)
 	private Asset asset;
 	
-	@Column(name=DatabaseName.PRICE.DATE)
-//	@Temporal(TemporalType.TIMESTAMP)
+	private Asset currency;
+	
 	private Instant date;	
 	
-	@Column(name=DatabaseName.OHLC.OPEN)
 	private Double open;
 	
-	@Column(name=DatabaseName.OHLC.HIGH)
 	private Double high;
 	
-	@Column(name=DatabaseName.OHLC.LOW)
 	private Double low;
 	
-	@Column(name=DatabaseName.OHLC.CLOSE)
 	private Double close;
+	
+	public Ohlc(Asset asset) {
+		this.asset = asset;
+		this.currency = asset.getApiIdentifier().getCurrency();
+	}
 
 	public Integer getId() {
 		return id;
@@ -103,4 +87,20 @@ public class Ohlc {
 		this.close = close;
 	}
 
+	public Asset getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Asset currency) {
+		this.currency = currency;
+	}
+	
+	// Lorsque l'on récupère qu'une seule donnée, on init tout avec celle-ci
+	public void setPrice(Double price) {
+		setOpen(price);
+		setLow(price);
+		setHigh(price);
+		setClose(price);
+	}
+	
 }

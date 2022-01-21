@@ -15,7 +15,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.project.lakshmi.model.DatabaseName;
-import com.project.lakshmi.model.LakshmiConstants;
 import com.project.lakshmi.model.api.ApiIdentifier;
 
 @Entity(name = DatabaseName.ASSET.TABLE)
@@ -107,6 +106,6 @@ public class Asset implements Serializable {
 	}
 	
 	public boolean isEuro() {
-		return LakshmiConstants.ASSET_EURO_ISIN.equals(getIsin());
+		return AssetType.EURO.equals(getType());
 	}
 }

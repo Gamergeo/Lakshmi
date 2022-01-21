@@ -1,0 +1,19 @@
+Pour faire appel à l'api yahoo on utilise :
+	- Une clé
+	- Les appels se font par liste d'asset
+	- On est limité à 10 appels par minute
+	
+Paramètres :
+	- interval : Exprimé par mot clé, correspond à la période de l'ohlc
+	- range : range des ohlc ???
+	- symbol : liste des symbols souhaités pour l'ohlc : limité à 10
+	
+Comme on est limité à 10, on groupe par liste de 10
+	
+Résultat : 
+	Les résultats sont triés par symbol
+	On ne peut recupérer que le prix de close !
+		???
+		
+Particularité :
+	- On a pas besoin de récupérer les prix pour l'instant

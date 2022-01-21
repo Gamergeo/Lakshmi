@@ -46,6 +46,8 @@ public class DatabaseName {
 		
 		public static final String MARKET = "market";
 		
+		public static final String SYMBOL = "symbol";
+		
 		public static final String ID_ASSET_CURRENCY = "id_asset_currency";
 	}
 	
