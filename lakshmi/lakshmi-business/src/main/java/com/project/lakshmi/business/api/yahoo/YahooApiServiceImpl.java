@@ -18,7 +18,7 @@ import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
 import com.project.lakshmi.technical.ApplicationException;
 
-@Service("stockApiService")
+@Service("yahooApiService")
 public class YahooApiServiceImpl extends ApiServiceImpl implements YahooApiService {
 	
 	@Override

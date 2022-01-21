@@ -66,19 +66,22 @@ Version 0.5.4 : Amélioration import OHLC
 	- Supprimer l'ohlc de la base
 	- Ajout de l'api yahoo finance
 	
+Version 0.5.5 : Page de genération de prix
+	- Mise en place de la page de génération de prix
+	- Requete pour selectionner les assets par api
+	- Suppression AssetType, remplacé par les api
+	
 ---------------------------------------------------------------------------------
 
-Version 0.5.4 : Amélioration import OHLC
-
-	- Ajout d'un mecanisme pour convertir en euro "à la volée" à partir d'une list asset
-	- Supprimer l'ohlc de la base ?
+Version 0.5.6 : Genération de prix
+	- Export csv fonctionnel
 
 
 
-	- Ajout d'un mecanisme de level ? on import ceux qui dependent de l'euro, ainsi de suite
-	- Mieux controller ce qu'on importe (date du dernier import)
-	- L'import des OHLC est limité a 6000 candle à priori : du coup on va appeler l'api uniquement quand on veut un prix spécifique.
-	
+Asset link pour les non managés
+
+
+
 
 TODO : Amelioration des assets
 

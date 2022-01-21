@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,9 +32,6 @@ public class Asset implements Serializable {
 	@Column
 	private String label;
 
-	@Enumerated(EnumType.STRING)
-	private AssetType type;
-	
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private ApiIdentifier apiIdentifier;
@@ -66,14 +61,6 @@ public class Asset implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public AssetType getType() {
-		return type;
-	}
-
-	public void setType(AssetType type) {
-		this.type = type;
 	}
 
 	public ApiIdentifier getApiIdentifier() {
@@ -106,6 +93,6 @@ public class Asset implements Serializable {
 	}
 	
 	public boolean isEuro() {
-		return AssetType.EURO.equals(getType());
+		return "EUR".equals(getIsin());
 	}
 }

@@ -5,17 +5,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.lakshmi.business.asset.AssetService;
 import com.project.lakshmi.business.operation.importer.binance.OperationImporterBinanceConstants;
 import com.project.lakshmi.model.asset.Asset;
-import com.project.lakshmi.model.asset.OldAsset;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.model.operation.investment.InvestmentType;
 import com.project.lakshmi.technical.DateUtil;
 
 @Service("operationImporterBinanceExtractorService")
 public class OperationImporterBinanceExtractorServiceImpl implements OperationImporterBinanceExtractorService {
+	
+	@Autowired
+	AssetService assetService;
 	
 	private List<String> getValues(String line) {
 		return Arrays.asList(line.split(OperationImporterBinanceConstants.SEPARATOR));
@@ -129,12 +133,11 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		if (!InvestmentType.MULTI_TRADE.equals(getInvestmentType(line))) {
 			return false;
 		}
-		
+
 		// TODO : avoir un asset propre
-		OldAsset asset = new OldAsset();
-		asset.setName(OperationImporterBinanceConstants.ASSET_BNB);
-		
-		return asset.equals(getAsset(line));
+		Asset bnbAsset = assetService.findByIsin("BNB");
+
+		return bnbAsset.equals(getAsset(line));
 	}	
 	
 	/**

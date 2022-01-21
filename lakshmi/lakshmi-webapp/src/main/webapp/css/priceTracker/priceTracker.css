@@ -1,9 +1,9 @@
-body {
+.contentBody {
 	display: grid;
 	grid-template-columns: 20% 40% 40%
 }
 
-body > #button {
+#generateButton {
 	grid-column: 1 span 3;
 	grid-row: 1;
 }

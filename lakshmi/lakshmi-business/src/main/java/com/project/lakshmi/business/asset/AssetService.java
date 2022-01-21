@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.DatabaseService;
+import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
 
@@ -20,13 +21,13 @@ public interface AssetService extends DatabaseService<Asset> {
 	Double getPrice(Asset asset, Instant instant);
 
 	List<Ohlc> getAllHistoricalData();
+
+	List<Asset> findAllNotManaged();
+
+	List<Asset> findAllManagedByApi(Api api);
+
+	Asset findByIsin(String isin);
 	
 //	void generateCsv() throws URISyntaxException, IOException;
-//
-//	List<OldAsset> findAllSpecialOrder(AssetType type);
-//
-//	List<OldAsset> findAllNotManaged();
-//
-//	List<OldAsset> findAll(AssetType type);
 }
 

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.lakshmi.business.api.ApiService;
 import com.project.lakshmi.business.asset.AssetService;
+import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.webapp.AbstractAction;
 
 @RequestMapping("priceTracker")
@@ -27,13 +28,13 @@ public class PriceTrackerAction extends AbstractAction {
 
 	@PostMapping("view")
 	public ModelAndView view() throws URISyntaxException, IOException {
-		ModelAndView model = new ModelAndView("priceTracker/priceTracker");
+		ModelAndView model = new ModelAndView("priceTracker/priceTrackerView");
 		
 //		List<Ohlc> ohlc = assetService.getAllHistoricalData();
 		
-//		model.addObject("cryptoList", assetService.findAll(AssetType.CRYPTO));
-//		model.addObject("stockList", assetService.findAll(AssetType.STOCK));
-//		model.addObject("notManagedList", assetService.findAllNotManaged());
+		model.addObject("cryptoList", assetService.findAllManagedByApi(Api.CRYPTOWATCH));
+		model.addObject("stockList", assetService.findAllManagedByApi(Api.YAHOO));
+		model.addObject("notManagedList", assetService.findAllNotManaged());
 		
 		return model;
 	}

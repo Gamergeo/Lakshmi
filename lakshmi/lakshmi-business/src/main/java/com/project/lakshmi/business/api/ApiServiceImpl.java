@@ -32,7 +32,7 @@ import com.project.lakshmi.technical.ApplicationException;
  * Generic call to api
  */
 @Service("apiService")
-public abstract class ApiServiceImpl implements ApiService {
+public class ApiServiceImpl implements ApiService {
 	
 	@Autowired
 	CryptoWatchApiService cryptoWatchApiService;
