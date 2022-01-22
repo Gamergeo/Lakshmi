@@ -7,19 +7,23 @@
 <div id="menu">
 
 	<span class="menuItem">
-		<l:button label="Accueil" onclick="$.refreshMainContent({'url' : 'main/startContent.do'});"/>
+		<l:button size="menu" label="Accueil" onclick="$.refreshMainContent({'url' : 'main/startContent.do'});"/>
 	</span>
 
 	<span class="menuItem">
-		<l:button label="Checklist" onclick="$.refreshMainContent({'url' : 'checklist/view.do'});"/>
+		<l:button size="menu"  label="Checklist" onclick="$.refreshMainContent({'url' : 'checklist/view.do'});"/>
 	</span>
 
 	<span class="menuItem">
-		<l:button label="Import CSV" onclick="$.refreshMainContent({'url' : 'operationImporter/view.do'});"/>
+		<l:button size="menu" label="Import CSV" onclick="$.refreshMainContent({'url' : 'operationImporter/view.do'});"/>
 	</span>
 
 	<span class="menuItem">
-		<l:button label="Generer prix" onclick="$.refreshMainContent({'url' : 'priceTracker/view.do'});"/>
+		<l:button size="menu" label="Generer prix" onclick="$.refreshMainContent({'url' : 'priceTracker/view.do'});"/>
+	</span>
+	
+	<span class="menuItem">
+		<l:button size="menu" label="Asset" onclick="$.refreshMainContent({'url' : 'asset/view.do'});"/>
 	</span>
 
 </div>

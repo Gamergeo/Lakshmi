@@ -1,0 +1,33 @@
+.contentBody {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(1) {
+	width: 18%;
+}
+
+.assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(2) {
+	width: 18%;
+}
+
+.assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(3) {
+	width: 18%;
+}
+
+.assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(4) {
+	width: 18%;
+}
+
+.assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(5) {
+	width: 18%;
+}
+
+.assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(6) {
+	width: 5%;
+}
+
+.assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(7) {
+	width: 5%;
+}

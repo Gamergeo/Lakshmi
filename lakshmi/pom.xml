@@ -248,6 +248,11 @@
   				<artifactId>form</artifactId>
 			    <version>${plugin.form.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.plugin</groupId>
+  				<artifactId>datatable</artifactId>
+			    <version>${plugin.form.version}</version>
+			</dependency>
 			
 		</dependencies>
 	</dependencyManagement>

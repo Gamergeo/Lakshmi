@@ -71,14 +71,33 @@ Version 0.5.5 : Page de genération de prix
 	- Requete pour selectionner les assets par api
 	- Suppression AssetType, remplacé par les api
 	
+Version 0.6.1 : Gestion des assets
+	- Création de la page asset
+	- Import du plugin datatable et quelques changements sur les plugins
+	
+	
 ---------------------------------------------------------------------------------
+
+Version 0.6.2 : Gestion des assets
+	- Fin de cr"ation de la page asset
+	- Backend permettant de récuperer les eventuels symbols cryptos directement
+	- Système de couleur pour afficher si la pair est toujours disponible (cryptowatch)
 
 Version 0.5.6 : Genération de prix
 	- Export csv fonctionnel
+	- Création des asset en base
+	- Asset link pour les non managés
+
+Version 0.6 : Gestion des assets
+
+Version 0.7 : Export QIF
+
+Version 1.0 : Import Kucoin
 
 
+Page de gestion des assets
 
-Asset link pour les non managés
+
 
 
 
@@ -91,8 +110,6 @@ IMPORTANT : Gestion des dates UTC
 	Pour l'instant les dates sont importés sans transformation
 	
 Checkbox pour exclure les operations antérieur à la dernière checklist terminée
-
-Prix a 5/10 m in près ?
 
 Reconnaissance automatique du fichier ?
 

@@ -86,6 +86,12 @@ public class ApiIdentifier {
 	}
 
 	public String getSymbol() {
+		
+		// Pour l'affichage
+		if (Api.CRYPTOWATCH.equals(getApi())) {
+			return getAsset().getIsin().toLowerCase() + getCurrency().getIsin().toLowerCase();
+		}
+		
 		return symbol;
 	}
 

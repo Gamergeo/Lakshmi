@@ -140,5 +140,9 @@
 			<groupId>com.plugin</groupId>
  			<artifactId>form</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.plugin</groupId>
+			<artifactId>datatable</artifactId>
+		</dependency>
 	</dependencies>
 </project>

@@ -2,27 +2,74 @@
 	--button-mini-width: 12.5px;
 	--button-small-width: 20px;
 	--button-normal-width: 50px;
-	--button-height: 40px;
+	--menuButton-height: 40px;
+	--button-height: 20px;
 }
 
-.button {
+.menuButton {
 	border: 1px;
 	border-radius: 7px;
 	cursor: pointer;
-	min-height: var(--button-height);
+	min-height: var(--menuButton-height);
 	min-width: 200px;
 	background-color: green;
 	color:white;
 	display:flex;
 }
 
-.button > span {
-	margin:auto;
-}
-
-.button:hover {
+.menuButton:hover {
 	background-color: lime;
 	color: grey;
 }
 
+.miniButton, .smallButton, .normalButton {	
+ 	border: none;
+  	text-align: center;
+  	text-decoration: none;
+  	display:flex;
+  	cursor: pointer;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: var(--button-height); 
+}
 
+.miniButton {
+	width: var(--button-mini-width);
+}
+
+.smallButton {
+	width: var(--button-small-width);
+}
+
+.normalButton {
+	width: var(--button-normal-width);
+}
+
+.button > span {
+	margin:auto;
+}
+
+.miniButton:hover, .smallButton:hover, .normalButton:hover {
+	background-color: var(--color-hover)!important;
+}
+
+.editButton {
+	background-image: url("../../images/icon/edit.png");
+}
+
+.deleteButton {
+	background-image: url("../../images/icon/delete.png");
+}
+
+.saveButton {
+	background-image: url("../../images/icon/save.svg");
+}
+
+.addButton {
+	background-image: url("../../images/icon/add.png");
+}
+
+.cancelButton {
+	background-image: url("../../images/icon/cancel.png");
+}
