@@ -6,6 +6,8 @@ import java.util.List;
 public class CryptoWatchApiConstants {
 	
 	final public static String BASE_URI = "https://api.cryptowat.ch/markets/";
+
+	final public static String MARKET_URI = "https://api.cryptowat.ch/markets";
 	
 	final public static String PARAMETER_PERIOD = "period";
 	

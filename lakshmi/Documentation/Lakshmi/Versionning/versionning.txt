@@ -75,6 +75,9 @@ Version 0.6.1 : Gestion des assets
 	- Création de la page asset
 	- Import du plugin datatable et quelques changements sur les plugins
 	
+Version 0.6.2.1 : Gestion des assets
+	- Mécanisme de refresh market / currency (incomplet)
+	
 	
 ---------------------------------------------------------------------------------
 

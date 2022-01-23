@@ -3,16 +3,32 @@
 <%@include file="/pages/head/headOnlyMetadata.jsp" %>
 <%@ page import="com.project.lakshmi.model.api.Api" %>
 
-<form:form method="post" action="asset/save" modelAttribute="asset" autocomplete="off" data-namespace="asset">
+<script type="text/javascript">
+  
+  	$(document).ready(function() {
+  		// On met en place les possibilités market / code
+//   		alert("#assetForm-${asset.id}");
+  		
+  		$('#assetForm-${asset.id}').refreshMarkets();
+  		$('#assetForm-${asset.id}').refreshCurrencies();
+  	});
+
+</script>
+
+<form:form id="assetForm-${asset.id}" method="post" action="asset/save" modelAttribute="asset" autocomplete="off" data-namespace="asset">
 
 	<form:hidden path="id" />
+	<c:if test="${asset.apiIdentifier != null}">
+		<form:hidden path="apiIdentifier.id" />
+	</c:if>
+	
 	<!-- Cell-->
 	<div>
 		<form:input path="label"/>
 	</div>
 	<!-- Cell-->
 	<div>
-		<form:input path="isin"/>
+		<form:input path="isin" onchange="$(this).refreshMarkets()"/>
 	</div>
 	<!-- Cell -->
 	<div>
@@ -23,11 +39,18 @@
 	</div>
 	<!-- Cell -->
 	<div>
-		a
+		<input type="hidden" name="oldMarket" value="${asset.apiIdentifier.market}">
+		<form:select path="apiIdentifier.market" onchange="$(this).refreshCurrencies()">
+			<option value=""></option>
+		</form:select>
+		<input type="hidden" name="oldCurrencyId" value="${asset.apiIdentifier.currency.id}">
+		<form:select path="apiIdentifier.currency.id">
+			<option value=""></option>
+		</form:select>
 	</div>
-	<!-- Cell -->
+	<!-- Cell-->
 	<div>
-		a
+		<form:input path="link"/>
 	</div>
 	<!-- Cell -->
 	<div class="buttonCell">

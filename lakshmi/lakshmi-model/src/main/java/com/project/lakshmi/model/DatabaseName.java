@@ -37,6 +37,12 @@ public class DatabaseName {
 	
 	public class ASSET {
 		public static final String TABLE = "asset";
+		
+		public static final String ISIN = "isin";
+		
+		public static final String LABEL = "label";
+		
+		public static final String LINK = "link";
 	}	
 	
 	public class API_IDENTIFIER {

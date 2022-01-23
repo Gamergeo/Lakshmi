@@ -17,15 +17,17 @@
 	<!-- Cell -->
 	<div>
 		<c:if test="${asset.apiIdentifier != null}">
-			${asset.apiIdentifier.symbol}
+			${asset.apiIdentifier.displayedSymbol}
 		</c:if>
 	</div>
-	<!-- Cell -->
 	<div>
-		<c:if test="${asset.apiIdentifier != null}">
-			${asset.apiIdentifier.market}
+		<c:if test="${asset.link != null}">
+			<a href="${asset.link}">
+				Lien
+			</a>
 		</c:if>
 	</div>
+	
 	<!-- Cell -->
 	<div class="buttonCell">
 		<div onclick="$(this).loadEditLine()" class="centered normalButton editButton">&nbsp;</div>

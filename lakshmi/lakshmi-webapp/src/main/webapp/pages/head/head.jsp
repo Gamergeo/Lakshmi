@@ -20,3 +20,7 @@
 	<!-- Content -->
 		<script type="text/javascript" src="<c:url value='/js/content/refreshContent.js' />"></script>
 		<script type="text/javascript" src="<c:url value='/js/content/refreshMainContent.js' />"></script>
+
+	<!-- ApiIdentifier -->
+		<script type="text/javascript" src="<c:url value='/js/apiIdentifier/refreshMarkets.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/js/apiIdentifier/refreshCurrencies.js' />"></script>	

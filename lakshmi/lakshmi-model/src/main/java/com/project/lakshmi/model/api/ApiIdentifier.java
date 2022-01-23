@@ -36,11 +36,12 @@ public class ApiIdentifier {
 	private Api api;
 	
 	@Column(name=DatabaseName.API_IDENTIFIER.MARKET)
-	private String market;
+	@Enumerated(EnumType.STRING)
+	private Market market;
 	
 	@Column(name=DatabaseName.API_IDENTIFIER.SYMBOL)
 	private String symbol;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -65,11 +66,11 @@ public class ApiIdentifier {
 		this.api = api;
 	}
 
-	public String getMarket() {
+	public Market getMarket() {
 		return market;
 	}
 
-	public void setMarket(String market) {
+	public void setMarket(Market market) {
 		this.market = market;
 	}
 
@@ -86,17 +87,25 @@ public class ApiIdentifier {
 	}
 
 	public String getSymbol() {
-		
-		// Pour l'affichage
-		if (Api.CRYPTOWATCH.equals(getApi())) {
-			return getAsset().getIsin().toLowerCase() + getCurrency().getIsin().toLowerCase();
-		}
-		
 		return symbol;
 	}
-
+	
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
-	
+
+	// Pour l'affichage
+	public String getDisplayedSymbol() {
+		
+		// Dans le cas de crypto watch c'est affiché "Market - isinassetisincurrency"
+		if (Api.CRYPTOWATCH.equals(getApi())) {
+			String market = getMarket().getCode();
+			String symbol = getAsset().getIsin().toLowerCase() + getCurrency().getIsin().toLowerCase(); 
+			
+			return market + " - " + symbol;
+		} else {
+			return getSymbol();
+		}
+	}
+
 }

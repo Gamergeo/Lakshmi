@@ -22,15 +22,18 @@ public class Asset implements Serializable {
 	private static final long serialVersionUID = -1864542003746307771L;
 
 	@Id
-	@Column
+	@Column(name=DatabaseName.ID)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected Integer id;
 
-	@Column
+	@Column(name=DatabaseName.ASSET.ISIN)
 	private String isin; // Pour les cryptos, correspond au cod
 
-	@Column
+	@Column(name=DatabaseName.ASSET.LABEL)
 	private String label;
+	
+	@Column(name=DatabaseName.ASSET.LINK)
+	private String link;
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -70,9 +73,17 @@ public class Asset implements Serializable {
 	public void setApiIdentifier(ApiIdentifier apiIdentifier) {
 		this.apiIdentifier = apiIdentifier;
 	}
+	
+	public String getLink() {
+		return link;
+	}
 
-		/**
-	 * TODO : pour l'instant, deux assets sont egales si elles ont le même nom
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	/**
+	 * Deux assets sont egales si elles ont le même ISIN
 	 */
 	@Override
 	public boolean equals(Object object) {

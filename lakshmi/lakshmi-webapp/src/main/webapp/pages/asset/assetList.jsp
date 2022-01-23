@@ -33,9 +33,9 @@
 		<!-- Header cell -->
 		<div>Api</div> 
 		<!-- Header cell -->
-		<div>Symbol</div>
+		<div>Api identifier</div>
 		<!-- Header cell -->
-		<div>Market</div> 
+		<div>Lien</div>
 		<!-- Header cell -->
 		<div>&nbsp;</div>
 		<!-- Header cell -->

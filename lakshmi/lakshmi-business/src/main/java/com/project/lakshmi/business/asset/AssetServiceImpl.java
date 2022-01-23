@@ -67,4 +67,10 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 	public Asset findByIsin(String isin) {
 		return assetDao.findByIsin(isin);
 	}
+	
+	@Override
+	@Transactional
+	public void saveOrUpdate(Asset asset) {
+		
+	}
 }
