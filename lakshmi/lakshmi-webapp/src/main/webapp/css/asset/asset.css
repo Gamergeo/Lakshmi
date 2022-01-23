@@ -31,3 +31,11 @@
 .assetTable .plugin_datatable_line .plugin_datatable_cell:nth-of-type(7) {
 	width: 5%;
 }
+
+.marketSelect {
+	max-width: 50%;
+}
+
+.currencySelect {
+	max-width: 40%;
+}

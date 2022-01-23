@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -41,7 +42,13 @@ public class AssetDaoImpl extends AbstractDAO<Asset> implements AssetDao {
 
 		restrictions.add(builder.equal(root.get(Asset_.isin), upperIsin));
 		
-		return getCurrentSession().createQuery(query).getSingleResult();
+		query.where(getPredicateArray(restrictions));
+		
+		try {
+			return getCurrentSession().createQuery(query).getSingleResult();
+		} catch (NoResultException exception) {
+			return null;
+		}
 	}
 	
 	/**

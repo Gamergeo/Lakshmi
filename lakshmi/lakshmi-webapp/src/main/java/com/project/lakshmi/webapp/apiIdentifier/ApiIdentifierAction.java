@@ -5,15 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.lakshmi.business.asset.AssetService;
-import com.project.lakshmi.model.api.Market;
-import com.project.lakshmi.model.asset.Asset;
+import com.project.lakshmi.business.asset.apiIdentifier.ApiIdentifierService;
+import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.webapp.AbstractAction;
 import com.project.lakshmi.webapp.response.json.ModelObjectResponse;
 
@@ -21,39 +20,48 @@ import com.project.lakshmi.webapp.response.json.ModelObjectResponse;
 @Controller
 public class ApiIdentifierAction extends AbstractAction {
 	
-	private final String SESSION_ATTRRIBUTE_PAIRLIST = "pairlist";
-	
 	@Autowired
 	AssetService assetService;
 	
+	@Autowired
+	ApiIdentifierService apiIdentifierService;
+	
 	@GetMapping("getMarkets")
-	public @ResponseBody List<Market> getMarkets(@RequestParam String isin) {
+	public @ResponseBody List<String> getMarkets(@RequestParam String isin) {
 		
 		// On récupère la liste en session
-		String pairList = (String) getSession().getAttribute(SESSION_ATTRRIBUTE_PAIRLIST);
+		@SuppressWarnings("unchecked")
+		List<ApiIdentifier> cryptowatchIdentifiers = (List<ApiIdentifier>) getSession().getAttribute(SESSION_ATTRRIBUTE_PAIRLIST);
 		
-		// Elle n'est pas initialisé
-		if (StringUtils.isEmpty(pairList)) {
-			
+		// On cherche les identifiants qui correspondent à ceux de cryptowatch
+		List<ApiIdentifier> correspondingIdentifiers = apiIdentifierService.findIdentifier(cryptowatchIdentifiers, isin);
+		
+		List<String> markets = new ArrayList<String>();
+		
+		for (ApiIdentifier apiIdentifier : correspondingIdentifiers) {
+			markets.add(apiIdentifier.getMarket());
 		}
-		
-		List<Market> markets = new ArrayList<Market>();
-		markets.add(Market.BINANCE);
-		markets.add(Market.KRAKEN);
-		
+			
 		return markets;
 	}
 	
 	@GetMapping("getCurrencies")
 	public @ResponseBody List<ModelObjectResponse> getCurrency(@RequestParam String isin, @RequestParam String market) {
+		// On récupère la liste en session
+		@SuppressWarnings("unchecked")
+		List<ApiIdentifier> cryptowatchIdentifiers = (List<ApiIdentifier>) getSession().getAttribute(SESSION_ATTRRIBUTE_PAIRLIST);
 		
-		List<ModelObjectResponse> result = new ArrayList<ModelObjectResponse>();
+		// On cherche les identifiants qui correspondent à ceux de cryptowatch
+		List<ApiIdentifier> correspondingIdentifiers = apiIdentifierService.findIdentifier(cryptowatchIdentifiers, isin, market);
 		
-		for (Asset asset : assetService.findAll()) {
-			ModelObjectResponse model = new ModelObjectResponse(asset.getId(), asset.getIsin());
-			result.add(model);
+		List<ModelObjectResponse> response = new ArrayList<ModelObjectResponse>();
+		
+		// On convertit les asset en object json
+		for (ApiIdentifier apiIdentifier : correspondingIdentifiers) {
+			ModelObjectResponse model = new ModelObjectResponse(apiIdentifier.getCurrency().getId(), apiIdentifier.getCurrency().getIsin());
+			response.add(model);
 		}
 		
-		return result;
+		return response;
 	}
 }

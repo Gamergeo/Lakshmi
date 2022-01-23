@@ -14,7 +14,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.lakshmi.business.api.ApiServiceImpl;
+import com.project.lakshmi.business.asset.apiIdentifier.ApiIdentifierService;
 import com.project.lakshmi.business.asset.ohlc.OhlcService;
+import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
 import com.project.lakshmi.technical.ApplicationException;
@@ -24,6 +26,9 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 	
 	@Autowired
 	OhlcService ohlcService;
+	
+	@Autowired
+	ApiIdentifierService apiIdentifierService;
 	
 	/**
 	 * @return all the day ohlc for asset
@@ -146,5 +151,48 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 		
 		return ohlcList;
 	}
-
+	
+	/**
+	 * @return une liste de tous les identifiants présents
+	 */
+	@Override
+	public List<ApiIdentifier> getAllIdentifiers() {
+		String uri = CryptoWatchApiConstants.MARKET_URI;
+		
+		String result = call(uri);
+		    
+	    ObjectMapper mapper = new ObjectMapper();
+		JsonNode resultNode;
+		try {
+			resultNode = mapper.readTree(result).findValue(CryptoWatchApiConstants.RESULT);
+		} catch (JsonProcessingException exception) {
+			throw new ApplicationException(exception.getMessage());
+		}
+		
+		List<ApiIdentifier> identifiers = new ArrayList<ApiIdentifier>();
+			
+		Iterator<JsonNode> iterator = resultNode.elements();
+			
+		while(iterator.hasNext()) {
+			JsonNode line = iterator.next();
+			
+			// On vérifie que la ligne est active
+			if (line.findValue(CryptoWatchApiConstants.RESULT_ACTIVE).asBoolean()) {
+				
+				String market = line.findValue(CryptoWatchApiConstants.RESULT_EXCHANGE).asText();
+				
+				String pair = line.findValue(CryptoWatchApiConstants.RESULT_PAIR).asText();
+				Asset asset = apiIdentifierService.getAsset(pair);
+				Asset currency = apiIdentifierService.getCurrency(pair, asset);
+				
+				// Tout a été trouvé, on ajoute l'identifier
+				if (asset != null && currency != null) {
+					ApiIdentifier identifier = new ApiIdentifier(asset, currency, market);
+					identifiers.add(identifier);
+				}
+			}
+		}
+		
+		return identifiers;
+	}
 }

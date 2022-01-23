@@ -78,13 +78,17 @@ Version 0.6.1 : Gestion des assets
 Version 0.6.2.1 : Gestion des assets
 	- Mécanisme de refresh market / currency (incomplet)
 	
+Version 0.6.2.2 : Gestion des assets
+	- Initialisation des identifiants cryptowatch au debut de l'application
+	- Backend permettant de récuperer les eventuels identifiants correspondant aux infos du formulaire
 	
 ---------------------------------------------------------------------------------
 
-Version 0.6.2 : Gestion des assets
-	- Fin de cr"ation de la page asset
-	- Backend permettant de récuperer les eventuels symbols cryptos directement
+Version 0.6.3 : Gestion des assets
+	- Fin de création de la page asset
+	- Mise en place du save
 	- Système de couleur pour afficher si la pair est toujours disponible (cryptowatch)
+	- Lenteur au debut de l'appli, voir à mutualiser pour faire moins de requete en base
 
 Version 0.5.6 : Genération de prix
 	- Export csv fonctionnel

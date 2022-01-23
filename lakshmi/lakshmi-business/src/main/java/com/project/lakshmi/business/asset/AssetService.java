@@ -27,6 +27,11 @@ public interface AssetService extends DatabaseService<Asset> {
 	List<Asset> findAllManagedByApi(Api api);
 
 	Asset findByIsin(String isin);
+
+	/**
+	 * Renvoie null si non trouvé
+	 */
+	Asset findByIsinIfAny(String isin);
 	
 //	void generateCsv() throws URISyntaxException, IOException;
 }

@@ -5,9 +5,8 @@ import java.util.List;
 
 public class CryptoWatchApiConstants {
 	
+	// -- OHLC
 	final public static String BASE_URI = "https://api.cryptowat.ch/markets/";
-
-	final public static String MARKET_URI = "https://api.cryptowat.ch/markets";
 	
 	final public static String PARAMETER_PERIOD = "period";
 	
@@ -25,5 +24,15 @@ public class CryptoWatchApiConstants {
 	
 	final public static String PARAMETER_PERIOD_DAY = "86400";
 	
+	// -- Market identifier
+	final public static String MARKET_URI = "https://api.cryptowat.ch/markets";
+	
+	final public static String RESULT = "result";
+	
+	final public static String RESULT_ACTIVE = "active";
+	
+	final public static String RESULT_PAIR = "pair";
+	
+	final public static String RESULT_EXCHANGE = "exchange";
 }
 

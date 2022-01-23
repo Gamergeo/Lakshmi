@@ -40,11 +40,12 @@
 	<!-- Cell -->
 	<div>
 		<input type="hidden" name="oldMarket" value="${asset.apiIdentifier.market}">
-		<form:select path="apiIdentifier.market" onchange="$(this).refreshCurrencies()">
+		<form:select class="marketSelect" path="apiIdentifier.market" onchange="$(this).refreshCurrencies()">
 			<option value=""></option>
 		</form:select>
+		-
 		<input type="hidden" name="oldCurrencyId" value="${asset.apiIdentifier.currency.id}">
-		<form:select path="apiIdentifier.currency.id">
+		<form:select class="currencySelect" path="apiIdentifier.currency.id">
 			<option value=""></option>
 		</form:select>
 	</div>

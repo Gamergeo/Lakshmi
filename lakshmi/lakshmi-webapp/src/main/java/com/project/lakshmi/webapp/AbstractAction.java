@@ -13,6 +13,8 @@ import com.project.lakshmi.technical.ApplicationException;
 
 public abstract class AbstractAction {
 	
+	protected final String SESSION_ATTRRIBUTE_PAIRLIST = "pairlist";
+	
 	protected HttpServletRequest getRequest() {
 		return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 	}

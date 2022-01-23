@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,9 +63,27 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 		return assetDao.findAllManagedByApi(api);
 	}
 	
+	/**
+	 * Renvoie une exception si non trouvé
+	 */
 	@Override
 	@Transactional
 	public Asset findByIsin(String isin) {
+		Asset asset = findByIsinIfAny(isin);
+		
+		if (asset == null) {
+			throw new NotYetImplementedException("Isin non trouvé : " + isin);
+		}
+		
+		return asset;
+	}
+	
+	/**
+	 * Renvoie null si non trouvé
+	 */
+	@Override
+	@Transactional
+	public Asset findByIsinIfAny(String isin) {
 		return assetDao.findByIsin(isin);
 	}
 	

@@ -40,6 +40,10 @@ public class ApiServiceImpl implements ApiService {
 	@Autowired
 	YahooApiService yahooApiService;
 	
+	protected String call(String uri) {
+		return call(uri, new ArrayList<NameValuePair>(), null, null);
+	}
+	
 	protected String call(String uri, List<NameValuePair> parameters) {
 		return call(uri, parameters, null, null);
 	}
