@@ -2,7 +2,6 @@ package com.project.lakshmi.model.asset;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +34,7 @@ public class Asset implements Serializable {
 	@Column(name=DatabaseName.ASSET.LINK)
 	private String link;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @PrimaryKeyJoinColumn
     private ApiIdentifier apiIdentifier;
     

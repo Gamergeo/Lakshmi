@@ -8,19 +8,30 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.lakshmi.business.AbstractDatabaseService;
 import com.project.lakshmi.business.api.cryptowatch.CryptoWatchApiService;
 import com.project.lakshmi.business.asset.AssetService;
 import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.model.asset.Asset;
+import com.project.lakshmi.persistance.IDao;
+import com.project.lakshmi.persistance.asset.apiidentifier.ApiIdentifierDao;
 
 @Service("apiIdentifierService")
-public class ApiIdentifierServiceImpl implements ApiIdentifierService {
+public class ApiIdentifierServiceImpl extends AbstractDatabaseService<ApiIdentifier> implements ApiIdentifierService {
 	
 	@Autowired
 	CryptoWatchApiService cryptoWatchApiService;
 	
 	@Autowired
 	AssetService assetService;
+	
+	@Autowired
+	ApiIdentifierDao apiIdentifierDao;
+
+	@Override
+	public IDao<ApiIdentifier> getDao() {
+		return apiIdentifierDao;
+	}
 	
 	/**
 	 * @param identifiers (liste préenregistré des identifiants)
@@ -73,52 +84,68 @@ public class ApiIdentifierServiceImpl implements ApiIdentifierService {
 	}
 	
 	/**
-	 * @return l'asset associé à une pair du type btcusdt
-	 * Renvoie null si l'asset n'existe pas en base
+	 * @return an api identifier correclty set with asset and currency
 	 */
 	@Override
 	@Transactional
-	public Asset getAsset(String pair) {
+	public ApiIdentifier createIdentifier(String pair, String market) {
+		List<Asset> existingAssets = assetService.findAll();
+		Asset asset = getAsset(pair, existingAssets);
 		
-		Asset asset;
+		// Il n'en existe pas, on arrète la
+		if (asset == null) {
+			return null;
+		}
 		
+		// On cherche à retrouver la currency
+		Asset currency = getCurrency(pair, existingAssets, asset);
+		
+		// Il n'en existe pas, on arrète la
+		if (currency == null) {
+			return null;
+		}
+		
+		// Sinon on crée l'apiidentifier
+		return new ApiIdentifier(asset, currency, market);
+	}
+	
+	/**
+	 * Découpe la pair et verifie s'il on arrive à determiner un asset existant
+	 */
+	private Asset getAsset(String pair, List<Asset> existingAssets) {
+		// On cerche à determiner l'isin de l'asset
 		for (int i = 1; i < pair.length(); i++) {
-			String subPair = pair.substring(0, i);
-			asset = assetService.findByIsinIfAny(subPair.toUpperCase());
+			String subPair = pair.substring(0, i).toUpperCase(); // On découpe les n premiers caractères
 			
-			if (asset != null) {
-				return asset;
+			// On determine si l'isin existe
+			for (Asset existingAsset : existingAssets) {
+				
+				// On a trouvé
+				if (existingAsset.getIsin().equals(subPair)) {
+					return existingAsset;
+				}
 			}
 		}
 		
 		return null;
 	}
 	
-	/**
-	 * @return la currency associé à une pair du type btcusdt
-	 * Renvoie null si l'asset n'existe pas en base
-	 */
-	@Override
-	@Transactional
-	public Asset getCurrency(String pair) {
-		Asset asset = getAsset(pair);
-		
+	private Asset getCurrency(String pair, List<Asset> existingAssets, Asset asset) {
 		if (asset == null) {
 			return null;
 		}
 		
-		return getCurrency(pair, asset);
-	}
-	
-	@Override
-	@Transactional
-	public Asset getCurrency(String pair, Asset asset) {
-		if (asset == null) {
-			return null;
+		String isinCurrency = pair.substring(asset.getIsin().length()).toUpperCase();
+		
+		// On determine si l'isin existe
+		for (Asset existingAsset : existingAssets) {
+			
+			// On a trouvé
+			if (existingAsset.getIsin().equals(isinCurrency)) {
+				return existingAsset;
+			}
 		}
 		
-		String isinCurrency = pair.substring(asset.getIsin().length());
-		
-		return assetService.findByIsinIfAny(isinCurrency.toUpperCase());
+		return null;
 	}
 }

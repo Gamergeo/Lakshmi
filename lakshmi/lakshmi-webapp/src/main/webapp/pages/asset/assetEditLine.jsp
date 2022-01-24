@@ -9,6 +9,7 @@
   		// On met en place les possibilités market / code
 //   		alert("#assetForm-${asset.id}");
   		
+  		$('#assetForm-${asset.id}').refreshApiIdentifier();
   		$('#assetForm-${asset.id}').refreshMarkets();
   		$('#assetForm-${asset.id}').refreshCurrencies();
   	});
@@ -32,22 +33,28 @@
 	</div>
 	<!-- Cell -->
 	<div>
-		<form:select path="apiIdentifier.api">
-			<option value=""></option>
+		<form:select path="apiIdentifier.api" onchange="$(this).refreshApiIdentifier()">
+			<option value="NONE"></option>
 			<form:options items="<%=Api.values()%>" itemLabel="code" itemValue="code"/>
 		</form:select>
 	</div>
 	<!-- Cell -->
 	<div>
-		<input type="hidden" name="oldMarket" value="${asset.apiIdentifier.market}">
-		<form:select class="marketSelect" path="apiIdentifier.market" onchange="$(this).refreshCurrencies()">
-			<option value=""></option>
-		</form:select>
-		-
-		<input type="hidden" name="oldCurrencyId" value="${asset.apiIdentifier.currency.id}">
-		<form:select class="currencySelect" path="apiIdentifier.currency.id">
-			<option value=""></option>
-		</form:select>
+		<div class="yahooInfos">
+			<form:input path="apiIdentifier.symbol"/>
+		</div>
+	
+		<div class="cryptowatchInfos">
+			<input type="hidden" name="oldMarket" value="${asset.apiIdentifier.market}">
+			<form:select class="marketSelect" path="apiIdentifier.market" onchange="$(this).refreshCurrencies()">
+				<option value=""></option>
+			</form:select>
+			-
+			<input type="hidden" name="oldCurrencyId" value="${asset.apiIdentifier.currency.id}">
+			<form:select class="currencySelect" path="apiIdentifier.currency.id">
+				<option value=""></option>
+			</form:select>
+		</div>
 	</div>
 	<!-- Cell-->
 	<div>

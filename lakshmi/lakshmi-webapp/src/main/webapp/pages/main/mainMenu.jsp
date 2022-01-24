@@ -23,7 +23,7 @@
 	</span>
 	
 	<span class="menuItem">
-		<l:button size="menu" label="Asset" onclick="$.refreshMainContent({'url' : 'asset/view.do'});"/>
+		<l:button size="menu" label="Asset" onclick="$.refreshMainContent({'url' : 'asset/list.do'});"/>
 	</span>
 
 </div>

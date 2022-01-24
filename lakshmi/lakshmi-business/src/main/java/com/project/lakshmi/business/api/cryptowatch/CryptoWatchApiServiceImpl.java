@@ -180,15 +180,13 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 			if (line.findValue(CryptoWatchApiConstants.RESULT_ACTIVE).asBoolean()) {
 				
 				String market = line.findValue(CryptoWatchApiConstants.RESULT_EXCHANGE).asText();
-				
 				String pair = line.findValue(CryptoWatchApiConstants.RESULT_PAIR).asText();
-				Asset asset = apiIdentifierService.getAsset(pair);
-				Asset currency = apiIdentifierService.getCurrency(pair, asset);
+				
+				ApiIdentifier apiIdentifier = apiIdentifierService.createIdentifier(pair, market);
 				
 				// Tout a été trouvé, on ajoute l'identifier
-				if (asset != null && currency != null) {
-					ApiIdentifier identifier = new ApiIdentifier(asset, currency, market);
-					identifiers.add(identifier);
+				if (apiIdentifier != null) {
+					identifiers.add(apiIdentifier);
 				}
 			}
 		}

@@ -4,29 +4,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.project.lakshmi.business.DatabaseService;
 import com.project.lakshmi.model.api.ApiIdentifier;
-import com.project.lakshmi.model.asset.Asset;
 
 @Service
-public interface ApiIdentifierService {
+public interface ApiIdentifierService extends DatabaseService<ApiIdentifier>{
 
 	/**
 	 * @return une liste de tous les identifiants présents
 	 */
 	List<ApiIdentifier> getAllIdentifiers();
-
-	/**
-	 * @return l'asset associé à une pair du type btcusdt
-	 */
-	Asset getAsset(String pair);
-
-	/**
-	 * @return la currency associé à une pair du type btcusdt
-	 * Renvoie null si l'asset n'existe pas en base
-	 */
-	Asset getCurrency(String pair);
-
-	Asset getCurrency(String pair, Asset asset);
 
 	/**
 	 * @param identifiers (liste préenregistré des identifiants)
@@ -42,6 +29,11 @@ public interface ApiIdentifierService {
 	 * @return tous les identifiants qui peuvent convenir à l'isin
 	 */
 	List<ApiIdentifier> findIdentifier(List<ApiIdentifier> apiIdentifiers, String isin, String market);
+
+	/**
+	 * @return an api identifier correclty set with asset and currency
+	 */
+	ApiIdentifier createIdentifier(String pair, String market);
 	
 }
 

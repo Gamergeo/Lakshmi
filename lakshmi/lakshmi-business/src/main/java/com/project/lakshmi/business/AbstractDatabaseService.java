@@ -2,6 +2,7 @@ package com.project.lakshmi.business;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import com.project.lakshmi.persistance.IDao;
@@ -44,5 +45,15 @@ public abstract class AbstractDatabaseService<T> implements DatabaseService<T> {
 	@Transactional
 	public void delete(Integer id) {
 		getDao().delete(id);
+	}
+	
+	@Override
+	@Transactional
+	public void deleteIfPossible(Integer id) {
+		try  {
+			getDao().delete(id);
+		} catch (EntityNotFoundException exception) {
+			
+		}
 	}
 }

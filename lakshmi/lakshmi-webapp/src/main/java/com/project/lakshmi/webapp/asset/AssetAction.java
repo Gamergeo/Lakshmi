@@ -2,6 +2,7 @@ package com.project.lakshmi.webapp.asset;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,10 +10,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.lakshmi.business.asset.AssetService;
+import com.project.lakshmi.model.api.Api;
+import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.model.asset.Asset;
+import com.project.lakshmi.technical.ApplicationException;
 import com.project.lakshmi.webapp.AbstractAction;
+import com.project.lakshmi.webapp.response.json.EmptyResponse;
 import com.project.lakshmi.webapp.response.json.JsonResponse;
 import com.project.lakshmi.webapp.response.json.ModelObjectResponse;
+
+import javassist.NotFoundException;
 
 @RequestMapping("asset")
 @Controller
@@ -21,8 +28,8 @@ public class AssetAction extends AbstractAction {
 	@Autowired
 	AssetService assetService;
 	
-	@PostMapping("view")
-	public ModelAndView view() {
+	@PostMapping("list")
+	public ModelAndView list() {
 		ModelAndView model = new ModelAndView("asset/assetList");
 		model.addObject("assets", assetService.findAll());	
 		return model;
@@ -60,10 +67,70 @@ public class AssetAction extends AbstractAction {
 		return new ModelObjectResponse(asset.getId());
 	}
 	
+	@PostMapping("delete")
+	public @ResponseBody JsonResponse delete(@RequestParam Integer id) throws NotFoundException {
+		
+		assetService.delete(id);
+		
+		return new EmptyResponse();  
+	}
+	
 	public void validate(Asset asset) {
 		
-//		if (StringUtils.isEmpty(account.getName()) || account.getName().length() > TechnicalConstants.DEFAULT_MAX_TEXT_SIZE) {
-//			throw new ApplicationException("Le nom doit etre entre 0 et 50 caractères");
-//		}
+		ApiIdentifier apiIdentifier = asset.getApiIdentifier();
+		
+		// Il n'est pas défini
+		if (apiIdentifier == null) {
+			return;
+		}
+		
+		// Si cryptowatch est l'api
+		if (Api.CRYPTOWATCH.equals(apiIdentifier.getApi())) {
+			
+			// Dans ce cas, le marché et l'asset et la currency doivent être défini
+			if (StringUtils.isEmpty(apiIdentifier.getMarket())) {
+				throw new ApplicationException("Le market doit être défini");
+			}
+			
+			if (apiIdentifier.getCurrency().getId() == null) {
+				throw new ApplicationException("La currency doit être défini");
+			}
+			
+			// Le symbol ne doit pas être défini
+			// Dans ce cas, le marché et l'asset et la currency doivent être défini
+			if (!StringUtils.isEmpty(apiIdentifier.getSymbol())) {
+				throw new ApplicationException("Le symbol ne doit pas être défini");
+			}
+			
+		} else if (Api.YAHOO.equals(apiIdentifier.getApi())) {
+			
+			// Dans ce cas, le marché et l'asset et la currency doivent être défini
+			if (StringUtils.isEmpty(apiIdentifier.getSymbol())) {
+				throw new ApplicationException("Le symbol doit être défini");
+			}
+			
+			// Le marché et l'asset et la currency ne doivent pas être défini
+			if (!StringUtils.isEmpty(apiIdentifier.getMarket())) {
+				throw new ApplicationException("Le market ne doit pas être défini");
+			}
+			
+			if (apiIdentifier.getCurrency().getId() != null) {
+				throw new ApplicationException("La currency ne doit pas être défini");
+			}
+		} else if (Api.YAHOO.equals(apiIdentifier.getApi())) {
+			
+			// Dans ce cas, ni le symbol, ni le marché, ni la currency ne doivent être defini
+			if (!StringUtils.isEmpty(apiIdentifier.getMarket())) {
+				throw new ApplicationException("Le market ne doit pas être défini");
+			}
+			
+			if (apiIdentifier.getCurrency().getId() != null) {
+				throw new ApplicationException("La currency ne doit pas être défini");
+			}
+			
+			if (!StringUtils.isEmpty(apiIdentifier.getSymbol())) {
+				throw new ApplicationException("Le symbol ne doit pas être défini");
+			}
+		}
 	}
 }

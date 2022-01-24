@@ -15,4 +15,6 @@ public interface DatabaseService<T> {
     public void delete(Integer id);
 
 	public List<T> findAllOrderBy(String attributeName);
+
+	void deleteIfPossible(Integer id);
 }

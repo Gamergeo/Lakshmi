@@ -2,6 +2,17 @@
 <!DOCTYPE html>
 <%@include file="/pages/head/headOnlyMetadata.jsp" %>
 
+
+<c:if test="${asset.apiIdentifier != null}">
+	<script type="text/javascript">
+  
+	  	$(document).ready(function() {
+	  		$('#assetForm-${asset.id}').isIdentifierAvailable();
+	  	});
+	
+	</script>
+</c:if>
+
  <form:form id="assetForm-${asset.id}" modelAttribute="asset" action="asset/save.do" data-namespace="asset">
 	<form:hidden path="id" value="${asset.id}" />
 	<!-- Cell -->
@@ -15,13 +26,13 @@
 		</c:if>
 	</div>
 	<!-- Cell -->
-	<div>
+	<div class="apiIdentifier">
 		<c:if test="${asset.apiIdentifier != null}">
 			${asset.apiIdentifier.displayedSymbol}
 		</c:if>
 	</div>
 	<div>
-		<c:if test="${asset.link != null}">
+		<c:if test='${asset.link != null && asset.link != ""}'>
 			<a href="${asset.link}">
 				Lien
 			</a>

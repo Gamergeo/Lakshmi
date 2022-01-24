@@ -6,6 +6,13 @@ $.fn.refreshCurrencies = function() {
 	return $(this).each(function() {
 		
 		let form = $(this).closestForm();
+		let api = form.find("select[name='apiIdentifier.api']").val();
+
+		// Si on n'est pas dans le cas cryptowatch, on ne fait rien
+		if ("CRYPTOWATCH" != api) {
+			return $(this);
+		}
+		
 		// On récupère l'isin
 		let isin = form.find("input[name='isin']").val();
 		let market = form.find("select[name='apiIdentifier.market']").val();

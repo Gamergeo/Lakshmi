@@ -82,20 +82,17 @@ Version 0.6.2.2 : Gestion des assets
 	- Initialisation des identifiants cryptowatch au debut de l'application
 	- Backend permettant de récuperer les eventuels identifiants correspondant aux infos du formulaire
 	
----------------------------------------------------------------------------------
-
 Version 0.6.3 : Gestion des assets
 	- Fin de création de la page asset
-	- Mise en place du save
+	- Mise en place du save / delete
 	- Système de couleur pour afficher si la pair est toujours disponible (cryptowatch)
-	- Lenteur au debut de l'appli, voir à mutualiser pour faire moins de requete en base
+	- Mutualisation des requetes pour refresh tous les identifiants de cryptowatch
+	- Ajout d'un bouton pour refresh les id
+	
+---------------------------------------------------------------------------------
 
 Version 0.5.6 : Genération de prix
 	- Export csv fonctionnel
-	- Création des asset en base
-	- Asset link pour les non managés
-
-Version 0.6 : Gestion des assets
 
 Version 0.7 : Export QIF
 
