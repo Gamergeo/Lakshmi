@@ -1,6 +1,7 @@
 package com.project.lakshmi.webapp.operation.importer;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,12 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.lakshmi.business.file.FileService;
+import com.project.lakshmi.business.operation.exporter.OperationExporterService;
 import com.project.lakshmi.business.operation.importer.OperationImporterService;
 import com.project.lakshmi.model.file.RawTextFile;
+import com.project.lakshmi.model.operation.Operation;
 import com.project.lakshmi.model.operation.importer.OperationImporterOrigin;
 import com.project.lakshmi.webapp.AbstractAction;
-import com.project.lakshmi.webapp.response.json.EmptyResponse;
 import com.project.lakshmi.webapp.response.json.JsonResponse;
+import com.project.lakshmi.webapp.response.json.StringResponse;
 
 @RequestMapping("operationImporter")
 @Controller
@@ -28,6 +31,9 @@ public class OperationImporterAction extends AbstractAction {
 	
 	@Autowired
 	OperationImporterService operationImporterService;
+	
+	@Autowired
+	OperationExporterService operationExporterService;
 	
 	@PostMapping("view")
 	public ModelAndView view() {
@@ -43,8 +49,10 @@ public class OperationImporterAction extends AbstractAction {
 		// Etape 1 : Création d'un TextFile
 		RawTextFile textFile = fileService.readTextFile(file.getInputStream());
 		
-		operationImporterService.importFile(origin, textFile);
+		List<Operation> operations = operationImporterService.importFile(origin, textFile);
 		
-		return new EmptyResponse();  
+		operationExporterService.exportOperations(operations);
+		
+		return new StringResponse("OK");  
 	}
 }

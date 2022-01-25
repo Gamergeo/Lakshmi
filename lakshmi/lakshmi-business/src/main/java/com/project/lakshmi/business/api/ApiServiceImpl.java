@@ -92,7 +92,6 @@ public class ApiServiceImpl implements ApiService {
 	@Override
 	public Ohlc getPriceOhlc(Asset asset, Instant instant) {
 		
-		
 		if (asset.isEuro()) { // ne devrait pas arriver
 			throw new ApplicationException("On ne doit pas chercher le prix d'un euro");
 			

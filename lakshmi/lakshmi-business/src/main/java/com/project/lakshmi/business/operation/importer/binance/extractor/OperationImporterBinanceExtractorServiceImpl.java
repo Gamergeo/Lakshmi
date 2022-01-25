@@ -13,6 +13,7 @@ import com.project.lakshmi.business.operation.importer.binance.OperationImporter
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.model.operation.investment.InvestmentType;
+import com.project.lakshmi.technical.ApplicationException;
 import com.project.lakshmi.technical.DateUtil;
 
 @Service("operationImporterBinanceExtractorService")
@@ -66,9 +67,12 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		
 		String assetName = values.get(OperationImporterBinanceConstants.ASSET_INDEX);
 		
-		// TODO : properly create asset
-		Asset asset = new Asset();
-		asset.setIsin(assetName);
+		Asset asset = assetService.findByIsinIfAny(assetName);
+		
+		// On a pas trouvé d'isin, on renvoie en erreur
+		if (asset == null) {
+			throw new ApplicationException("Asset non trouvé " + assetName);
+		}
 		
 		return asset;
 	}
@@ -95,7 +99,7 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 		List<String> values = getValues(line);
 		String rawDate = values.get(OperationImporterBinanceConstants.DATE_INDEX);
 		
-		return DateUtil.formatDate(rawDate, OperationImporterBinanceConstants.DATE_FORMAT, OperationImporterBinanceConstants.DATE_ZONE);
+		return DateUtil.extractDate(rawDate, OperationImporterBinanceConstants.DATE_FORMAT, OperationImporterBinanceConstants.DATE_ZONE);
 	}
 
 	/**

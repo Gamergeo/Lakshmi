@@ -89,6 +89,10 @@ Version 0.6.3 : Gestion des assets
 	- Mutualisation des requetes pour refresh tous les identifiants de cryptowatch
 	- Ajout d'un bouton pour refresh les id
 	
+Version 0.7.1 : Export QIF
+	- Mise en place de l'export qif
+	- L'export d'un trade est fonctionnel
+	
 ---------------------------------------------------------------------------------
 
 Version 0.5.6 : Genération de prix

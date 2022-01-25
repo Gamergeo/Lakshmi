@@ -13,6 +13,10 @@ public class FileUtils {
 		getFile(fileName).delete();
 	}
 	
+	public static void writeOnFileAndEndLine(String fileName, String message) {
+		writeOnFile(fileName, message + "\n");
+	}
+	
 	/**
 	 * Ecrit un message sur un fichier
 	 */

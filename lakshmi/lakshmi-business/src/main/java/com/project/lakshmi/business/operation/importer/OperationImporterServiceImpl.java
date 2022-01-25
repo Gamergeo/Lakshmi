@@ -19,7 +19,7 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 	OperationImporterBinanceService operationImporterBinanceService;
 
 	@Override
-	public void importFile(OperationImporterOrigin origin, RawTextFile rawFile) {
+	public List<Operation> importFile(OperationImporterOrigin origin, RawTextFile rawFile) {
 		// On valide le header
 		validateHeader(origin, rawFile);
 		
@@ -32,6 +32,8 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 			operations.add(operation);
 			operation = importNextOperation(origin, rawFile);
 		}
+		
+		return operations;
 	}
 	
 	/**
