@@ -52,7 +52,7 @@ public class Ohlc {
 	}
 	
 	public void setDate(long timestamp) {
-		this.date = Instant.ofEpochMilli(timestamp);
+		this.date = Instant.ofEpochSecond(timestamp);
 	}
 
 	public Double getOpen() {

@@ -93,7 +93,13 @@ Version 0.7.1 : Export QIF
 	- Mise en place de l'export qif
 	- L'export d'un trade est fonctionnel
 	
+Version 0.7.2 : Export QIF - Multitrade
+	- Correction de bug de calcul
+	- L'export d'un multi trade est fonctionnel
+	
 ---------------------------------------------------------------------------------
+
+Que faire pour le santos ou autre asset introuvable ???
 
 Version 0.5.6 : Genération de prix
 	- Export csv fonctionnel
@@ -103,17 +109,8 @@ Version 0.7 : Export QIF
 Version 1.0 : Import Kucoin
 
 
-Page de gestion des assets
-
-
-
-
-
-
 TODO : Amelioration des assets
 
-Version 5.0 : Reprise du code des assets etc...
-	
 IMPORTANT : Gestion des dates UTC
 	Pour l'instant les dates sont importés sans transformation
 	
