@@ -24,18 +24,20 @@ public class OperationExporterServiceImpl implements OperationExporterService {
 	OperationTextExporterService operationTextExporterService;
 
 	@Override
-	public void exportOperations(OperationImporterOrigin origin, List<Operation> operations) {
+	public String exportOperations(OperationImporterOrigin origin, List<Operation> operations) {
 		
 		setOrigin(origin);
 		
 		// On crée les deux fichiers
-		operationQifExporterService.createFile();
+		String qifFileName = operationQifExporterService.createFile();
 		operationTextExporterService.createFile();
 		
 		for (Operation operation : operations) {
 			// On ne peut ecrire que des investissements pour l'instant
 			writeOperation(operation.asOperationInvestment());
 		}
+		
+		return qifFileName;
 	}
 	
 	private void writeOperation(OperationInvestment operation) {

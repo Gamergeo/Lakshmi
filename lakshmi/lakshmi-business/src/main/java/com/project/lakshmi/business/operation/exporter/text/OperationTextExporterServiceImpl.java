@@ -17,8 +17,9 @@ public class OperationTextExporterServiceImpl implements OperationTextExporterSe
 	OperationExporterService operationExporterService;
 	
 	@Override
-	public void createFile() {
+	public String createFile() {
 		FileUtils.removeFile(getFileName());
+		return getFileName();
 	}
 	
 	@Override

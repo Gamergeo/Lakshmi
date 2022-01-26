@@ -13,7 +13,7 @@ import com.project.lakshmi.model.operation.importer.OperationImporterOrigin;
 @Service
 public interface OperationExporterService {
 	
-	void exportOperations(OperationImporterOrigin origin, List<Operation> operations);
+	String exportOperations(OperationImporterOrigin origin, List<Operation> operations);
 
 	OperationImporterOrigin getOrigin();
 }

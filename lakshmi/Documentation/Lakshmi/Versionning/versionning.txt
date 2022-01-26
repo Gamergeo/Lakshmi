@@ -103,6 +103,11 @@ Version 0.7.2 : Export QIF - All
 	- Refonte légère architecture (exporter / format)
 	- L'export qif est fonctionnel
 	
+Version 0.8.1 : Price tracker
+	- Mise en place du price tracker
+	- Amélioration interface (confirm, css..)
+	
+	
 ---------------------------------------------------------------------------------
 
 Que faire pour le santos ou autre asset introuvable ???

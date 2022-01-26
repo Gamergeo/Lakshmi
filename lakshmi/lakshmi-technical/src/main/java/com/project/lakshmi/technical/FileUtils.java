@@ -17,6 +17,14 @@ public class FileUtils {
 		writeOnFile(fileName, message + "\n");
 	}
 	
+	public static void endLine(String fileName) {
+		writeOnFileAndEndLine(fileName, "");
+	}
+	
+	public static String getUri(String fileName) {
+		return TechnicalConstants.BASE_DIRECTORY + fileName;
+	}
+	
 	/**
 	 * Ecrit un message sur un fichier
 	 */

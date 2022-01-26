@@ -7,7 +7,7 @@
 <l:pageInfos title="Price tracker"/>
 		
 <div id="generateButton">
-	<button onclick="generateCsv()">Generer csv</button>
+	<l:button size="menu" onclick="$.priceTracker()" label="Generer csv"/>
 </div>
 
 <div id="cryptoAsset">

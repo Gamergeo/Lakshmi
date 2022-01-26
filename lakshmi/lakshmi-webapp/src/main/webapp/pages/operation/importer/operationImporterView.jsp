@@ -4,23 +4,45 @@
 
 <%@ page import="com.project.lakshmi.model.operation.importer.OperationImporterOrigin" %>
 
+<link href="<c:url value='/css/operation/importer/operationImporter.css' />" rel="stylesheet" media="all" type="text/css">
+
 <l:pageInfos title="Import Order"/>
 
-<form method="post" action="operationImporter/import.do" enctype="multipart/form-data" >
+<script type="text/javascript">
+  
+	function submitForm() {
+		if (confirm("Lancer upload")) {
+			options = new Object();
+			options.success = (result) => {
+				alert(result.message);
+			}
+			
+			$("#importForm").submitForm(options);
+		}
+	}
 
-	<div>
-		<select name="origin">
-		    <option value="">--Please choose an option--</option>
-		    <option value="<%=OperationImporterOrigin.BINANCE%>">Binance</option>
-		</select>
+</script>
+
+<form id="importForm" method="post" action="operationImporter/import.do" enctype="multipart/form-data" >
+
+	<div id="origin">
+		<span>
+	  		<input type="checkbox" id="originBinance" name="origin" value="<%=OperationImporterOrigin.BINANCE%>">
+	  		<label for="originBinance">Binance</label>
+	  	</span>
+	  
+		<span>
+	  		<input type="checkbox" id="originKucoin" name="origin" value="<%=OperationImporterOrigin.KUCOIN%>">
+	  		<label for="originKucoin">Kucoin</label>
+	  	</span>
 	</div>
-	<div>
+	
+	<div id="file">
 		<input type = "file" name = "file" size = "50" />
 	</div>
 	
-	<div>
-		<div onclick="$(this).submitForm()">Upload file</div>
-<!-- 		<input type = "submit" value = "Upload File" /> -->
+	<div id="submit">
+		<l:button size="menu" onclick="submitForm()" label="Upload file"/>
 	</div>
 
 </form>

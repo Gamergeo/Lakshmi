@@ -9,4 +9,6 @@ $.refreshAllIdentifiers = function() {
 		alert(result.message);
 	}
 	$.getJson(options);
+	
+	return $;
 }

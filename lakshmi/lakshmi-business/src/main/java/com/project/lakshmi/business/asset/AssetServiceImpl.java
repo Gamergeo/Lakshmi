@@ -1,6 +1,7 @@
 package com.project.lakshmi.business.asset;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -50,7 +51,7 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 	@Override
 	@Transactional
 	public List<Ohlc> getAllHistoricalData() {
-		List<Asset> assets = findAll();
+		List<Asset> assets = findAllManagedByApi(Api.getManagedApi());
 
 		return ohlcService.getHistoricalOhlc(assets);
 	}
@@ -58,13 +59,21 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 	@Override
 	@Transactional
 	public List<Asset> findAllNotManaged() {
-		return assetDao.findAllNotManaged();
+		return findAllManagedByApi(Api.NONE);
 	}
 
 	@Override
 	@Transactional
+	public List<Asset> findAllManagedByApi(List<Api> apis) {
+		return assetDao.findAllManagedByApi(apis);
+	}
+	
+	@Override
+	@Transactional
 	public List<Asset> findAllManagedByApi(Api api) {
-		return assetDao.findAllManagedByApi(api);
+		List<Api> apis = new ArrayList<Api>();
+		apis.add(api);
+		return findAllManagedByApi(apis);
 	}
 
 	/**

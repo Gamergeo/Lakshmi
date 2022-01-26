@@ -10,7 +10,7 @@ import com.project.lakshmi.model.operation.investment.OperationInvestment;
 @Service
 public interface OperationFormatExporterService {
 	
-	void createFile();
+	String createFile();
 	
 	void writeOperation(OperationInvestment operation);
 	

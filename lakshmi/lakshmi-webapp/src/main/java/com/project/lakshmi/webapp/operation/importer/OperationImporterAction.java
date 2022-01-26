@@ -18,6 +18,7 @@ import com.project.lakshmi.business.operation.importer.OperationImporterService;
 import com.project.lakshmi.model.file.RawTextFile;
 import com.project.lakshmi.model.operation.Operation;
 import com.project.lakshmi.model.operation.importer.OperationImporterOrigin;
+import com.project.lakshmi.technical.FileUtils;
 import com.project.lakshmi.webapp.AbstractAction;
 import com.project.lakshmi.webapp.response.json.JsonResponse;
 import com.project.lakshmi.webapp.response.json.StringResponse;
@@ -51,8 +52,8 @@ public class OperationImporterAction extends AbstractAction {
 		
 		List<Operation> operations = operationImporterService.importFile(origin, textFile);
 		
-		operationExporterService.exportOperations(origin, operations);
-		
-		return new StringResponse("OK");
+		String fileName = operationExporterService.exportOperations(origin, operations);
+
+		return new StringResponse("Fichier disponible à " + FileUtils.getUri(fileName));
 	}
 }

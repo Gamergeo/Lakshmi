@@ -1,0 +1,22 @@
+.contentBody {
+	display: flex;
+	flex-direction: column;
+	margin-left:auto;
+	margin-right:auto;
+	width: 50%;
+}
+
+#origin, #file {
+	width: min-content;
+	display: flex;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#origin > span {
+	min-width: 100px;
+}
+
+

@@ -11,22 +11,13 @@ public interface AssetDao extends IDao<Asset> {
 	Asset findByIsin(String isin);
 
 	/**
-	 * @return La liste des assets qui n'ont pas d'api identifier
-	 * SELECT * FROM ASSET WHERE ID NOT IN (SELECT DISTINCT ID FROM API_IDENTIFIER)
-	 */
-	List<Asset> findAllNotManaged();
-
-	/**
 	 * @return la liste des assts géré par l'api donné
 	 * SELECT * 
 	 * FROM ASSET, API_IDENTIFIER 
 	 * WHERE ASSET.ID = API_IDENTIFIER.ID
-	 * AND API_IDENTIFIER.API = "Api" 
+	 * AND API_IDENTIFIER.API IN "Apis" 
 	 */
-	List<Asset> findAllManagedByApi(Api api);
+	List<Asset> findAllManagedByApi(List<Api> apis);
 
-//	List<OldAsset> findAll(AssetType type, List<Integer> dependencies);
-//
-//	List<OldAsset> findAll(AssetType type, boolean managed);
 
 }

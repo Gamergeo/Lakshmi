@@ -10,7 +10,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 
 import org.springframework.stereotype.Repository;
 
@@ -51,37 +50,13 @@ public class AssetDaoImpl extends AbstractDAO<Asset> implements AssetDao {
 		}
 	}
 	
-	/**
-	 * @return La liste des assets qui n'ont pas d'api identifier
-	 * SELECT * 
-	 * FROM ASSET 
-	 * WHERE NOT EXISTS 
-	 * (SELECT * FROM API_IDENTIFIER WHERE ASSET.ID = API_IDENTIFIER.ID)
-	 */
-	@Override
-	public List<Asset> findAllNotManaged() {
-		
-		// SELECT PRINCIPAL
-		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
-		CriteriaQuery<Asset> query = builder.createQuery(Asset.class);
-		Root<Asset> root = query.from(Asset.class);
-		
-		Subquery<ApiIdentifier> subquery = query.subquery(ApiIdentifier.class);
-		Root<ApiIdentifier> subRoot = subquery.from(ApiIdentifier.class);
-		subquery.select(subRoot);
-		subquery.where(builder.equal(root.get(Asset_.id), subRoot.get(ApiIdentifier_.id)));
-		
-		query.select(root);
-		
-		Set<Predicate> restrictions = new HashSet<Predicate>();
-		
-		restrictions.add(builder.not(builder.exists(subquery)));
-
-		query.where(getPredicateArray(restrictions));
-		query.orderBy(builder.asc(root.get(Asset_.label)));
-		return getCurrentSession().createQuery(query).getResultList();
-	}
-	
+//	/**
+//	 * @return La liste des assets qui n'ont pas d'api identifier
+//	 * SELECT * 
+//	 * FROM ASSET 
+//	 * WHERE NOT EXISTS 
+//	 * (SELECT * FROM API_IDENTIFIER WHERE ASSET.ID = API_IDENTIFIER.ID)
+//	 */
 //	@Override
 //	public List<Asset> findAllNotManaged() {
 //		
@@ -90,16 +65,16 @@ public class AssetDaoImpl extends AbstractDAO<Asset> implements AssetDao {
 //		CriteriaQuery<Asset> query = builder.createQuery(Asset.class);
 //		Root<Asset> root = query.from(Asset.class);
 //		
-//		Subquery<Integer> subquery = query.subquery(Integer.class);
+//		Subquery<ApiIdentifier> subquery = query.subquery(ApiIdentifier.class);
 //		Root<ApiIdentifier> subRoot = subquery.from(ApiIdentifier.class);
-//		subquery.select(subRoot.get(ApiIdentifier_.id));
-//		subquery.distinct(true);
+//		subquery.select(subRoot);
+//		subquery.where(builder.equal(root.get(Asset_.id), subRoot.get(ApiIdentifier_.id)));
 //		
 //		query.select(root);
 //		
 //		Set<Predicate> restrictions = new HashSet<Predicate>();
 //		
-//		restrictions.add(builder.not(builder.in(subquery)));
+//		restrictions.add(builder.not(builder.exists(subquery)));
 //
 //		query.where(getPredicateArray(restrictions));
 //		query.orderBy(builder.asc(root.get(Asset_.label)));
@@ -111,10 +86,10 @@ public class AssetDaoImpl extends AbstractDAO<Asset> implements AssetDao {
 	 * SELECT * 
 	 * FROM ASSET, API_IDENTIFIER 
 	 * WHERE ASSET.ID = API_IDENTIFIER.ID
-	 * AND API_IDENTIFIER.API = "Api" 
+	 * AND API_IDENTIFIER.API IN "Apis" 
 	 */
 	@Override
-	public List<Asset> findAllManagedByApi(Api api) {
+	public List<Asset> findAllManagedByApi(List<Api> apis) {
 		CriteriaBuilder builder = getCurrentSession().getCriteriaBuilder();
 		CriteriaQuery<Asset> query = builder.createQuery(Asset.class);
 		Root<Asset> root = query.from(Asset.class);
@@ -122,8 +97,8 @@ public class AssetDaoImpl extends AbstractDAO<Asset> implements AssetDao {
 		query.select(root);
 		
 		Set<Predicate> restrictions = new HashSet<Predicate>();
-
-		restrictions.add(builder.equal(join.get(ApiIdentifier_.api), api));
+		
+		restrictions.add(join.get(ApiIdentifier_.api).in(apis));
 		
 		query.where(getPredicateArray(restrictions));
 		query.orderBy(builder.asc(root.get(Asset_.label)));

@@ -43,9 +43,11 @@ public class OperationQifExporterServiceImpl implements OperationQifExporterServ
 	OperationInvestmentFinancingQifExporterService operationInvestmentFinancingExporterService;
 
 	@Override
-	public void createFile() {
+	public String createFile() {
 		FileUtils.removeFile(getFileName());
 		writeOnFile(QifExporterConstants.HEADER);
+		
+		return getFileName();
 	}
 	
 	@Override
@@ -70,8 +72,8 @@ public class OperationQifExporterServiceImpl implements OperationQifExporterServ
 	
 	protected void write(Instant date, Investment investment, String type, Double totalPrice, Double feePrice, String memo) {
 		// Date
-//		String formattedDate = DateUtil.formatDate(date, QifExporterConstants.DATE_FORMAT);
-		String formattedDate = DateUtil.formatDate(Instant.now(), QifExporterConstants.DATE_FORMAT);
+		String formattedDate = DateUtil.formatDate(date, QifExporterConstants.DATE_FORMAT);
+//		String formattedDate = DateUtil.formatDate(Instant.now(), QifExporterConstants.DATE_FORMAT);
 		writeAttribute(formattedDate, QifExporterConstants.PREFIX_DATE);
 		
 		// Quantité (toujours positif)
