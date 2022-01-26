@@ -1,15 +1,16 @@
-package com.project.lakshmi.business.operation.exporter.multitrade;
+package com.project.lakshmi.business.operation.exporter.qif.multitrade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.lakshmi.business.operation.exporter.trade.OperationInvestmentTradeExporterServiceImpl;
+import com.project.lakshmi.business.operation.exporter.qif.trade.OperationInvestmentTradeQifExporterServiceImpl;
 import com.project.lakshmi.business.operation.investment.InvestmentService;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.model.operation.investment.OperationInvestmentMultiTrade;
+import com.project.lakshmi.technical.NumberUtil;
 
 @Service("operationInvestmentMultiTradeExporterService")
-public class OperationInvestmentMultiTradeExporterServiceImpl extends OperationInvestmentTradeExporterServiceImpl implements OperationInvestmentMultiTradeExporterService {
+public class OperationInvestmentMultiTradeQifExporterServiceImpl extends OperationInvestmentTradeQifExporterServiceImpl implements OperationInvestmentMultiTradeQifExporterService {
 	
 	@Autowired
 	InvestmentService investmentService;
@@ -29,14 +30,14 @@ public class OperationInvestmentMultiTradeExporterServiceImpl extends OperationI
 		
 		// Opération principale
 		// Commentaire
-		String memo = "Conversion " + toExactString(multiTrade.getInvestment().getQuantity()) + " BNB";
+		String memo = "Conversion " + NumberUtil.toExactString(multiTrade.getInvestment().getQuantity()) + " BNB";
 		write(multiTrade.getDate(), multiTrade.getInvestment(), getTradeType(multiTrade.getInvestment()), 
 				totalPrice, 0d, memo);
 		
 		// Opérations d'equilibrage
 		for (Investment balancingInvestment : multiTrade.getBalancingInvestments()) {
 			memo = "Conversion de ";
-			memo += toRoundedString(balancingInvestment.getQuantity()) + " "; 
+			memo += NumberUtil.toExactString(balancingInvestment.getQuantity()) + " "; 
 			memo += balancingInvestment.getAsset().getIsin() + " en BNB";
 
 			// On récupère le prix de la transaction balancing

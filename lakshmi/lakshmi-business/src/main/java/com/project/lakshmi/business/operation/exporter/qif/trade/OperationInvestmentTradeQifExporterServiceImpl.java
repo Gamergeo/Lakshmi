@@ -1,16 +1,17 @@
-package com.project.lakshmi.business.operation.exporter.trade;
+package com.project.lakshmi.business.operation.exporter.qif.trade;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.lakshmi.business.operation.exporter.OperationExporterConstants;
-import com.project.lakshmi.business.operation.exporter.OperationExporterServiceImpl;
+import com.project.lakshmi.business.operation.exporter.qif.QifExporterConstants;
+import com.project.lakshmi.business.operation.exporter.qif.OperationQifExporterServiceImpl;
 import com.project.lakshmi.business.operation.investment.InvestmentService;
 import com.project.lakshmi.model.operation.investment.Investment;
 import com.project.lakshmi.model.operation.investment.OperationInvestmentTrade;
+import com.project.lakshmi.technical.NumberUtil;
 
 @Service("operationInvestmentTradeExporterService")
-public class OperationInvestmentTradeExporterServiceImpl extends OperationExporterServiceImpl implements OperationInvestmentTradeExporterService {
+public class OperationInvestmentTradeQifExporterServiceImpl extends OperationQifExporterServiceImpl implements OperationInvestmentTradeQifExporterService {
 	
 	@Autowired
 	InvestmentService investmentService;
@@ -40,14 +41,14 @@ public class OperationInvestmentTradeExporterServiceImpl extends OperationExport
 		
 		// Opération principale
 		String memo = trade.getInvestment().getQuantity() >= 0 ?  "Achat " : "Vente ";
-		memo += toExactString(trade.getInvestment().getQuantity()) + " ";
+		memo += NumberUtil.toExactString(trade.getInvestment().getQuantity()) + " ";
 		memo += trade.getInvestment().getAsset().getIsin();
 		write(trade.getDate(), trade.getInvestment(), getTradeType(trade.getInvestment()), 
 				totalPrice, feePrice, memo);
 		
 		// Opération d'equilibrage (attention, le prix total retranché des fees)
 		memo = "Equilibrage ";
-		memo += toExactString(trade.getBalancingInvestment().getQuantity()) + " "; 
+		memo += NumberUtil.toExactString(trade.getBalancingInvestment().getQuantity()) + " "; 
 		memo += trade.getBalancingInvestment().getAsset().getIsin();
 		
 		// Le total price de l'equilibrage dépends du fait que ca soit une vente ou non
@@ -65,7 +66,7 @@ public class OperationInvestmentTradeExporterServiceImpl extends OperationExport
 		// Fee
 		if (trade.getFeeInvestment() != null) {
 			memo = "Frais " + trade.getFeeInvestment().getAsset().getIsin();
-			write(trade.getDate(), trade.getFeeInvestment(), OperationExporterConstants.TYPE_SELL,
+			write(trade.getDate(), trade.getFeeInvestment(), QifExporterConstants.TYPE_SELL,
 					feePrice, 0d, memo);
 		}
 	}
@@ -76,9 +77,9 @@ public class OperationInvestmentTradeExporterServiceImpl extends OperationExport
 	protected String getTradeType(Investment invesment) {
 		// Dans le cas d'un trade, on ecrit sell ou buy suivant la quantité
 		if (invesment.getQuantity() >= 0) {
-			return OperationExporterConstants.TYPE_BUY;
+			return QifExporterConstants.TYPE_BUY;
 		} else {
-			return OperationExporterConstants.TYPE_SELL;
+			return QifExporterConstants.TYPE_SELL;
 		}
 	}
 }

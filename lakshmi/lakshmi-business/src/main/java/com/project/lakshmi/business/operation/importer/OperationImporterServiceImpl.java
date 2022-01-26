@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import com.project.lakshmi.business.operation.importer.binance.OperationImporterBinanceService;
 import com.project.lakshmi.model.file.RawTextFile;
 import com.project.lakshmi.model.operation.Operation;
+import com.project.lakshmi.model.operation.OperationType;
 import com.project.lakshmi.model.operation.importer.OperationImporterOrigin;
+import com.project.lakshmi.model.operation.investment.InvestmentType;
+import com.project.lakshmi.model.operation.investment.OperationInvestment;
 
 @Service("operationImporterService")
 public class OperationImporterServiceImpl implements OperationImporterService {
@@ -29,11 +32,58 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 		Operation operation = importNextOperation(origin, rawFile);
 		
 		while (operation != null) {
-			operations.add(operation);
+			addOperation(operations, operation);
 			operation = importNextOperation(origin, rawFile);
 		}
 		
 		return operations;
+	}
+	
+	/**
+	 * Plutot que d'importer n opérations de stacking, on en importe une seule
+	 * La date est alors la dernière
+	 * @param existingOperation
+	 * @param operationToAdd
+	 */
+	private void addOperation(List<Operation> existingOperations, Operation operationToAdd) {
+		
+		boolean addOperation = true;
+		
+		if (OperationType.INVESTMENT.equals(operationToAdd.getOperationType())) {
+			OperationInvestment operationInvestmentToAdd = operationToAdd.asOperationInvestment();
+
+			// Traitement spécial pour le stacking et le mining
+			if (InvestmentType.STACKING.equals(operationInvestmentToAdd.getInvestmentType()) ||
+					InvestmentType.MINING.equals(operationInvestmentToAdd.getInvestmentType())) {
+				
+				// On check si une operation de stacking pour cet asset existe déja
+				for (Operation existingOperation : existingOperations) {
+
+					if (OperationType.INVESTMENT.equals(operationToAdd.getOperationType())) {
+						OperationInvestment existingOperationInvestment = existingOperation.asOperationInvestment();
+						
+						// On a trouvé une opération de même type et l'asset correspond
+						if (existingOperationInvestment.getInvestmentType().equals(operationInvestmentToAdd.getInvestmentType()) &&
+								existingOperationInvestment.getInvestment().getAsset().equals(operationInvestmentToAdd.getInvestment().getAsset())) {
+							
+							// Dans ce cas on update l'existante en ajoutant la quantité
+							existingOperationInvestment.getInvestment().addInvestment(operationInvestmentToAdd.getInvestment());
+							
+							// Si la date est postérieure, c'est celle ci qui est prise en compte
+							if (operationInvestmentToAdd.getDate().isAfter(existingOperationInvestment.getDate())) {
+								existingOperationInvestment.setDate(operationInvestmentToAdd.getDate());
+							}
+							
+							addOperation = false;
+						}
+					}
+				}
+			}
+		}
+		
+		if (addOperation) {
+			existingOperations.add(operationToAdd);
+		}
 	}
 	
 	/**

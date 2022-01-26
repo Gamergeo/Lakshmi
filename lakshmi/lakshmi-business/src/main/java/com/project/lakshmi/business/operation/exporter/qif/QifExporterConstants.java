@@ -1,11 +1,13 @@
-package com.project.lakshmi.business.operation.exporter;
+package com.project.lakshmi.business.operation.exporter.qif;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class OperationExporterConstants {
+public class QifExporterConstants {
 	
 	public final static String HEADER = "!Type:Invst";
+	
+	public static String FILE_NAME = "OperationExport.qif";
 	
 	public final static DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(ZoneId.systemDefault());;
 	
@@ -28,6 +30,8 @@ public class OperationExporterConstants {
 	public final static String TYPE_BUY = "BUY";
 	
 	public final static String TYPE_SELL = "SELL";
+	
+	public final static String TYPE_ADD = "SHRSIN";
 	
 	public final static String END_OPERATION = "^";
 }

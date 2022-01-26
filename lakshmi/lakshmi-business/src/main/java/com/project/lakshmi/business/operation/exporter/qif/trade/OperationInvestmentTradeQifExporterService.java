@@ -1,11 +1,11 @@
-package com.project.lakshmi.business.operation.exporter.trade;
+package com.project.lakshmi.business.operation.exporter.qif.trade;
 
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.model.operation.investment.OperationInvestmentTrade;
 
 @Service
-public interface OperationInvestmentTradeExporterService {
+public interface OperationInvestmentTradeQifExporterService {
 
 	/**
 	 * Un trade se compose de trois opérations distinctes :

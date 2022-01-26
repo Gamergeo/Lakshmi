@@ -51,8 +51,8 @@ public class OperationImporterAction extends AbstractAction {
 		
 		List<Operation> operations = operationImporterService.importFile(origin, textFile);
 		
-		operationExporterService.exportOperations(operations);
+		operationExporterService.exportOperations(origin, operations);
 		
-		return new StringResponse("OK");  
+		return new StringResponse("OK");
 	}
 }

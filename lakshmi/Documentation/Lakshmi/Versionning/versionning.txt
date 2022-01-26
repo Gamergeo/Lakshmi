@@ -97,6 +97,12 @@ Version 0.7.2 : Export QIF - Multitrade
 	- Correction de bug de calcul
 	- L'export d'un multi trade est fonctionnel
 	
+Version 0.7.2 : Export QIF - All
+	- Fin de l'export QIF
+	- Export text pour les opérations à checker
+	- Refonte légère architecture (exporter / format)
+	- L'export qif est fonctionnel
+	
 ---------------------------------------------------------------------------------
 
 Que faire pour le santos ou autre asset introuvable ???
