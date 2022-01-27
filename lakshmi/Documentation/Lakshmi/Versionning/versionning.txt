@@ -106,21 +106,31 @@ Version 0.7.2 : Export QIF - All
 Version 0.8.1 : Price tracker
 	- Mise en place du price tracker
 	- Amélioration interface (confirm, css..)
-	
+
+Version 0.9.1 : Import Kucoin
+	- Mise en place de l'import Kucoin
+	- Les fees sont mal gérés, il faut importer un deuxième fichier, le feeFile
+	- L'import kucoin n'est pas fonctionnel en l'état
 	
 ---------------------------------------------------------------------------------
 
+Les fees sont encore plus deguelasse que prevu, certains n'apparaissent pas alors qu'il le devrait (sol du 10/01)
+
+
 Que faire pour le santos ou autre asset introuvable ???
 
-Version 0.5.6 : Genération de prix
-	- Export csv fonctionnel
-
-Version 0.7 : Export QIF
-
-Version 1.0 : Import Kucoin
 
 
-TODO : Amelioration des assets
+
+Version 0.10.1 : Api Kucoin
+	- Oblige d'en passer par la pour certains assets
+	- Supprimer l'exception du kcs
+	- Nettoyage de code ?
+	
+Version 1.0 : Cheklist
+	- Mécanisme de complétion des checklist
+	
+
 
 IMPORTANT : Gestion des dates UTC
 	Pour l'instant les dates sont importés sans transformation

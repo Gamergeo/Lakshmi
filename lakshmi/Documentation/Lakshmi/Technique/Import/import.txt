@@ -18,7 +18,24 @@ Specificité de Binance :
 	Ils sont composés d'un main (BNB) et de un ou plusieurs RIGHT part
 	Le main est l'ajout de toutes les lignes BNB
 	
+Specificité de Kucoin :
+
+	Les fees sont incorrects sur Kucoin, il faut donc deux fichier pour les traiter
 	
+	TradeFile :
+		Fichier contenant tous les trade
+		On réunit les trades en une seule opération s'ils ont la même date et les mêmes asset
+		La plupart des fees sont faux dans ce fichier
+			Sauf pour les KCS (feeCurrency = KCS)
+	
+	FeeFile : 
+		Fichier contenant les fees
+			On supprime toutes les opérations non fees
+			On inverse les lignes
+		On considère le feeFile comme contenant tous les fees en KCS, on le passe donc ligne par ligne
+			Les dates sont parfois plusieurs minutes après le trade, on peut donc pas utiliser les date
+		Suivant le nombre d'operation mergé dans le tradefile, on prends autant de ligne dans le feeFile
+			
 
 
 	

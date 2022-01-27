@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.operation.importer.binance.OperationImporterBinanceService;
+import com.project.lakshmi.business.operation.importer.kucoin.OperationImporterKucoinService;
 import com.project.lakshmi.model.file.RawTextFile;
 import com.project.lakshmi.model.operation.Operation;
 import com.project.lakshmi.model.operation.OperationType;
@@ -20,20 +21,29 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 	
 	@Autowired
 	OperationImporterBinanceService operationImporterBinanceService;
+	
+	@Autowired
+	OperationImporterKucoinService operationImporterKucoinTradeService;
 
 	@Override
-	public List<Operation> importFile(OperationImporterOrigin origin, RawTextFile rawFile) {
+	public List<Operation> importFile(OperationImporterOrigin origin, RawTextFile rawFile, RawTextFile feeFile) {
+		
 		// On valide le header
-		validateHeader(origin, rawFile);
+		validateHeader(origin, rawFile, feeFile);
+		
+		// On prépare le feeFile
+		if (OperationImporterOrigin.KUCOIN.equals(origin)) {
+			feeFile = operationImporterKucoinTradeService.prepareFeeFile(feeFile);
+		}
 		
 		List<Operation> operations = new ArrayList<Operation>();
 		
 		// On passe la main aux constructeurs spécifiques à l'origin
-		Operation operation = importNextOperation(origin, rawFile);
+		Operation operation = importNextOperation(origin, rawFile, feeFile);
 		
 		while (operation != null) {
 			addOperation(operations, operation);
-			operation = importNextOperation(origin, rawFile);
+			operation = importNextOperation(origin, rawFile, feeFile);
 		}
 		
 		return operations;
@@ -92,20 +102,24 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 	 * @param origin
 	 * @param rawFile
 	 */
-	private void validateHeader(OperationImporterOrigin origin, RawTextFile rawFile) {
+	private void validateHeader(OperationImporterOrigin origin, RawTextFile rawFile, RawTextFile feeFile) {
 		
 		if (OperationImporterOrigin.BINANCE.equals(origin)) {
 			operationImporterBinanceService.validateHeader(rawFile);
+		} else if (OperationImporterOrigin.KUCOIN.equals(origin)) {
+			operationImporterKucoinTradeService.validateHeaders(rawFile, feeFile);
 		} else {		
-			throw new NotYetImplementedException("importNext is not implemented for origin " + origin);
+			throw new NotYetImplementedException("validateHeader is not implemented for origin " + origin);
 		}
 	}
 	
-	private Operation importNextOperation(OperationImporterOrigin origin, RawTextFile rawFile) {
+	private Operation importNextOperation(OperationImporterOrigin origin, RawTextFile rawFile, RawTextFile feeFile) {
 		
 		if (OperationImporterOrigin.BINANCE.equals(origin)) {
 			return operationImporterBinanceService.importNextOperation(rawFile);
-		}
+		} else if (OperationImporterOrigin.KUCOIN.equals(origin)) {
+			return operationImporterKucoinTradeService.importNextOperation(rawFile, feeFile);
+		} 
 		
 		throw new NotYetImplementedException("importNext is not implemented for origin " + origin);
 	}

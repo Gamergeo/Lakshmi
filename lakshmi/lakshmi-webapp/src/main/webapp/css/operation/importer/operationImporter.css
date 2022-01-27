@@ -6,13 +6,17 @@
 	width: 50%;
 }
 
-#origin, #file {
+#origin, #file, #feeFile {
 	width: min-content;
 	display: flex;
 	margin-left:auto;
 	margin-right:auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
+}
+
+#feeFile {
+	display : none;
 }
 
 #origin > span {

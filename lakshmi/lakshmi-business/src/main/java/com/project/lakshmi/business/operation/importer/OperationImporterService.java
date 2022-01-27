@@ -10,11 +10,6 @@ import com.project.lakshmi.model.operation.importer.OperationImporterOrigin;
 
 @Service
 public interface OperationImporterService {
+	List<Operation> importFile(OperationImporterOrigin origin, RawTextFile rawFile, RawTextFile feeFile);
 	
-	
-	List<Operation> importFile(OperationImporterOrigin origin, RawTextFile rawFile);
-	
-//	void importOperations(OperationImporterOrigin origin, RawTextFile rawFile) throws IOException;
-
-
 }

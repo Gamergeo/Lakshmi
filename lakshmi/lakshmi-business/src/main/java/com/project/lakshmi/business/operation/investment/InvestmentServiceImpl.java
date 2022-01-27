@@ -19,11 +19,28 @@ public class InvestmentServiceImpl implements InvestmentService {
 	 */
 	@Override
 	public Double getTotal(Investment investment, Instant date) {
-		// On cherche le prix de l'asset associé
-		Double price = assetService.getPrice(investment.getAsset(), date);
 		
-		// Le montant total est le prix * quantité
-		return Math.abs(price * investment.getQuantity());
+		// Cas spécial des conversions spécials kucoin eth (ETH2)
+		// L'eth2 n'existe pas, donc le prix (en ETH) est defini directement dans l'investissement
+		if (investment.isSpecialConversion()) {
+			
+			// On cerche le prix de la currency
+			Double price = assetService.getPrice(investment.getSpecialConversionCurrency(), date);
+			
+			// Le montant total est le prix * quantité * rate
+			return Math.abs(price * investment.getQuantity() * investment.getSpecialConversionRate());
+			
+		} else {
+			
+			// On cherche le prix de l'asset associé
+			Double price = assetService.getPrice(investment.getAsset(), date);
+			
+			// Le montant total est le prix * quantité
+			return Math.abs(price * investment.getQuantity());
+		}
+		
+		
+
 	}
 
 }

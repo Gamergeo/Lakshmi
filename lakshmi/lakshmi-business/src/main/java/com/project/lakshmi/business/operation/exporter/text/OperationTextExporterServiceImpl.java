@@ -54,6 +54,6 @@ public class OperationTextExporterServiceImpl implements OperationTextExporterSe
 	}
 	
 	protected String getFileName() {
-		return operationExporterService.getOrigin().getLabel() + TextExporterConstants.FILE_NAME;
+		return operationExporterService.getOrigin().getFileName() + TextExporterConstants.FILE_NAME;
 	}
 }

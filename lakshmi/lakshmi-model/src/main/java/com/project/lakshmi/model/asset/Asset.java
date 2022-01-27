@@ -105,4 +105,12 @@ public class Asset implements Serializable {
 	public boolean isEuro() {
 		return "EUR".equals(getIsin());
 	}
+	
+	public boolean isKucoinEth() {
+		return "ETH2".equals(getIsin());
+	}
+	
+	public boolean isKcs() {
+		return "KCS".equals(getIsin());
+	}
 }

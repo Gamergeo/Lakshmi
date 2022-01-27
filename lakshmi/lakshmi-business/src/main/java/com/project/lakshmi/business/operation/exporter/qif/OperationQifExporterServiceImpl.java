@@ -113,6 +113,6 @@ public class OperationQifExporterServiceImpl implements OperationQifExporterServ
 	}
 	
 	protected String getFileName() {
-		return operationExporterService.getOrigin().getLabel() + QifExporterConstants.FILE_NAME;
+		return operationExporterService.getOrigin().getFileName() + QifExporterConstants.FILE_NAME;
 	}
 }

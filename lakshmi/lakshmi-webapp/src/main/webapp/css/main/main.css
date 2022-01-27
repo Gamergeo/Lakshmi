@@ -49,6 +49,7 @@
 	overflow: auto;
 	padding-left:10px;
 	padding-top:10px;
+	max-height: 90%;
 }
 
 /* #titleContainer { */

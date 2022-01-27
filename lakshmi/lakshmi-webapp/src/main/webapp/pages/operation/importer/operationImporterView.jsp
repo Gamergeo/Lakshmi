@@ -20,6 +20,15 @@
 			$("#importForm").submitForm(options);
 		}
 	}
+	
+	function originChange() {
+		
+		if ($("#originBinance").is(":checked")) {
+			$("#feeFile").hide();
+		} else {
+			$("#feeFile").show();
+		}
+	}
 
 </script>
 
@@ -27,18 +36,23 @@
 
 	<div id="origin">
 		<span>
-	  		<input type="checkbox" id="originBinance" name="origin" value="<%=OperationImporterOrigin.BINANCE%>">
+	  		<input onchange="originChange();" type="radio" id="originBinance" name="origin" value="<%=OperationImporterOrigin.BINANCE%>">
 	  		<label for="originBinance">Binance</label>
 	  	</span>
 	  
 		<span>
-	  		<input type="checkbox" id="originKucoin" name="origin" value="<%=OperationImporterOrigin.KUCOIN%>">
+	  		<input onchange="originChange();" type="radio" id="originKucoin" name="origin" value="<%=OperationImporterOrigin.KUCOIN%>">
 	  		<label for="originKucoin">Kucoin</label>
 	  	</span>
 	</div>
 	
 	<div id="file">
 		<input type = "file" name = "file" size = "50" />
+	</div>
+	
+	<div id="feeFile">
+		<span>Fee file :</span>
+		<input type = "file" name = "feeFile" size = "50" />
 	</div>
 	
 	<div id="submit">

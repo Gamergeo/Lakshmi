@@ -45,12 +45,14 @@ public class OperationImporterAction extends AbstractAction {
 	@PostMapping("import")
 	public @ResponseBody JsonResponse importOrder(
 			@RequestParam("origin") OperationImporterOrigin origin, 
-			@RequestParam("file") MultipartFile file) throws IOException {
+			@RequestParam("file") MultipartFile rawFile,
+			@RequestParam(name = "feeFile", required = false) MultipartFile rawFeeFile) throws IOException {
 		
 		// Etape 1 : Création d'un TextFile
-		RawTextFile textFile = fileService.readTextFile(file.getInputStream());
+		RawTextFile file = fileService.readTextFile(rawFile.getInputStream());
+		RawTextFile feeFile = fileService.readTextFile(rawFeeFile.getInputStream());
 		
-		List<Operation> operations = operationImporterService.importFile(origin, textFile);
+		List<Operation> operations = operationImporterService.importFile(origin, file, feeFile);
 		
 		String fileName = operationExporterService.exportOperations(origin, operations);
 

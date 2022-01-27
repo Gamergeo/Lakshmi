@@ -1,6 +1,7 @@
 package com.project.lakshmi.model.file;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -73,5 +74,9 @@ public class RawTextFile {
 	
 	public void removeNext() {
 		removeLine(1);
+	}
+	
+	public void reverseLine() {
+		Collections.reverse(lines);
 	}
 }

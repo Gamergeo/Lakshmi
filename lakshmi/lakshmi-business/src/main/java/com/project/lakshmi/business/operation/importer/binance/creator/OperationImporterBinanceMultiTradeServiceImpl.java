@@ -31,7 +31,13 @@ public class OperationImporterBinanceMultiTradeServiceImpl implements OperationI
 		
 		// On cherche si la prochaine ligne concerne ce trade
 		String line = rawFile.getNext();
-		Instant lineDate = operationImporterBinanceExtractorService.getDate(line);
+		Instant lineDate = null;
+		
+		if (line != null) {
+			lineDate = operationImporterBinanceExtractorService.getDate(line);
+		} else {
+			lineDate = null;
+		}
 		
 		while (operationDate.equals(lineDate)) {
 			

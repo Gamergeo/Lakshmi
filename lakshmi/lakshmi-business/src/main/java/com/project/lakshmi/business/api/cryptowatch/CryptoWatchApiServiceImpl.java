@@ -99,7 +99,7 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 		// On ne doit en trouver qu'une
 		
 		if (ohlcs.size() != 1) {
-			throw new ApplicationException("Plusieurs ohlc trouvé pour " + instant.toString());
+			throw new ApplicationException("Plusieurs ohlc trouvé pour " + asset.getIsin() + " " + instant.toString());
 		}
 		
 		return ohlcs.get(0);

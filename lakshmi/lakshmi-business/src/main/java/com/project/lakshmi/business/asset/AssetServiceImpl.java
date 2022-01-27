@@ -42,6 +42,7 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 	 */
 	@Override
 	public Double getPrice(Asset asset, Instant instant) {
+		
 		Ohlc ohlc = ohlcService.getOhlc(asset, instant);
 		ohlcService.convertToEuro(ohlc);
 
