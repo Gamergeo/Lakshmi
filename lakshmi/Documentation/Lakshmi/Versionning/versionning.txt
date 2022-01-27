@@ -112,6 +112,10 @@ Version 0.9.1 : Import Kucoin
 	- Les fees sont mal gérés, il faut importer un deuxième fichier, le feeFile
 	- L'import kucoin n'est pas fonctionnel en l'état
 	
+Version 0.10.1: Api Kucoin
+	- Pour certains, asset on rajoute l'api kucoin
+	- L'api est fonctionnelle
+	
 ---------------------------------------------------------------------------------
 
 Les fees sont encore plus deguelasse que prevu, certains n'apparaissent pas alors qu'il le devrait (sol du 10/01)
@@ -119,7 +123,7 @@ Les fees sont encore plus deguelasse que prevu, certains n'apparaissent pas alor
 
 Que faire pour le santos ou autre asset introuvable ???
 
-
+Rajouter des tests, ca serait bien
 
 
 Version 0.10.1 : Api Kucoin

@@ -31,11 +31,6 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 		// On valide le header
 		validateHeader(origin, rawFile, feeFile);
 		
-		// On prépare le feeFile
-		if (OperationImporterOrigin.KUCOIN.equals(origin)) {
-			feeFile = operationImporterKucoinTradeService.prepareFeeFile(feeFile);
-		}
-		
 		List<Operation> operations = new ArrayList<Operation>();
 		
 		// On passe la main aux constructeurs spécifiques à l'origin
@@ -45,6 +40,9 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 			addOperation(operations, operation);
 			operation = importNextOperation(origin, rawFile, feeFile);
 		}
+		
+		// On associe les fee si besoin (cas kucoin)
+		associateFee(origin, operations, feeFile);
 		
 		return operations;
 	}
@@ -122,6 +120,18 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 		} 
 		
 		throw new NotYetImplementedException("importNext is not implemented for origin " + origin);
+	}
+	
+	/**
+	 * Dans le cas de Kucoin, on associe les fee à posteriori à partir du fee file
+	 */
+	private void associateFee(OperationImporterOrigin origin, List<Operation> operations, RawTextFile feeFile) {
+		
+		if (OperationImporterOrigin.BINANCE.equals(origin)) { // Rien à faire
+			return;
+		} else if (OperationImporterOrigin.KUCOIN.equals(origin)) {
+			operationImporterKucoinTradeService.associateFee(operations, feeFile);
+		} 
 	}
 	
 }

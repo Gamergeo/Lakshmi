@@ -109,17 +109,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/org/zcore/maven/merge-maven-plugin/0.0.3/merge-maven-plugin-0.0.3.jar" sourcepath="M2_REPO/org/zcore/maven/merge-maven-plugin/0.0.3/merge-maven-plugin-0.0.3-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/maven/maven-plugin-api/3.0.1/maven-plugin-api-3.0.1.jar" sourcepath="M2_REPO/org/apache/maven/maven-plugin-api/3.0.1/maven-plugin-api-3.0.1-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/maven/maven-model/3.0.1/maven-model-3.0.1.jar" sourcepath="M2_REPO/org/apache/maven/maven-model/3.0.1/maven-model-3.0.1-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/codehaus/plexus/plexus-utils/2.0.4/plexus-utils-2.0.4.jar" sourcepath="M2_REPO/org/codehaus/plexus/plexus-utils/2.0.4/plexus-utils-2.0.4-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/maven/maven-artifact/3.0.1/maven-artifact-3.0.1.jar" sourcepath="M2_REPO/org/apache/maven/maven-artifact/3.0.1/maven-artifact-3.0.1-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/sonatype/sisu/sisu-inject-plexus/1.4.3.1/sisu-inject-plexus-1.4.3.1.jar" sourcepath="M2_REPO/org/sonatype/sisu/sisu-inject-plexus/1.4.3.1/sisu-inject-plexus-1.4.3.1-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5.jar" sourcepath="M2_REPO/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/codehaus/plexus/plexus-classworlds/2.2.3/plexus-classworlds-2.2.3.jar" sourcepath="M2_REPO/org/codehaus/plexus/plexus-classworlds/2.2.3/plexus-classworlds-2.2.3-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/sonatype/sisu/sisu-inject-bean/1.4.3.1/sisu-inject-bean-1.4.3.1.jar" sourcepath="M2_REPO/org/sonatype/sisu/sisu-inject-bean/1.4.3.1/sisu-inject-bean-1.4.3.1-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/sonatype/sisu/sisu-guice/2.9.1/sisu-guice-2.9.1-noaop.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/maven/plugin-tools/maven-plugin-annotations/3.2/maven-plugin-annotations-3.2.jar" sourcepath="M2_REPO/org/apache/maven/plugin-tools/maven-plugin-annotations/3.2/maven-plugin-annotations-3.2-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

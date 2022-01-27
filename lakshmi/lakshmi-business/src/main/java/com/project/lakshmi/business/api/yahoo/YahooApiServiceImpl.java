@@ -45,12 +45,15 @@ public class YahooApiServiceImpl extends ApiServiceImpl implements YahooApiServi
 	private List<Ohlc> getOhlc(List<Asset> assets, String interval) {
 		String uri = YahooApiConstants.BASE_URI;
 		
+	    List<NameValuePair> headers = new ArrayList<NameValuePair>();
+	    headers.add(new BasicNameValuePair(YahooApiConstants.API_KEY_HEADER_YAHOO, YahooApiConstants.API_KEY_YAHOO));
+		
 	    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 	    parameters.add(new BasicNameValuePair(YahooApiConstants.PARAMETER_INTERVAL,interval));
 	    parameters.add(new BasicNameValuePair(YahooApiConstants.PARAMETER_RANGE, YahooApiConstants.RANGE_5Y));
 	    parameters.add(new BasicNameValuePair(YahooApiConstants.PARAMETER_SYMBOL, getSymbols(assets)));
 	    
-	    String result = call(uri, parameters, YahooApiConstants.API_KEY_HEADER_YAHOO, YahooApiConstants.API_KEY_YAHOO);
+	    String result = call(uri, headers, parameters);
 	    
 	    ObjectMapper mapper = new ObjectMapper();
 	    JsonNode rootNode;

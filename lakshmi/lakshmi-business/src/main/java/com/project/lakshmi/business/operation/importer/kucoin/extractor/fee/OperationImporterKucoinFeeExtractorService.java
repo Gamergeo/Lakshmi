@@ -1,18 +1,12 @@
 package com.project.lakshmi.business.operation.importer.kucoin.extractor.fee;
 
-import java.time.Instant;
-
 import org.springframework.stereotype.Service;
 
-import com.project.lakshmi.model.operation.investment.Investment;
+import com.project.lakshmi.model.operation.investment.OperationInvestmentTrade;
 
 @Service
 public interface OperationImporterKucoinFeeExtractorService {
 
-	Instant getDate(String line);
-
-	Investment getInvestment(String line);
-
-	boolean isFee(String line);
+	OperationInvestmentTrade getFeeOperation(String line);
 
 }

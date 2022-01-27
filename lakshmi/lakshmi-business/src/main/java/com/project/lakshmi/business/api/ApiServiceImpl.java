@@ -18,9 +18,9 @@ import org.apache.http.util.EntityUtils;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.project.lakshmi.business.api.cryptowatch.CryptoWatchApiService;
+import com.project.lakshmi.business.api.kucoin.KucoinApiService;
 import com.project.lakshmi.business.api.yahoo.YahooApiService;
 import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.api.ApiIdentifier;
@@ -39,16 +39,19 @@ public class ApiServiceImpl implements ApiService {
 
 	@Autowired
 	YahooApiService yahooApiService;
+
+	@Autowired
+	KucoinApiService kucoinApiService;
 	
 	protected String call(String uri) {
-		return call(uri, new ArrayList<NameValuePair>(), null, null);
+		return call(uri, new ArrayList<NameValuePair>(), new ArrayList<NameValuePair>());
 	}
 	
 	protected String call(String uri, List<NameValuePair> parameters) {
-		return call(uri, parameters, null, null);
+		return call(uri, new ArrayList<NameValuePair>(), parameters);
 	}
 	
-	protected String call(String uri, List<NameValuePair> parameters, String apiKeyHeaderName, String apiKey) {
+	protected String call(String uri, List<NameValuePair> headers, List<NameValuePair> parameters) {
 		String response_content = "";
 		URIBuilder query;
 		CloseableHttpClient client;
@@ -67,8 +70,8 @@ public class ApiServiceImpl implements ApiService {
 
 	    request.setHeader(HttpHeaders.ACCEPT, "application/json");
 	    
-	    if (!StringUtils.isEmpty(apiKeyHeaderName)) {
-	    	request.addHeader(apiKeyHeaderName, apiKey);
+	    for (NameValuePair header : headers) {
+	    	request.addHeader(header.getName(), header.getValue());
 	    }
 
 	    CloseableHttpResponse response;
@@ -97,6 +100,8 @@ public class ApiServiceImpl implements ApiService {
 			
 		} else if (Api.CRYPTOWATCH.equals(asset.getApiIdentifier().getApi())) {
 			return cryptoWatchApiService.getPriceOhlc(asset, instant);
+		} else if (Api.KUCOIN.equals(asset.getApiIdentifier().getApi())) {
+			return kucoinApiService.getPriceOhlc(asset, instant);
 		}
 		
 		throw new NotYetImplementedException("import api non implémenté");
@@ -108,20 +113,23 @@ public class ApiServiceImpl implements ApiService {
 		// On va trier les assets en plusieurs listes, suivant l'api concerné
 		List<Asset> cryptoWatchAsset = new ArrayList<Asset>();
 		List<Asset> yahooAsset = new ArrayList<Asset>();
+		List<Asset> kucoinAsset = new ArrayList<Asset>();
 		
 		for (Asset asset : assets) {
 			
 			ApiIdentifier apiIdentifier = asset.getApiIdentifier();
 			
 			// L'euro n'a pas d'identifier
-			if (apiIdentifier != null) {
-				if (Api.CRYPTOWATCH.equals(apiIdentifier.getApi())) {
-					cryptoWatchAsset.add(asset);
-				} else if (Api.YAHOO.equals(apiIdentifier.getApi())) {
-					yahooAsset.add(asset);
-				} else {
-					throw new NotYetImplementedException("Api non definie");
-				}
+			if (Api.CRYPTOWATCH.equals(apiIdentifier.getApi())) {
+				cryptoWatchAsset.add(asset);
+			} else if (Api.YAHOO.equals(apiIdentifier.getApi())) {
+				yahooAsset.add(asset);
+			} else if (Api.KUCOIN.equals(apiIdentifier.getApi())) {
+				kucoinAsset.add(asset);
+			} else if (Api.NONE.equals(apiIdentifier.getApi())) {
+				// Rien à faire
+			} else {
+				throw new NotYetImplementedException("Api non definie");
 			}
 		}
 		
@@ -129,6 +137,7 @@ public class ApiServiceImpl implements ApiService {
 		
 		ohlc.addAll(cryptoWatchApiService.getHistoricalOhlc(cryptoWatchAsset));
 		ohlc.addAll(yahooApiService.getHistoricalOhlc(yahooAsset));
+		ohlc.addAll(kucoinApiService.getHistoricalOhlc(kucoinAsset));
 		
 		return ohlc;
 	}
