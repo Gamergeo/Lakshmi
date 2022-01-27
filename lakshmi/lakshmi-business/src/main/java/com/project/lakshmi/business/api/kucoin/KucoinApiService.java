@@ -7,6 +7,8 @@ import com.project.lakshmi.model.api.ApiIdentifier;
 
 public interface KucoinApiService extends ApiService {
 
-//	List<ApiIdentifier> getAllIdentifiers();
-
+	/**
+	 * @return une liste de tous les identifiants présents
+	 */
+	List<ApiIdentifier> getAllIdentifiers();
 }

@@ -1,8 +1,5 @@
 package com.project.lakshmi.model.operation.investment;
 
-import java.util.AbstractMap;
-import java.util.Map.Entry;
-
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.technical.ApplicationException;
 
@@ -11,12 +8,6 @@ public class Investment {
 	private Asset asset;
 	
 	private Double quantity;
-	
-	// Certains assets sont irrecupérables en api
-	// Cependantn Kucoin precise les prix
-	// Donc dans certains cas, on utilise une coversion
-	// Ex : ETH2 = 0.94 ETH
-	private Entry<Asset, Double> specialConversion;
 	
 	public Investment(Asset asset, Double quantity) {
 		super();
@@ -57,21 +48,5 @@ public class Investment {
 				setQuantity(getQuantity() + addedInvestment.getQuantity()); 
 			}
 		}
-	}
-	
-	public boolean isSpecialConversion() {
-		return specialConversion != null;
-	}
-
-	public Double getSpecialConversionRate() {
-		return specialConversion.getValue();
-	}
-	
-	public Asset getSpecialConversionCurrency() {
-		return specialConversion.getKey();
-	}
-
-	public void setSpecialConversion(Asset currency, Double rate) {
-		this.specialConversion = new AbstractMap.SimpleEntry<Asset, Double>(currency, rate);
 	}
 }

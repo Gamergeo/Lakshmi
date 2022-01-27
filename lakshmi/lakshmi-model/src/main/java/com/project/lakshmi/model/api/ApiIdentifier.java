@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.project.lakshmi.model.DatabaseName;
 import com.project.lakshmi.model.asset.Asset;
@@ -40,6 +41,10 @@ public class ApiIdentifier {
 	
 	@Column(name=DatabaseName.API_IDENTIFIER.SYMBOL)
 	private String symbol;
+	
+	// Utilisé pour retrouver tous les identifiants
+	@Transient
+	private String rawSymbol;
 	
 	public ApiIdentifier() {}
 	
@@ -103,8 +108,8 @@ public class ApiIdentifier {
 		this.symbol = symbol;
 	}
 
-	// Pour l'affichage
-	public String getDisplayedSymbol() {
+	// Correspond à l'identifiant de l'api
+	public String getApiSymbol() {
 		
 		// Dans le cas de crypto watch c'est affiché "Market - isinassetisincurrency"
 		if (Api.CRYPTOWATCH.equals(getApi())) {
@@ -112,8 +117,22 @@ public class ApiIdentifier {
 			String symbol = getAsset().getIsin().toLowerCase() + getCurrency().getIsin().toLowerCase(); 
 			
 			return market + " - " + symbol;
-		} else {
-			return getSymbol();
 		}
+		
+		// Dans le cas de kucoin c'est affiché "ISINASSET- ISINCURRENCY"
+		if (Api.KUCOIN.equals(getApi())) {
+			return getAsset().getIsin().toUpperCase() + "-" + getCurrency().getIsin().toUpperCase(); 
+		} 
+		
+		return getSymbol();
 	}
+
+	public String getRawSymbol() {
+		return rawSymbol;
+	}
+
+	public void setRawSymbol(String rawSymbol) {
+		this.rawSymbol = rawSymbol;
+	}
+	
 }

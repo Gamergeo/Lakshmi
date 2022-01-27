@@ -5,35 +5,29 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.DatabaseService;
+import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.api.ApiIdentifier;
 
 @Service
 public interface ApiIdentifierService extends DatabaseService<ApiIdentifier>{
 
 	/**
-	 * @return une liste de tous les identifiants présents
+	 * @return tous les identifiants qui peuvent convenir à l'isin et à l'api
 	 */
-	List<ApiIdentifier> getAllIdentifiers();
+	List<ApiIdentifier> getMatchingIdentifier(Api api, String isin);
 
 	/**
-	 * @param identifiers (liste préenregistré des identifiants)
-	 * @param isin
-	 * @return tous les identifiants qui peuvent convenir à l'isin
+	 * @return tous les identifiants qui peuvent convenir à l'isin et au market
 	 */
-	List<ApiIdentifier> findIdentifier(List<ApiIdentifier> apiIdentifiers, String isin);
+	List<ApiIdentifier> getMatchingIdentifier(Api api, String isin, String market);
+
+	ApiIdentifier getMatchingIdentifier(Api api, String isin, String currencyIsin, String market);
 
 	/**
-	 * @param identifiers (liste préenregistré des identifiants)
-	 * @param isin
-	 * @param market
-	 * @return tous les identifiants qui peuvent convenir à l'isin
+	 * @return l'isin de la currency
+	 * Pour cela on prends le raw, et on supprime l'isin (plus d'eventuels caractères spéciaiux)
 	 */
-	List<ApiIdentifier> findIdentifier(List<ApiIdentifier> apiIdentifiers, String isin, String market);
+	String getCurrencyIsin(String assetIsin, ApiIdentifier identifier);
 
-	/**
-	 * @return an api identifier correclty set with asset and currency
-	 */
-	ApiIdentifier createIdentifier(String pair, String market);
-	
 }
 

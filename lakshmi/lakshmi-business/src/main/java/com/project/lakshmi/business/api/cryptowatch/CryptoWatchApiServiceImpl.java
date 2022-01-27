@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.lakshmi.business.api.ApiServiceImpl;
 import com.project.lakshmi.business.asset.apiIdentifier.ApiIdentifierService;
 import com.project.lakshmi.business.asset.ohlc.OhlcService;
+import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
@@ -182,7 +183,10 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 				String market = line.findValue(CryptoWatchApiConstants.RESULT_EXCHANGE).asText();
 				String pair = line.findValue(CryptoWatchApiConstants.RESULT_PAIR).asText();
 				
-				ApiIdentifier apiIdentifier = apiIdentifierService.createIdentifier(pair, market);
+				ApiIdentifier apiIdentifier = new ApiIdentifier();
+				apiIdentifier.setRawSymbol(pair);
+				apiIdentifier.setMarket(market);
+				apiIdentifier.setApi(Api.CRYPTOWATCH);
 				
 				// Tout a été trouvé, on ajoute l'identifier
 				if (apiIdentifier != null) {

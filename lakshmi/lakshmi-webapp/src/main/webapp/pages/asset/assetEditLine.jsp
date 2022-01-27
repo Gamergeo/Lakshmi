@@ -6,12 +6,7 @@
 <script type="text/javascript">
   
   	$(document).ready(function() {
-  		// On met en place les possibilités market / code
-//   		alert("#assetForm-${asset.id}");
-  		
   		$('#assetForm-${asset.id}').refreshApiIdentifier();
-  		$('#assetForm-${asset.id}').refreshMarkets();
-  		$('#assetForm-${asset.id}').refreshCurrencies();
   	});
 
 </script>
@@ -40,18 +35,21 @@
 	</div>
 	<!-- Cell -->
 	<div>
-		<div class="yahooInfos">
+	
+		<div class="symbol">
 			<form:input path="apiIdentifier.symbol"/>
 		</div>
 	
-		<div class="cryptowatchInfos">
+		<div class="market">
 			<input type="hidden" name="oldMarket" value="${asset.apiIdentifier.market}">
 			<form:select class="marketSelect" path="apiIdentifier.market" onchange="$(this).refreshCurrencies()">
 				<option value=""></option>
 			</form:select>
 			-
-			<input type="hidden" name="oldCurrencyId" value="${asset.apiIdentifier.currency.id}">
-			<form:select class="currencySelect" path="apiIdentifier.currency.id">
+		</div>
+		<div class="currency">
+			<input type="hidden" name="oldCurrencyIsin" value="${asset.apiIdentifier.currency.isin}">
+			<form:select class="currencySelect" path="apiIdentifier.currency.isin">
 				<option value=""></option>
 			</form:select>
 		</div>

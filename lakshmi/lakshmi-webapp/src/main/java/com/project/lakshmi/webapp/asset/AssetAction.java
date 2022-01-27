@@ -1,8 +1,5 @@
 package com.project.lakshmi.webapp.asset;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.lakshmi.business.api.ApiService;
+import com.project.lakshmi.business.api.kucoin.KucoinApiService;
 import com.project.lakshmi.business.asset.AssetService;
 import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.api.ApiIdentifier;
@@ -37,10 +35,37 @@ public class AssetAction extends AbstractAction {
 	@Autowired
 	ApiService apiService;
 	
+	@Autowired
+	KucoinApiService kucoinApiService;
+	
 	@PostMapping("list")
 	public ModelAndView list() {
 		ModelAndView model = new ModelAndView("asset/assetList");
 		model.addObject("assets", assetService.findAll());
+		
+//		// A supprimer
+//		Asset btc = assetService.findByIsin("ETH2");
+//		Asset usdt = assetService.findByIsin("USDT");
+//		ApiIdentifier identifier = new ApiIdentifier();
+//		identifier.setApi(Api.KUCOIN);
+//		identifier.setAsset(btc);
+//		identifier.setCurrency(usdt);
+//		btc.setApiIdentifier(identifier);
+//		
+//		List<Asset> assets = new ArrayList<Asset>();
+//		assets.add(btc);
+////		apiService.getHistoricalOhlc(assets);
+//		
+//		Instant date = Instant.now().minus(65, ChronoUnit.DAYS);
+//		
+//		Double price = assetService.getPrice(btc, date);
+//		
+//		System.out.println(price);
+		List<ApiIdentifier> id =  kucoinApiService.getAllIdentifiers();
+		
+		System.out.println(id);
+		
+		
 		return model;
 	}
 	
@@ -101,12 +126,11 @@ public class AssetAction extends AbstractAction {
 				throw new ApplicationException("Le market doit être défini");
 			}
 			
-			if (apiIdentifier.getCurrency().getId() == null) {
+			if (apiIdentifier.getCurrency().getIsin() == null) {
 				throw new ApplicationException("La currency doit être défini");
 			}
 			
 			// Le symbol ne doit pas être défini
-			// Dans ce cas, le marché et l'asset et la currency doivent être défini
 			if (!StringUtils.isEmpty(apiIdentifier.getSymbol())) {
 				throw new ApplicationException("Le symbol ne doit pas être défini");
 			}
@@ -123,10 +147,26 @@ public class AssetAction extends AbstractAction {
 				throw new ApplicationException("Le market ne doit pas être défini");
 			}
 			
-			if (apiIdentifier.getCurrency().getId() != null) {
+			if (apiIdentifier.getCurrency().getIsin() != null) {
 				throw new ApplicationException("La currency ne doit pas être défini");
 			}
-		} else if (Api.YAHOO.equals(apiIdentifier.getApi())) {
+		}  else if (Api.KUCOIN.equals(apiIdentifier.getApi())) {
+			
+			// Dans ce cas, la currency doivent être défini
+			if (apiIdentifier.getCurrency().getIsin() == null) {
+				throw new ApplicationException("La currency doit être défini");
+			}
+			
+			// Le marché et symbol ne doivent pas être défini
+			if (!StringUtils.isEmpty(apiIdentifier.getMarket())) {
+				throw new ApplicationException("Le market ne doit pas être défini");
+			}			
+			
+			if (!StringUtils.isEmpty(apiIdentifier.getSymbol())) {
+				throw new ApplicationException("Le symbol ne doit pas être défini");
+			}
+			
+		} else if (Api.NONE.equals(apiIdentifier.getApi())) {
 			
 			// Dans ce cas, ni le symbol, ni le marché, ni la currency ne doivent être defini
 			if (!StringUtils.isEmpty(apiIdentifier.getMarket())) {

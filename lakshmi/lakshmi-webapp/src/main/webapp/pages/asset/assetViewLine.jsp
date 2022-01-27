@@ -28,7 +28,7 @@
 	<!-- Cell -->
 	<div class="apiIdentifier">
 		<c:if test="${asset.apiIdentifier != null}">
-			${asset.apiIdentifier.displayedSymbol}
+			${asset.apiIdentifier.apiSymbol}
 		</c:if>
 	</div>
 	<div>

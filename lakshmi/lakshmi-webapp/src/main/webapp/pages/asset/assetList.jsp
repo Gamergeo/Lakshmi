@@ -8,7 +8,7 @@
   
   	$(document).ready(function() {
   		let options = {
-  	  		'sortColumns' : [1, 2],
+  	  		'sortColumns' : [1, 2, 3],
   			'searchColumn' : 1,
   			'pagination' : true,
   		}
@@ -19,10 +19,6 @@
 </script>
 
 <l:pageInfos title="Asset management"/>
-
-<div id="updateCryptowatchIdentifierButton">
-	<l:button size="menu" label="Mettre à jour les identifiants" onclick="$.refreshAllIdentifiers();"/>
-</div>
 
 <div class="assetTable">
 	<!-- Header line -->

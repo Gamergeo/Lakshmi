@@ -116,6 +116,11 @@ Version 0.10.1: Api Kucoin
 	- Pour certains, asset on rajoute l'api kucoin
 	- L'api est fonctionnelle
 	
+Version 0.10.2 : Amélioration all identifier
+	- Correction de getAllIdentifier pour pas avoir plein de requetes
+	- Mise en place de getAllIdentifier pour Kucoin
+	- On peut maintenant ajouter des asset dans kucoin
+	
 ---------------------------------------------------------------------------------
 
 Les fees sont encore plus deguelasse que prevu, certains n'apparaissent pas alors qu'il le devrait (sol du 10/01)

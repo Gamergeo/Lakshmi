@@ -1,6 +1,5 @@
 package com.project.lakshmi.webapp.apiIdentifier;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +18,6 @@ import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.webapp.AbstractAction;
 import com.project.lakshmi.webapp.response.json.JsonResponse;
-import com.project.lakshmi.webapp.response.json.ModelObjectResponse;
 import com.project.lakshmi.webapp.response.json.StringResponse;
 
 @RequestMapping("apiIdentifier")
@@ -36,14 +34,10 @@ public class ApiIdentifierAction extends AbstractAction {
 	CryptoWatchApiService cryptoWatchApiService;
 	
 	@GetMapping("getMarkets")
-	public @ResponseBody Set<String> getMarkets(@RequestParam String isin) {
+	public @ResponseBody Set<String> getMarkets(@RequestParam Api api, @RequestParam String isin) {
 		
-		// On récupère la liste en session
-		@SuppressWarnings("unchecked")
-		List<ApiIdentifier> cryptowatchIdentifiers = (List<ApiIdentifier>) getSession().getAttribute(SESSION_ATTRRIBUTE_PAIRLIST);
-		
-		// On cherche les identifiants qui correspondent à ceux de cryptowatch
-		List<ApiIdentifier> correspondingIdentifiers = apiIdentifierService.findIdentifier(cryptowatchIdentifiers, isin);
+		// On cherche les identifiants qui correspondent au bon api et isin
+		List<ApiIdentifier> correspondingIdentifiers = apiIdentifierService.getMatchingIdentifier(api, isin);
 		
 		Set<String> markets = new HashSet<String>();
 		
@@ -55,53 +49,42 @@ public class ApiIdentifierAction extends AbstractAction {
 	}
 	
 	@GetMapping("getCurrencies")
-	public @ResponseBody List<ModelObjectResponse> getCurrency(@RequestParam String isin, @RequestParam String market) {
-		// On récupère la liste en session
-		@SuppressWarnings("unchecked")
-		List<ApiIdentifier> cryptowatchIdentifiers = (List<ApiIdentifier>) getSession().getAttribute(SESSION_ATTRRIBUTE_PAIRLIST);
+	public @ResponseBody Set<String> getCurrency(@RequestParam Api api, 
+																@RequestParam String isin, 
+																@RequestParam(required=false) String market) {
 		
 		// On cherche les identifiants qui correspondent à ceux de cryptowatch
-		List<ApiIdentifier> correspondingIdentifiers = apiIdentifierService.findIdentifier(cryptowatchIdentifiers, isin, market);
+		List<ApiIdentifier> correspondingIdentifiers = apiIdentifierService.getMatchingIdentifier(api, isin, market);
 		
-		List<ModelObjectResponse> response = new ArrayList<ModelObjectResponse>();
+		Set<String> currencies = new HashSet<String>();
 		
-		// On convertit les asset en object json
 		for (ApiIdentifier apiIdentifier : correspondingIdentifiers) {
-			ModelObjectResponse model = new ModelObjectResponse(apiIdentifier.getCurrency().getId(), apiIdentifier.getCurrency().getIsin());
-			response.add(model);
+			currencies.add(apiIdentifierService.getCurrencyIsin(isin, apiIdentifier));
 		}
-		
-		return response;
+			
+		return currencies;
 	}
 	
 	@GetMapping("isIdentifierAvailable")
 	public @ResponseBody JsonResponse isIdentifierAvailable(Integer id) {
+		
 		ApiIdentifier apiIdentifier = apiIdentifierService.findById(id);
 		
-		if (!Api.CRYPTOWATCH.equals(apiIdentifier.getApi())) {
+		// On est pas dans le cas Kucoin cryptowatch, on renvoie toujours true
+		if (!Api.CRYPTOWATCH.equals(apiIdentifier.getApi()) && !Api.KUCOIN.equals(apiIdentifier.getApi())) {
 			return new StringResponse("true");
 		}
 		
-		@SuppressWarnings("unchecked")
-		List<ApiIdentifier> cryptowatchIdentifiers = (List<ApiIdentifier>) getSession().getAttribute(SESSION_ATTRRIBUTE_PAIRLIST);
+		// On cherche les identifiants qui correspondent à ceux de l'asset
+		ApiIdentifier correspondingIdentifier = apiIdentifierService.getMatchingIdentifier(apiIdentifier.getApi(), 
+				apiIdentifier.getAsset().getIsin(), apiIdentifier.getCurrency().getIsin(), apiIdentifier.getMarket());
 		
-		// On verifie si elle est dans notre liste
-		for (ApiIdentifier cryptowatchIdentifier : cryptowatchIdentifiers) {
-			
-			if (cryptowatchIdentifier.getMarket().equals(apiIdentifier.getMarket()) &&
-				cryptowatchIdentifier.getAsset().equals(apiIdentifier.getAsset()) &&
-				cryptowatchIdentifier.getCurrency().equals(apiIdentifier.getCurrency())) {
-				
-				return new StringResponse("true");
-			}
+		// Si un identifiant à été trouvé, on est bon
+		if (correspondingIdentifier != null) {
+			return new StringResponse("true");
 		}
 		
 		return new StringResponse("false");
 	}
 	
-	@GetMapping("refreshAllIdentifiers")
-	public @ResponseBody JsonResponse refreshAllIdentifiers() {
-		getSession().setAttribute(SESSION_ATTRRIBUTE_PAIRLIST, cryptoWatchApiService.getAllIdentifiers());
-		return new StringResponse("OK");
-	}
 }

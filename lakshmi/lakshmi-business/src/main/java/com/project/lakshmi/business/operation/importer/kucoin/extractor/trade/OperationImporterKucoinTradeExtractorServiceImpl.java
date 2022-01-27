@@ -74,12 +74,6 @@ public class OperationImporterKucoinTradeExtractorServiceImpl implements Operati
 		
 		Investment investment = new Investment(asset, quantity);
 		
-		// Dans le cas de l'ETH2, on est obligé de passer par une conversion spéciale
-		// On récupère le prix et l'asset est eth
-		if (asset.isKucoinEth()) {
-			investment.setSpecialConversion(assetService.findByIsin("ETH"), getPrice(line));
-		}
-		
 		return investment;
 	}
 	
@@ -120,12 +114,6 @@ public class OperationImporterKucoinTradeExtractorServiceImpl implements Operati
 		} else {
 			return quantity;
 		}
-	}
-
-	// Utilisé dans les cas spéciaux
-	private Double getPrice(String line) {
-		List<String> values = getValues(line);
-		return Double.parseDouble(values.get(OperationImporterKucoinConstants.TRADE_FILE.PRICE_INDEX));
 	}
 	
 	@Override

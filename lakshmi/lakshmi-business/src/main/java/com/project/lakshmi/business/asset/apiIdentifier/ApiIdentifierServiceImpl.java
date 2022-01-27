@@ -3,16 +3,16 @@ package com.project.lakshmi.business.asset.apiIdentifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.lakshmi.business.AbstractDatabaseService;
 import com.project.lakshmi.business.api.cryptowatch.CryptoWatchApiService;
+import com.project.lakshmi.business.api.kucoin.KucoinApiService;
 import com.project.lakshmi.business.asset.AssetService;
+import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.api.ApiIdentifier;
-import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.persistance.IDao;
 import com.project.lakshmi.persistance.asset.apiidentifier.ApiIdentifierDao;
 
@@ -21,6 +21,9 @@ public class ApiIdentifierServiceImpl extends AbstractDatabaseService<ApiIdentif
 	
 	@Autowired
 	CryptoWatchApiService cryptoWatchApiService;
+	
+	@Autowired
+	KucoinApiService kucoinApiService;
 	
 	@Autowired
 	AssetService assetService;
@@ -36,16 +39,19 @@ public class ApiIdentifierServiceImpl extends AbstractDatabaseService<ApiIdentif
 	/**
 	 * @param identifiers (liste préenregistré des identifiants)
 	 * @param isin
-	 * @return tous les identifiants qui peuvent convenir à l'isin
+	 * @return tous les identifiants qui peuvent convenir à l'isin et à l'api
 	 */
 	@Override
-	public List<ApiIdentifier> findIdentifier(List<ApiIdentifier> apiIdentifiers, String isin) {
+	public List<ApiIdentifier> getMatchingIdentifier(Api api, String isin) {
 		
 		List<ApiIdentifier> results = new ArrayList<ApiIdentifier>();
 		
-		for (ApiIdentifier apiIdentifier : apiIdentifiers) {
+		for (ApiIdentifier apiIdentifier : getAllIdentifier(api)) {
 			
-			if (apiIdentifier.getAsset().getIsin().equals(isin)) {
+			String pair = apiIdentifier.getRawSymbol();
+			
+			// la raw pair start avec l'isin, on est ok
+			if (pair.toUpperCase().startsWith(isin.toUpperCase())) {
 				results.add(apiIdentifier);
 			}
 		}
@@ -60,14 +66,21 @@ public class ApiIdentifierServiceImpl extends AbstractDatabaseService<ApiIdentif
 	 * @return tous les identifiants qui peuvent convenir à l'isin
 	 */
 	@Override
-	public List<ApiIdentifier> findIdentifier(List<ApiIdentifier> apiIdentifiers, String isin, String market) {
+	public List<ApiIdentifier> getMatchingIdentifier(Api api, String isin, String market) {
+		
+		List<ApiIdentifier> matchingIdentifiers = getMatchingIdentifier(api, isin);
+		
+		// Market n'est pas spécifié, on renvoie sans le prendre en compte
+		if (StringUtils.isEmpty(market)) {
+			return matchingIdentifiers;
+		}
 		
 		List<ApiIdentifier> results = new ArrayList<ApiIdentifier>();
 		
-		for (ApiIdentifier apiIdentifier : apiIdentifiers) {
+		// On verifie que les marchés correspondent
+		for (ApiIdentifier apiIdentifier : matchingIdentifiers) {
 			
-			if (apiIdentifier.getAsset().getIsin().equals(isin) &&
-					apiIdentifier.getMarket().equals(market)) {
+			if (apiIdentifier.getMarket().equals(market)) {
 				results.add(apiIdentifier);
 			}
 		}
@@ -75,77 +88,53 @@ public class ApiIdentifierServiceImpl extends AbstractDatabaseService<ApiIdentif
 		return results;
 	}
 	
-	/**
-	 * @return une liste de tous les identifiants présents
-	 */
 	@Override
-	public List<ApiIdentifier> getAllIdentifiers() {
-		return cryptoWatchApiService.getAllIdentifiers();
-	}
-	
-	/**
-	 * @return an api identifier correclty set with asset and currency
-	 */
-	@Override
-	@Transactional
-	public ApiIdentifier createIdentifier(String pair, String market) {
-		List<Asset> existingAssets = assetService.findAll();
-		Asset asset = getAsset(pair, existingAssets);
+	public ApiIdentifier getMatchingIdentifier(Api api, String isin, String currencyIsin, String market) {
+
+		List<ApiIdentifier> matchingIdentifiers = getMatchingIdentifier(api, isin, market);
 		
-		// Il n'en existe pas, on arrète la
-		if (asset == null) {
-			return null;
-		}
-		
-		// On cherche à retrouver la currency
-		Asset currency = getCurrency(pair, existingAssets, asset);
-		
-		// Il n'en existe pas, on arrète la
-		if (currency == null) {
-			return null;
-		}
-		
-		// Sinon on crée l'apiidentifier
-		return new ApiIdentifier(asset, currency, market);
-	}
-	
-	/**
-	 * Découpe la pair et verifie s'il on arrive à determiner un asset existant
-	 */
-	private Asset getAsset(String pair, List<Asset> existingAssets) {
-		// On cerche à determiner l'isin de l'asset
-		for (int i = 1; i < pair.length(); i++) {
-			String subPair = pair.substring(0, i).toUpperCase(); // On découpe les n premiers caractères
+		// On verifie que les currency correspondent
+		for (ApiIdentifier matchingIdentifier : matchingIdentifiers) {
 			
-			// On determine si l'isin existe
-			for (Asset existingAsset : existingAssets) {
-				
-				// On a trouvé
-				if (existingAsset.getIsin().equals(subPair)) {
-					return existingAsset;
-				}
+			String matchingCurrencyIsin = getCurrencyIsin(isin, matchingIdentifier);
+			
+			if (matchingCurrencyIsin.equals(currencyIsin.toUpperCase())) {
+				return matchingIdentifier;
 			}
 		}
 		
 		return null;
 	}
 	
-	private Asset getCurrency(String pair, List<Asset> existingAssets, Asset asset) {
-		if (asset == null) {
-			return null;
+	/**
+	 * @return une liste de tous les identifiants présents pour l'api
+	 */
+	private List<ApiIdentifier> getAllIdentifier(Api api) {
+		
+		if (Api.KUCOIN.equals(api)) {
+			return kucoinApiService.getAllIdentifiers();
+		} else if (Api.CRYPTOWATCH.equals(api)) {
+			return cryptoWatchApiService.getAllIdentifiers();
+		} else { // Vide
+			return new ArrayList<ApiIdentifier>();
 		}
+	}
+	
+	/**
+	 * @return l'isin de la currency
+	 * Pour cela on prends le raw, et on supprime l'isin (plus d'eventuels caractères spéciaiux)
+	 */
+	@Override
+	public String getCurrencyIsin(String assetIsin, ApiIdentifier identifier) {
 		
-		String isinCurrency = pair.substring(asset.getIsin().length()).toUpperCase();
+		String rawSymbol = identifier.getRawSymbol().toUpperCase().replaceFirst(assetIsin.toUpperCase(), "");
 		
-		// On determine si l'isin existe
-		for (Asset existingAsset : existingAssets) {
-			
-			// On a trouvé
-			if (existingAsset.getIsin().equals(isinCurrency)) {
-				return existingAsset;
-			}
+		// Dans le cas Kucoin, il y a aussi des caractères spéciaux
+		if (Api.KUCOIN.equals(identifier.getApi())) {
+			rawSymbol = rawSymbol.replace("-", "");
 		}
-		
-		return null;
+
+		// Isin toujours en upper case
+		return rawSymbol.toUpperCase();
 	}
 }

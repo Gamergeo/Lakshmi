@@ -17,6 +17,7 @@ import com.project.lakshmi.model.api.Api;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
 import com.project.lakshmi.persistance.asset.AssetDao;
+import com.project.lakshmi.technical.ApplicationException;
 
 @Service("assetService")
 public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements AssetService {
@@ -108,6 +109,20 @@ public class AssetServiceImpl extends AbstractDatabaseService<Asset> implements 
 		// Dans le cas de yahoo, la currency est toujours l'euro
 		if (Api.YAHOO.equals(asset.getApiIdentifier().getApi())) {
 			asset.getApiIdentifier().setCurrency(findByIsin("EUR"));
+		}
+		
+		// Dans le cas Kucoin / cryptowatch, on essaie de retrouver la currency
+		if (Api.CRYPTOWATCH.equals(asset.getApiIdentifier().getApi()) ||
+				Api.KUCOIN.equals(asset.getApiIdentifier().getApi())) {
+			
+			String currencyIsin = asset.getApiIdentifier().getCurrency().getIsin();
+			Asset currency = findByIsinIfAny(currencyIsin);
+			
+			if (currency == null) {
+				throw new ApplicationException("La currency n'existe pas !" + currencyIsin);
+			}
+			
+			asset.getApiIdentifier().setCurrency(currency);
 		}
 
 		if (Api.NONE.equals(asset.getApiIdentifier().getApi())) {

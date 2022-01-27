@@ -15,7 +15,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.lakshmi.business.api.ApiServiceImpl;
+import com.project.lakshmi.business.asset.apiIdentifier.ApiIdentifierService;
 import com.project.lakshmi.business.hash.HashService;
+import com.project.lakshmi.model.api.Api;
+import com.project.lakshmi.model.api.ApiIdentifier;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
 import com.project.lakshmi.technical.ApplicationException;
@@ -27,6 +30,9 @@ public class KucoinApiServiceImpl extends ApiServiceImpl implements KucoinApiSer
 	
 	@Autowired
 	HashService hashService;
+	
+	@Autowired
+	ApiIdentifierService apiIdentifierService;
 	
 	@Override
 	public List<Ohlc> getHistoricalOhlc(List<Asset> assets) {
@@ -89,6 +95,23 @@ public class KucoinApiServiceImpl extends ApiServiceImpl implements KucoinApiSer
 		return uri;
 	}
 	
+	private List<NameValuePair> getHeaders(String uri) {
+		return getHeaders(uri, new ArrayList<NameValuePair>());
+	}
+	
+	private List<NameValuePair> getHeaders(String uri, List<NameValuePair> parameters) {
+		List<NameValuePair> headers = new ArrayList<NameValuePair>();
+	    String timeStamp = NumberUtil.toExactString(Instant.now().getEpochSecond());
+	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_KEY, KucoinApiConstants.API_KEY));
+	    String signature = sign(timeStamp, uri, parameters);
+	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_SIGN, signature));
+	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_TIMESTAMP, timeStamp));
+	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_PASSPHRASE, hashPassphrase()));
+	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_KEY_VERSION, KucoinApiConstants.API_KEY_VERSION));
+	    
+	    return headers;
+	}
+	
 	private List<Ohlc> getOhlc(Asset asset, String period, String startAt, String endAt) {
 		String uri = KucoinApiConstants.BASE_URI + KucoinApiConstants.URI_OHLC;
 	    
@@ -106,14 +129,7 @@ public class KucoinApiServiceImpl extends ApiServiceImpl implements KucoinApiSer
 	    	parameters.add(new BasicNameValuePair(KucoinApiConstants.PARAMETER_END, endAt));
 	    }
 		
-	    List<NameValuePair> headers = new ArrayList<NameValuePair>();
-	    String timeStamp = NumberUtil.toExactString(Instant.now().getEpochSecond());
-	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_KEY, KucoinApiConstants.API_KEY));
-	    String signature = sign(timeStamp, uri, parameters);
-	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_SIGN, signature));
-	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_TIMESTAMP, timeStamp));
-	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_PASSPHRASE, hashPassphrase()));
-	    headers.add(new BasicNameValuePair(KucoinApiConstants.HEADER_API_KEY_VERSION, KucoinApiConstants.API_KEY_VERSION));
+	    List<NameValuePair> headers = getHeaders(uri, parameters);
 	    
 	    String result = call(uri, headers, parameters);
 	    
@@ -163,46 +179,46 @@ public class KucoinApiServiceImpl extends ApiServiceImpl implements KucoinApiSer
 		return String.valueOf(endDate.getEpochSecond());
 	}
 	
-//	
-//	/**
-//	 * @return une liste de tous les identifiants présents
-//	 */
-//	@Override
-//	public List<ApiIdentifier> getAllIdentifiers() {
-//		String uri = CryptoWatchApiConstants.MARKET_URI;
-//		
-//		String result = call(uri);
-//		    
-//	    ObjectMapper mapper = new ObjectMapper();
-//		JsonNode resultNode;
-//		try {
-//			resultNode = mapper.readTree(result).findValue(CryptoWatchApiConstants.RESULT);
-//		} catch (JsonProcessingException exception) {
-//			throw new ApplicationException(exception.getMessage());
-//		}
-//		
-//		List<ApiIdentifier> identifiers = new ArrayList<ApiIdentifier>();
-//			
-//		Iterator<JsonNode> iterator = resultNode.elements();
-//			
-//		while(iterator.hasNext()) {
-//			JsonNode line = iterator.next();
-//			
-//			// On vérifie que la ligne est active
-//			if (line.findValue(CryptoWatchApiConstants.RESULT_ACTIVE).asBoolean()) {
-//				
-//				String market = line.findValue(CryptoWatchApiConstants.RESULT_EXCHANGE).asText();
-//				String pair = line.findValue(CryptoWatchApiConstants.RESULT_PAIR).asText();
-//				
-//				ApiIdentifier apiIdentifier = apiIdentifierService.createIdentifier(pair, market);
-//				
-//				// Tout a été trouvé, on ajoute l'identifier
-//				if (apiIdentifier != null) {
-//					identifiers.add(apiIdentifier);
-//				}
-//			}
-//		}
-//		
-//		return identifiers;
-//	}
+	
+	/**
+	 * @return une liste de tous les identifiants présents
+	 */
+	@Override
+	public List<ApiIdentifier> getAllIdentifiers() {
+		String uri = KucoinApiConstants.BASE_URI + KucoinApiConstants.URI_ALL_TICKERS;
+		
+		List<NameValuePair> headers = getHeaders(uri);
+		
+		String result = call(uri, headers, new ArrayList<NameValuePair>());
+		    
+	    ObjectMapper mapper = new ObjectMapper();
+		JsonNode resultNode;
+		try {
+			resultNode = mapper.readTree(result).findValue(KucoinApiConstants.RESULT_DATA).findValue(KucoinApiConstants.RESULT_DATA_TICKER);
+		} catch (JsonProcessingException exception) {
+			throw new ApplicationException(exception.getMessage());
+		}
+		
+		List<ApiIdentifier> identifiers = new ArrayList<ApiIdentifier>();
+			
+		Iterator<JsonNode> iterator = resultNode.elements();
+			
+		while(iterator.hasNext()) {
+			JsonNode line = iterator.next();
+			
+			String pair = line.findValue(KucoinApiConstants.RESULT_DATA_SYMBOL).asText();
+			
+			ApiIdentifier apiIdentifier = new ApiIdentifier();
+			apiIdentifier.setRawSymbol(pair);
+			apiIdentifier.setApi(Api.KUCOIN);
+			
+			// Tout a été trouvé, on ajoute l'identifier
+			if (apiIdentifier != null) {
+				identifiers.add(apiIdentifier);
+			}
+		}
+			
+		
+		return identifiers;
+	}
 }

@@ -6,6 +6,8 @@ public class KucoinApiConstants {
 	
 	final public static String URI_OHLC = "api/v1/market/candles";
 	
+	final public static String URI_ALL_TICKERS = "/api/v1/market/allTickers";
+	
 	final public static String API_KEY = "61f29339a2de0c0001be4a7d";
 	
 	final public static String API_SECRET = "f6a4151e-3c63-4639-b121-97ed8d42a409";
@@ -35,6 +37,10 @@ public class KucoinApiConstants {
 	final public static String PARAMETER_PERIOD_MINUTE = "1min";
 	
 	final public static String RESULT_DATA = "data";
+	
+	final public static String RESULT_DATA_TICKER = "ticker";
+	
+	final public static String RESULT_DATA_SYMBOL = "symbol";
 	
 	final public static Integer RESULT_INDEX_DATE= 0;
 	

@@ -18,7 +18,7 @@ $.fn.refreshMarkets = function() {
 		let oldMarket = form.find("input[name='oldMarket']").val();
 		
 		let options = new Object();
-		options.url = "apiIdentifier/getMarkets.do?isin="+isin;
+		options.url = "apiIdentifier/getMarkets.do?isin="+isin+"&api="+api;
 		options.success = (result) => {
 			// On met à jour le select
 			let marketSelect = form.find("select[name='apiIdentifier.market']");
