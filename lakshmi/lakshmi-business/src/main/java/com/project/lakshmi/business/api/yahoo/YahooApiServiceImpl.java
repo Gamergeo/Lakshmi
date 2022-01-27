@@ -53,7 +53,7 @@ public class YahooApiServiceImpl extends ApiServiceImpl implements YahooApiServi
 	    parameters.add(new BasicNameValuePair(YahooApiConstants.PARAMETER_RANGE, YahooApiConstants.RANGE_5Y));
 	    parameters.add(new BasicNameValuePair(YahooApiConstants.PARAMETER_SYMBOL, getSymbols(assets)));
 	    
-	    String result = call(uri, headers, parameters);
+	    String result = getContent(call(uri, headers, parameters));
 	    
 	    ObjectMapper mapper = new ObjectMapper();
 	    JsonNode rootNode;

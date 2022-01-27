@@ -25,9 +25,12 @@ public class OperationTextExporterServiceImpl implements OperationTextExporterSe
 	@Override
 	public void writeOperation(OperationInvestment operation) {
 		
-		if (InvestmentType.WITHDRAW.equals(operation.getInvestmentType()) ||
-				InvestmentType.DEPOSIT.equals(operation.getInvestmentType())) {
-			write(operation);
+		if (InvestmentType.WITHDRAW.equals(operation.getInvestmentType())) {
+			write(operation, "Retrait a verifier");
+		} else if (InvestmentType.DEPOSIT.equals(operation.getInvestmentType())) {
+			write(operation, "Depot a verifier");
+		} else if (InvestmentType.TRADE.equals(operation.getInvestmentType())) {
+			write(operation, "Trade sans fees");
 		} else {
 			throw new NotYetImplementedException("export pas encore implémenté " + operation.getInvestmentType());
 		}
@@ -37,7 +40,7 @@ public class OperationTextExporterServiceImpl implements OperationTextExporterSe
 	 * Ligne simple 
 	 * Date / Type / Quantité Asset
 	 */
-	private void write(OperationInvestment operation) {
+	private void write(OperationInvestment operation, String comment) {
 		
 		// Date
 		String formattedDate = DateUtil.formatDate(operation.getDate(), TextExporterConstants.DATE_FORMAT);
@@ -50,7 +53,10 @@ public class OperationTextExporterServiceImpl implements OperationTextExporterSe
 		FileUtils.writeOnFile(getFileName(), operation.getInvestment().getQuantity() + " ");
 		
 		// Asset
-		FileUtils.writeOnFileAndEndLine(getFileName(), operation.getInvestment().getAsset().getIsin() + " ");
+		FileUtils.writeOnFile(getFileName(), operation.getInvestment().getAsset().getIsin() + " / ");
+		
+		// Comment
+		FileUtils.writeOnFileAndEndLine(getFileName(), comment);
 	}
 	
 	protected String getFileName() {

@@ -43,16 +43,15 @@ public class ApiServiceImpl implements ApiService {
 	@Autowired
 	KucoinApiService kucoinApiService;
 	
-	protected String call(String uri) {
+	protected CloseableHttpResponse call(String uri) {
 		return call(uri, new ArrayList<NameValuePair>(), new ArrayList<NameValuePair>());
 	}
 	
-	protected String call(String uri, List<NameValuePair> parameters) {
+	protected CloseableHttpResponse call(String uri, List<NameValuePair> parameters) {
 		return call(uri, new ArrayList<NameValuePair>(), parameters);
 	}
 	
-	protected String call(String uri, List<NameValuePair> headers, List<NameValuePair> parameters) {
-		String response_content = "";
+	protected CloseableHttpResponse call(String uri, List<NameValuePair> headers, List<NameValuePair> parameters) {
 		URIBuilder query;
 		CloseableHttpClient client;
 		HttpGet request;
@@ -77,19 +76,35 @@ public class ApiServiceImpl implements ApiService {
 	    CloseableHttpResponse response;
 		try {
 			response = client.execute(request);
-		    try {
-		    	System.out.println(response.getStatusLine() + uri + parameters.toString());
-		    	HttpEntity entity = response.getEntity();
-		    	response_content = EntityUtils.toString(entity);
-		    	EntityUtils.consume(entity);
-		    } finally {
-		    	response.close();
-		    }
 		} catch (IOException exception) {
 			throw new ApplicationException(exception.getMessage());
 		}
+		
+		System.out.println(response.getStatusLine() + " " + uri + " " + parameters.toString());
 
-	    return response_content;
+	    return response;
+	}
+	
+	protected Integer getStatus(CloseableHttpResponse response) {
+		return response.getStatusLine().getStatusCode();
+	}
+	
+	protected String getContent(CloseableHttpResponse response) {
+		String response_content = "";
+		
+		try {
+			try {
+		    	HttpEntity entity = response.getEntity();
+		    	response_content = EntityUtils.toString(entity);
+		    	EntityUtils.consume(entity);
+			} finally {
+		 	    response.close();
+		 	}
+		} catch (IOException exception) {
+			throw new ApplicationException(exception.getMessage());
+		}
+		
+		return response_content;
 	}
 	
 	@Override

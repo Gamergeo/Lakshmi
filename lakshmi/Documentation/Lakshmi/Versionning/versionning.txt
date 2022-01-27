@@ -121,20 +121,17 @@ Version 0.10.2 : Amélioration all identifier
 	- Mise en place de getAllIdentifier pour Kucoin
 	- On peut maintenant ajouter des asset dans kucoin
 	
+Version 0.10.3 : Améliorations divers
+	- Correction css
+	- Système de wait pour 429 Kucoin
+	
 ---------------------------------------------------------------------------------
-
-Les fees sont encore plus deguelasse que prevu, certains n'apparaissent pas alors qu'il le devrait (sol du 10/01)
-
 
 Que faire pour le santos ou autre asset introuvable ???
 
 Rajouter des tests, ca serait bien
 
 
-Version 0.10.1 : Api Kucoin
-	- Oblige d'en passer par la pour certains assets
-	- Supprimer l'exception du kcs
-	- Nettoyage de code ?
 	
 Version 1.0 : Cheklist
 	- Mécanisme de complétion des checklist

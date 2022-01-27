@@ -23,7 +23,7 @@ $.fn.refreshCurrencies = function() {
 		
 		// On precise le market dans le cas cryptowatch
 		if ("CRYPTOWATCH" == api) {
-			options.url += "&market"+market;
+			options.url += "&market="+market;
 		}
 		
 		options.success = (result) => {

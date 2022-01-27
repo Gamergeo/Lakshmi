@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,8 +100,10 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 		
 		// On ne doit en trouver qu'une
 		
-		if (ohlcs.size() != 1) {
+		if (ohlcs.size() > 1) {
 			throw new ApplicationException("Plusieurs ohlc trouvé pour " + asset.getIsin() + " " + instant.toString());
+		} else if (ohlcs.size() == 0) {
+			throw new ApplicationException("Aucun ohlc trouvé pour " + asset.getIsin() + " " + instant.toString());
 		}
 		
 		return ohlcs.get(0);
@@ -123,7 +126,8 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 	    	parameters.add(new BasicNameValuePair(CryptoWatchApiConstants.PARAMETER_BEFORE, before));
 	    }
 	    
-	    String result = call(uri, parameters);
+	    CloseableHttpResponse response = call(uri, parameters);
+	    String result = getContent(response);
 	    
 	    ObjectMapper mapper = new ObjectMapper();
 		JsonNode resultNode;
@@ -160,7 +164,8 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 	public List<ApiIdentifier> getAllIdentifiers() {
 		String uri = CryptoWatchApiConstants.MARKET_URI;
 		
-		String result = call(uri);
+	    CloseableHttpResponse response = call(uri);
+	    String result = getContent(response);
 		    
 	    ObjectMapper mapper = new ObjectMapper();
 		JsonNode resultNode;

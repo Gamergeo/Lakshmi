@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -131,7 +132,7 @@ public class KucoinApiServiceImpl extends ApiServiceImpl implements KucoinApiSer
 		
 	    List<NameValuePair> headers = getHeaders(uri, parameters);
 	    
-	    String result = call(uri, headers, parameters);
+	    String result = callOrWait(uri, headers, parameters);
 	    
 	    ObjectMapper mapper = new ObjectMapper();
 		JsonNode resultNode;
@@ -162,6 +163,30 @@ public class KucoinApiServiceImpl extends ApiServiceImpl implements KucoinApiSer
 	}
 	
 	/**
+	 * Réalise l'appel
+	 * Si on a une réponse de type too many request, on attends et on retente
+	 */
+	private String callOrWait(String uri, List<NameValuePair> headers, List<NameValuePair> parameters) {
+	    CloseableHttpResponse response = call(uri, headers, parameters);
+	    int attempts = 1;
+	    
+	    // Too many request, on wait 15s et on retente
+	    while (attempts <= 10 && getStatus(response) == 429) {
+	    	try {
+	    		System.out.println("Wait 15s for kucoin api");
+				Thread.sleep(15000);
+			} catch (InterruptedException e) {
+				throw new ApplicationException(e.getMessage());
+			}
+	    	
+	    	attempts++;
+	    	response = call(uri, headers, parameters);
+	    }
+	    
+	    return getContent(response);
+	}
+	
+	/**
 	 * Determine la date de départ (date trunqué de la minute)
 	 */
 	private String getStartParameter(Instant instant) {
@@ -189,7 +214,7 @@ public class KucoinApiServiceImpl extends ApiServiceImpl implements KucoinApiSer
 		
 		List<NameValuePair> headers = getHeaders(uri);
 		
-		String result = call(uri, headers, new ArrayList<NameValuePair>());
+		String result = callOrWait(uri, headers, new ArrayList<NameValuePair>());
 		    
 	    ObjectMapper mapper = new ObjectMapper();
 		JsonNode resultNode;

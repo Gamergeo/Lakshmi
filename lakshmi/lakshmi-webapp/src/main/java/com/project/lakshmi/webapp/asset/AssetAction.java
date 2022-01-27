@@ -147,7 +147,7 @@ public class AssetAction extends AbstractAction {
 				throw new ApplicationException("Le market ne doit pas être défini");
 			}
 			
-			if (apiIdentifier.getCurrency().getIsin() != null) {
+			if (!StringUtils.isEmpty(apiIdentifier.getCurrency().getIsin())) {
 				throw new ApplicationException("La currency ne doit pas être défini");
 			}
 		}  else if (Api.KUCOIN.equals(apiIdentifier.getApi())) {

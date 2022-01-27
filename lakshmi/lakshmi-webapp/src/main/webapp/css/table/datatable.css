@@ -6,7 +6,7 @@
 }
 
 .plugin_datatable_header {
-	background-color: var(--color-table-header);
+	background-color: var(--color-table-header)!important;
 	border-bottom: var(--small-separator);
 }
 
@@ -100,22 +100,6 @@
 
 .plugin_datatable_posttable > div > div:hover {
 	background-color: grey;
-}
-
-.plugin_datatable_pagination_button_first {
-	background-image: url("images/double_previous.png");
-}
-
-.plugin_datatable_pagination_button_previous {
-	background-image: url("images/previous.png");
-}
-
-.plugin_datatable_pagination_button_next {
-	background-image: url("images/next.png");
-}
-
-.plugin_datatable_pagination_button_last {
-	background-image: url("images/double_next.png");
 }
 
 .plugin_datatable_pagination_input {

@@ -109,7 +109,8 @@ public class OperationImporterKucoinServiceImpl implements OperationImporterKuco
 			OperationInvestmentTrade trade = (OperationInvestmentTrade) operation;
 			
 			// Le fee n'est pas déja renseigné, on le recherche
-			trade.setFeeInvestment(getNextFee(trade, feeOperations));
+			Investment fee = getNextFee(trade, feeOperations);
+			trade.setFeeInvestment(fee);
 		}
 		
 		// On remets les operations dans l'ordre (inutile mais sympa)
@@ -150,8 +151,9 @@ public class OperationImporterKucoinServiceImpl implements OperationImporterKuco
 			return trade.getFeeInvestment();
 		}
 		
-		// Sinon, on cherche on prends la première ligne, si la date du fee est supérieure à la date de l'opération
-		if (trade.getDate().isBefore(feeOperations.get(0).getDate())) {
+		// Sinon, on cherche on prends la première ligne, si la date du fee est supérieure ou egaleà la date de l'opération
+		if (trade.getDate().isBefore(feeOperations.get(0).getDate()) ||
+				trade.getDate().equals(feeOperations.get(0).getDate())) {
 			
 			// Dans ce cas on a trouvé le fee, on le supprime de la liste
 			Investment fee = feeOperations.get(0).getFeeInvestment();
