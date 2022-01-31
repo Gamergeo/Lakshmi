@@ -3,6 +3,12 @@
 	flex-direction: column;
 }
 
+#resetAll {
+	margin-left: auto;
+	margin-right: auto;
+	widrh: 300px;	
+}
+
 #checklistDate {
 	display: flex;
 }
@@ -23,6 +29,6 @@
 
 .checklistStepLine {
 	display: grid;
-	grid-template-columns: 10% 10% 80%;
+	grid-template-columns: 10% 40% 40%;
 	height: 20px;
 }

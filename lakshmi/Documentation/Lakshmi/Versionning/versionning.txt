@@ -125,12 +125,15 @@ Version 0.10.3 : Améliorations divers
 	- Correction css
 	- Système de wait pour 429 Kucoin
 	
+Version 1.0 : Cheklist
+	- Mécanisme de complétion des checklist
+	
 ---------------------------------------------------------------------------------
 
 Que faire pour le santos ou autre asset introuvable ???
 
 Rajouter des tests, ca serait bien
-
+Rajouter des logs aussi
 
 	
 Version 1.0 : Cheklist

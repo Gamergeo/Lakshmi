@@ -19,12 +19,19 @@ public class OhlcExporterServiceImpl implements OhlcExporterService {
 	public String exportOhlc(List<Ohlc> ohlcs) {
 		// S'il existe déja on le supprime
 		FileUtils.removeFile(OhlcExporterConstants.FILE_NAME);
+		String currentIsin = null;
 		
 		for (Ohlc ohlc : ohlcs) {
+			
 			Asset asset = ohlc.getAsset();
 			
+			if (!asset.getIsin().equals(currentIsin)) {
+				currentIsin = asset.getIsin();
+				System.out.println("Writing " + currentIsin);
+			}
+			
 			// On n'importe que les OHLC passés
-			if (ohlc.getDate().isBefore(Instant.now())) {
+			if (ohlc.getDate().isBefore(Instant.now()) && ohlc.getOpen() != 0d) {
 				// ISIN
 				writeOnFile(asset.getIsin());
 				writeOnFile(TechnicalConstants.CSV_SEPARATOR);

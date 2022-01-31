@@ -27,7 +27,6 @@
 		<script type="text/javascript" src="<c:url value='/js/apiIdentifier/refreshMarkets.js' />"></script>
 		<script type="text/javascript" src="<c:url value='/js/apiIdentifier/refreshCurrencies.js' />"></script>
 		<script type="text/javascript" src="<c:url value='/js/apiIdentifier/refreshApiIdentifier.js' />"></script>
-		<script type="text/javascript" src="<c:url value='/js/apiIdentifier/refreshAllIdentifiers.js' />"></script>
 		<script type="text/javascript" src="<c:url value='/js/apiIdentifier/isIdentifierAvailable.js' />"></script>
 		
 	<!-- PriceTracker -->	

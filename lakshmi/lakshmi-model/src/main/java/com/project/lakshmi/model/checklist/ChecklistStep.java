@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.project.lakshmi.model.DatabaseName;
@@ -23,21 +21,15 @@ public class ChecklistStep implements Serializable {
 	@Column(name=DatabaseName.ID)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected Integer id;
-	
-	@ManyToOne
-	@JoinColumn(name=DatabaseName.CHECKLIST_STEP.ID_CHECKLIST, referencedColumnName = DatabaseName.ID)
-	private Checklist checklist;
-	
-	@ManyToOne
-	@JoinColumn(name=DatabaseName.CHECKLIST_STEP.ID_CHECKLIST_STEP_INFOS, referencedColumnName = DatabaseName.ID)
-	private ChecklistStepInfos checklistStepInfos;
 
-	@Column(name=DatabaseName.CHECKLIST_STEP.STARTED)
-	protected boolean started;
-	
-	@Column(name=DatabaseName.CHECKLIST_STEP.ENDED)
-	protected boolean ended;
+	@Column(name=DatabaseName.CHECKLIST_STEP.LABEL)
+	private String label;
 
+	@Column(name=DatabaseName.CHECKLIST_STEP.ADVICE)
+	private String advice;
+	
+	@Column(name=DatabaseName.CHECKLIST_STEP.DONE)
+	private boolean done;
 
 	public Integer getId() {
 		return id;
@@ -47,36 +39,28 @@ public class ChecklistStep implements Serializable {
 		this.id = id;
 	}
 
-	public Checklist getChecklist() {
-		return checklist;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setChecklist(Checklist checklist) {
-		this.checklist = checklist;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
-	public ChecklistStepInfos getChecklistStepInfos() {
-		return checklistStepInfos;
+	public String getAdvice() {
+		return advice;
 	}
 
-	public void setChecklistStepInfos(ChecklistStepInfos checklistStepInfos) {
-		this.checklistStepInfos = checklistStepInfos;
+	public void setAdvice(String advice) {
+		this.advice = advice;
 	}
 
-	public boolean isStarted() {
-		return started;
+	public boolean isDone() {
+		return done;
 	}
 
-	public void setStarted(boolean started) {
-		this.started = started;
-	}
-
-	public boolean isEnded() {
-		return ended;
-	}
-
-	public void setEnded(boolean ended) {
-		this.ended = ended;
+	public void setDone(boolean done) {
+		this.done = done;
 	}
 	
 }

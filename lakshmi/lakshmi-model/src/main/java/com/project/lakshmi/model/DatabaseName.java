@@ -4,36 +4,19 @@ public class DatabaseName {
 	
 	public static final String ID = "id";
 	
-	public class CHECKLIST {
-		
-		public static final String TABLE = "checklist";
-
-		public static final String CREATION_DATE = "creation_date";
-		
-		public static final String END_DATE = "end_date";
-	}	
-	
 	public class CHECKLIST_STEP {
 		
 		public static final String TABLE = "checklist_step";
 		
-		public static final String ID_CHECKLIST = "id_checklist";
-
-		public static final String ID_CHECKLIST_STEP_INFOS = "id_checklist_step_infos";
-		
-		public static final String STARTED = "started";
-		
-		public static final String ENDED = "ended";
-	}	
-	
-	public class CHECKLIST_STEP_INFOS {
-		
-		public static final String TABLE = "checklist_step_infos";
-		
 		public static final String ORDER = "order";
 		
 		public static final String LABEL = "label";
+		
+		public static final String ADVICE = "advice";
+		
+		public static final String DONE = "done";
 	}
+	
 	
 	public class ASSET {
 		public static final String TABLE = "asset";

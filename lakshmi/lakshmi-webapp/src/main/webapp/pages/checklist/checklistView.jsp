@@ -4,36 +4,23 @@
 
 <link href="<c:url value='/css/checklist/checklist.css' />" rel="stylesheet" media="all" type="text/css">
 
+<script type="text/javascript">
+  
+  	function uncheckAll() {
+  		$(".checklistStepLine").find("input[type='checkbox']").prop("checked", false);
+  		$(".checklistStepLine").find("input[type='checkbox']").submitForm();
+  	}
+
+</script>
+
 <l:pageInfos title="Checklist"/>
 
-<div id="checklistDate">
-
-	<div id="lastDate">
-		<span class="label" id="lastDateLabel">Date de création: </span>
-		<span id="lastDateValue">${checklist.creationDate}</span>
-	</div>
-	
-	<div id="otherDates">
-		<span id="otherDatesLink">Autres dates</span>
-	</div>
+<div id="resetAll">
+	<l:button size="menu" label="Uncheck all" onclick="uncheckAll()" />
 </div>
-
 <div id="checklist">
 
-	<!-- Header -->
-	<div class="checklistStepLine">
-		<div>
-			Démarré
-		</div>
-		<div>
-			Fini
-		</div>
-		<div>
-			Label
-		</div>
-	</div>
-	
-	<c:forEach items="${checklist.checklistSteps}" var="checklistStep">
+	<c:forEach items="${checklistSteps}" var="checklistStep">
 		
 		<!-- Line -->
 		<div>
