@@ -98,12 +98,17 @@ public class CryptoWatchApiServiceImpl extends ApiServiceImpl implements CryptoW
 		
 		List<Ohlc> ohlcs = getOhlc(asset, period, after, before);
 		
-		// On ne doit en trouver qu'une
+		// Parfois cryptowatch casse les couilles, donc on retente alors sans le paramètre before et on prends la première
 		
 		if (ohlcs.size() > 1) {
 			throw new ApplicationException("Plusieurs ohlc trouvé pour " + asset.getIsin() + " " + instant.toString());
 		} else if (ohlcs.size() == 0) {
-			throw new ApplicationException("Aucun ohlc trouvé pour " + asset.getIsin() + " " + instant.toString());
+			
+			ohlcs = getOhlc(asset, period, after, null);
+			
+			if (ohlcs.size() == 0) {
+				throw new ApplicationException("Aucun ohlc trouvé pour " + asset.getIsin() + " " + instant.toString());
+			}
 		}
 		
 		return ohlcs.get(0);

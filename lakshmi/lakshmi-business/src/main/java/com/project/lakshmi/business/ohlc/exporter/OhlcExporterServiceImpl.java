@@ -1,6 +1,7 @@
 package com.project.lakshmi.business.ohlc.exporter;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class OhlcExporterServiceImpl implements OhlcExporterService {
 			}
 			
 			// On n'importe que les OHLC passés
-			if (ohlc.getDate().isBefore(Instant.now()) && ohlc.getOpen() != 0d) {
+			if (ohlc.getDate().isBefore(Instant.now().minus(1, ChronoUnit.DAYS)) && ohlc.getOpen() != 0d) {
 				// ISIN
 				writeOnFile(asset.getIsin());
 				writeOnFile(TechnicalConstants.CSV_SEPARATOR);

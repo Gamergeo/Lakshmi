@@ -128,6 +128,10 @@ Version 0.10.3 : Améliorations divers
 Version 1.0 : Cheklist
 	- Mécanisme de complétion des checklist
 	
+Version 1.0.1 : Correction bug
+	- Ajout d'un mecanisme pour les problèmes cryptowatch
+	- Import des ohlc passés uniquement
+	
 ---------------------------------------------------------------------------------
 
 Que faire pour le santos ou autre asset introuvable ???
