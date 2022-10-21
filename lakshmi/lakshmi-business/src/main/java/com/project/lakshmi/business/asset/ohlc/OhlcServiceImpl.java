@@ -45,6 +45,7 @@ public class OhlcServiceImpl implements OhlcService {
 			ohlc.setLow(1d);
 			ohlc.setClose(1d);
 			ohlc.setDate(date);
+			ohlc.setCurrency(asset);
 			
 			return ohlc;
 		}
@@ -65,7 +66,7 @@ public class OhlcServiceImpl implements OhlcService {
 		Asset currency = result.getCurrency();
 		
 		// On continue tant que l'on est pas en euro
-		while(!result.getCurrency().isEuro()) {
+		while(result.getCurrency() != null && !result.getCurrency().isEuro()) {
 			// Sinon on va chercher le prix correspondant à l'asset currency et on ajuste
 			Ohlc currencyOhlc = getOhlc(currency, result.getDate());
 			result = updateOhlc(result, currencyOhlc);

@@ -22,6 +22,8 @@ public class OhlcExporterServiceImpl implements OhlcExporterService {
 		FileUtils.removeFile(OhlcExporterConstants.FILE_NAME);
 		String currentIsin = null;
 		
+		String message = "";
+		
 		for (Ohlc ohlc : ohlcs) {
 			
 			Asset asset = ohlc.getAsset();
@@ -34,45 +36,47 @@ public class OhlcExporterServiceImpl implements OhlcExporterService {
 			// On n'importe que les OHLC passés
 			if (ohlc.getDate().isBefore(Instant.now().minus(1, ChronoUnit.DAYS)) && ohlc.getOpen() != 0d) {
 				// ISIN
-				writeOnFile(asset.getIsin());
-				writeOnFile(TechnicalConstants.CSV_SEPARATOR);
+				message += asset.getIsin();
+				message += TechnicalConstants.CSV_SEPARATOR;
 
 				// Date		
 				String date = DateUtil.formatDate(ohlc.getDate(), OhlcExporterConstants.DATE_FORMAT); 
-				writeOnFile(date);
-				writeOnFile(TechnicalConstants.CSV_SEPARATOR);
+				message += date;
+				message += TechnicalConstants.CSV_SEPARATOR;
 				
 				// Open
 				Double openPrice = ohlc.getOpen();
 				if (openPrice != null) {
-					writeOnFile(NumberUtil.toExactString(openPrice));
+					message += NumberUtil.toExactString(openPrice);
 				}
-				writeOnFile(TechnicalConstants.CSV_SEPARATOR);
+				message += TechnicalConstants.CSV_SEPARATOR;
 				
 				// High
 				Double highPrice = ohlc.getHigh();
 				if (highPrice != null) {
-					writeOnFile(NumberUtil.toExactString(highPrice));
+					message += NumberUtil.toExactString(highPrice);
 				}
-				writeOnFile(TechnicalConstants.CSV_SEPARATOR);
+				message += TechnicalConstants.CSV_SEPARATOR;
 				
 				// Low
 				Double lowPrice = ohlc.getLow();
 				if (lowPrice != null) {
-					writeOnFile(NumberUtil.toExactString(lowPrice));
+					message += NumberUtil.toExactString(lowPrice);
 				}
-				writeOnFile(TechnicalConstants.CSV_SEPARATOR);
+				message += TechnicalConstants.CSV_SEPARATOR;
 				
 				// Close
 				Double closePrice = ohlc.getClose();
 				if (closePrice != null) {
-					writeOnFile(NumberUtil.toExactString(closePrice));
+					message += NumberUtil.toExactString(closePrice);
 				}
-				writeOnFile(TechnicalConstants.CSV_SEPARATOR);
+				message += TechnicalConstants.CSV_SEPARATOR;
 				
-				FileUtils.endLine(OhlcExporterConstants.FILE_NAME);
+				message += "\n";
 			}
 		}
+		
+		writeOnFile(message);
 		
 		return OhlcExporterConstants.FILE_NAME;
 	}
