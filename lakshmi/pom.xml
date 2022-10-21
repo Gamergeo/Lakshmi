@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.project</groupId>
-	<artifactId>lakshmit</artifactId>
+	<artifactId>lakshmi</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
   
