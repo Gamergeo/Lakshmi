@@ -31,7 +31,8 @@ public class OperationImporterBinanceConstants {
 	public final static List<String> INVESTMENT_TYPE_STACKING = Arrays.asList(new String[]{
 			"Pool Distribution", "Savings Interest", "ETH 2.0 Staking Rewards", 
 			"POS savings interest", "Super BNB Mining", "Launchpool Interest",
-			"Commission Rebate"});
+			"Commission Rebate", "Staking Rewards", "Simple Earn Flexible Interest",
+			"Simple Earn Locked Rewards", "BNB Vault Rewards"});
 	
 	public final static String INVESTMENT_TYPE_WITHDRAW = "Withdraw";
 	
@@ -39,7 +40,10 @@ public class OperationImporterBinanceConstants {
 	
 	public final static List<String> INVESTMENT_TYPE_IGNORED = Arrays.asList(new String[]{
 			"Dual savings settlement", "Dual savings purchase", "Savings purchase", 
-			"Savings Principal redemption", "POS savings purchase", "POS savings redemption"});
+			"Savings Principal redemption", "POS savings purchase", "POS savings redemption",
+			"Simple Earn Flexible Subscription", "Simple Earn Flexible Redemption", "Staking Redemption",
+			"Staking Purchase", "Simple Earn Locked Redemption", "Main and funding account transfer",
+			"Simple Earn Locked Subscription"});
 	
 	public final static DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	public final static ZoneId DATE_ZONE = ZoneId.of("UTC");

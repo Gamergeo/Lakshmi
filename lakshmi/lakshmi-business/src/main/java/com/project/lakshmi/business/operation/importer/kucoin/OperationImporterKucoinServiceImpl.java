@@ -151,6 +151,11 @@ public class OperationImporterKucoinServiceImpl implements OperationImporterKuco
 			return trade.getFeeInvestment();
 		}
 		
+		// Il n'y a pas de fee 
+		if (feeOperations.isEmpty()) {
+			return null;
+		}
+		
 		// Sinon, on cherche on prends la première ligne, si la date du fee est supérieure ou egaleà la date de l'opération
 		if (trade.getDate().isBefore(feeOperations.get(0).getDate()) ||
 				trade.getDate().equals(feeOperations.get(0).getDate())) {
