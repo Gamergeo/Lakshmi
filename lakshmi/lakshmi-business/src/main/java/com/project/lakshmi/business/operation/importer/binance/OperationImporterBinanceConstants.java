@@ -17,9 +17,9 @@ public class OperationImporterBinanceConstants {
 	
 	public final static String ASSET_BNB = "BNB";
 	
-	public final static String INVESTMENT_TYPE_BUY = "Buy";
+	public final static String INVESTMENT_TYPE_BUY = "Transaction Buy";
 	
-	public final static String INVESTMENT_TYPE_SELL = "Sell";
+	public final static String INVESTMENT_TYPE_SELL = "Transaction Spend";
 	
 	public final static String INVESTMENT_TYPE_FEE = "Fee";
 	

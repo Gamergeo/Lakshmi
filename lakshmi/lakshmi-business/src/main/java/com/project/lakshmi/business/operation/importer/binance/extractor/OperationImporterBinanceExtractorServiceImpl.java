@@ -121,7 +121,7 @@ public class OperationImporterBinanceExtractorServiceImpl implements OperationIm
 				quantity >= 0) {
 			return true;
 		} else if (OperationImporterBinanceConstants.INVESTMENT_TYPE_SELL.equals(investmentType) &&
-				quantity <= 0) {
+				quantity >= 0) {
 			return true;
 		}
 		
