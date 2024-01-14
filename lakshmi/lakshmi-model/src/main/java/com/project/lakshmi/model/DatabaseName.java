@@ -66,4 +66,10 @@ public class DatabaseName {
 		
 		public static final String CLOSE = "close";
 	}
+	
+	public class CONFIG {
+		public static final String TABLE = "config";
+		
+		public static final String YAHOO_KEY = "yahoo_key";
+	}
 }

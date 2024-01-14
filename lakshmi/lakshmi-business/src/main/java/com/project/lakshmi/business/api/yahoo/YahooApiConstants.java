@@ -4,8 +4,6 @@ public class YahooApiConstants {
 	
 	final public static String BASE_URI = "https://yfapi.net/v8/finance/spark";
 	
-	public static String API_KEY_YAHOO = "bPcyzwW55539k8EsNEzXS9StNg4Wvb0O88GPXsGQ";
-	
 	public static String API_KEY_HEADER_YAHOO = "x-api-key";
 	
 	final public static String PARAMETER_INTERVAL = "interval";

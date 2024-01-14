@@ -8,18 +8,23 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.hibernate.cfg.NotYetImplementedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.lakshmi.business.api.ApiServiceImpl;
+import com.project.lakshmi.business.config.ConfigService;
 import com.project.lakshmi.model.asset.Asset;
 import com.project.lakshmi.model.asset.price.Ohlc;
 import com.project.lakshmi.technical.ApplicationException;
 
 @Service("yahooApiService")
 public class YahooApiServiceImpl extends ApiServiceImpl implements YahooApiService {
+	
+	@Autowired
+	ConfigService configService;
 	
 	@Override
 	public Ohlc getPriceOhlc(Asset asset, Instant instant) {
@@ -46,7 +51,7 @@ public class YahooApiServiceImpl extends ApiServiceImpl implements YahooApiServi
 		String uri = YahooApiConstants.BASE_URI;
 		
 	    List<NameValuePair> headers = new ArrayList<NameValuePair>();
-	    headers.add(new BasicNameValuePair(YahooApiConstants.API_KEY_HEADER_YAHOO, YahooApiConstants.API_KEY_YAHOO));
+	    headers.add(new BasicNameValuePair(YahooApiConstants.API_KEY_HEADER_YAHOO, configService.findYahooKey()));
 		
 	    List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 	    parameters.add(new BasicNameValuePair(YahooApiConstants.PARAMETER_INTERVAL,interval));
