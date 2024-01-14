@@ -17,4 +17,9 @@ public interface OperationImporterBinanceService {
 	 * @param rawFile
 	 */
 	void validateHeader(RawTextFile rawFile);
+
+	/**
+	 * Nettoie le fichier, en l'occurence, supprime les caractères en trop
+	 */
+	void cleanFile(RawTextFile rawFile);
 }

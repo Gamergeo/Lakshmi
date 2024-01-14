@@ -21,6 +21,7 @@ public class OperationImporterBinanceDefaultServiceImpl implements OperationImpo
 		OperationInvestment operation = new OperationInvestment();
 		
 		String line = rawFile.getAndRemoveNext();
+		
 		Instant operationDate = operationImporterBinanceExtractorService.getDate(line);
 		operation.setDate(operationDate);
 		

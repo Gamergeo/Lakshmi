@@ -23,8 +23,9 @@
 		<jsp-api.version>2.0</jsp-api.version>
     	<commons.version>3.6</commons.version>
 		<spring.version>5.0.8.RELEASE</spring.version>
-		<mysql-connector.version>8.0.12</mysql-connector.version>
+		<mysql-connector.version>8.0.20</mysql-connector.version>
 		<maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
 		<dbcp.version>2.5.0</dbcp.version>
 		<hibernate.version>5.5.7.Final</hibernate.version>
 		<jaxb.version>2.3.0</jaxb.version>
@@ -58,6 +59,12 @@
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
 					</configuration>
+				</plugin>
+				
+				<plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-war-plugin</artifactId>
+				    <version>${maven-war-plugin.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

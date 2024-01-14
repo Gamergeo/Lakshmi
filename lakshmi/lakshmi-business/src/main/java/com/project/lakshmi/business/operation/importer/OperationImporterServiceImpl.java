@@ -28,6 +28,8 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 	@Override
 	public List<Operation> importFile(OperationImporterOrigin origin, RawTextFile rawFile, RawTextFile feeFile) {
 		
+		cleanFile(origin, rawFile);
+		
 		// On valide le header
 		validateHeader(origin, rawFile, feeFile);
 		
@@ -91,6 +93,20 @@ public class OperationImporterServiceImpl implements OperationImporterService {
 		
 		if (addOperation) {
 			existingOperations.add(operationToAdd);
+		}
+	}
+	
+	/**
+	 * Nettoie le fichier, en l'occurence, supprime les caractères en trop
+	 */
+	private void cleanFile(OperationImporterOrigin origin, RawTextFile rawFile) {
+		
+		if (OperationImporterOrigin.BINANCE.equals(origin)) {
+			operationImporterBinanceService.cleanFile(rawFile);
+		} else if (OperationImporterOrigin.KUCOIN.equals(origin)) {
+			return;
+		} else {		
+			throw new NotYetImplementedException("validateHeader is not implemented for origin " + origin);
 		}
 	}
 	

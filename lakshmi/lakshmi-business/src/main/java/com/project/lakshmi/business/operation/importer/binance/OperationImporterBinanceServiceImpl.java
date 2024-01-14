@@ -1,5 +1,8 @@
 package com.project.lakshmi.business.operation.importer.binance;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,26 @@ public class OperationImporterBinanceServiceImpl implements OperationImporterBin
 	
 	@Autowired
 	private OperationImporterBinanceMultiTradeService operationImporterBinanceMultiTradeService;
+	
+	/**
+	 * Nettoie le fichier, en l'occurence, supprime les caractères en trop
+	 */
+	@Override
+	public void cleanFile(RawTextFile rawFile) {
+		
+		List<String> lines = new ArrayList<String>();
+		String line = rawFile.getAndRemoveNext();
+		
+		while(line != null) {
+			// Remove "
+			line = line.replace("\"", "");
+			
+			lines.add(line);
+			line = rawFile.getAndRemoveNext();
+		}
+		
+		rawFile.setLines(lines);
+	}
 	
 	/**
 	 * Valide le header, si nécéssaire
